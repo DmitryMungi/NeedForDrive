@@ -1,0 +1,31 @@
+@import '../../../common-styles/variables.less';
+:host {
+  min-width: 50%;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  .title__wrapp {
+    .title {
+      margin-bottom: 34px;
+
+      &___heading {
+        color: @color-black;
+      }
+      &__heading-color {
+        color: @color-green;
+      }
+    }
+
+    .description {
+      margin-bottom: 60px;
+      font-family: 'Roboto-Light';
+      font-size: 26px;
+      font-weight: 300;
+      color: @color-grey;
+    }
+  }
+}

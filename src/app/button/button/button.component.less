@@ -1,0 +1,33 @@
+@import '../../../common-styles/variables.less';
+
+.basic-btn {
+  padding: 15px 60px 11px;
+  border-radius: 8px;
+  outline: none;
+  border: none;
+  font-family: 'Roboto-Medium';
+  font-weight: 500;
+  font-size: 18px;
+  color: @color-white;
+  cursor: pointer;
+
+}
+
+
+.default {background: none; cursor: default;}
+
+.accept {
+  background: @gradient-accept;
+
+  &:hover {
+    background: @gradient-accept-10;
+  }
+
+  &:focus {
+    background: @gradient-accept-10;
+  }
+
+  &:active {
+    background: @gradient-accept-20;
+  }
+}

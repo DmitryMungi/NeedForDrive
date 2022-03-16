@@ -1,0 +1,22 @@
+@import '../../../common-styles/variables.less';
+
+.footer {
+  padding-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 400;
+
+  &__iso-sign, &__iso-name{
+    color: @color-grey;
+  }
+
+  &__iso-sign, &__tel {
+    display: inline-block;
+  }
+
+  &__tel-link {
+    color: @color-black;
+  }
+}
