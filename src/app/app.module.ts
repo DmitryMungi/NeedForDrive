@@ -4,6 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ButtonModule } from './button/button.module';
 import { StartPageModule } from './start-page/start-page.module';
+// import { CarouselModule } from './carousel/carousel.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { StartPageModule } from './start-page/start-page.module';
     BrowserModule,
     AppRoutingModule,
     StartPageModule,
-    ButtonModule
+    ButtonModule,
+    // CarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent]

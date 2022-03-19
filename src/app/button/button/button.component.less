@@ -1,8 +1,8 @@
 @import '../../../common-styles/variables.less';
 
 .basic-btn {
-  padding: 15px 60px 11px;
-  border-radius: 8px;
+  // padding: 15px 60px 11px;
+  // border-radius: 8px;
   outline: none;
   border: none;
   font-family: 'Roboto-Medium';
@@ -10,9 +10,17 @@
   font-size: 18px;
   color: @color-white;
   cursor: pointer;
-
 }
 
+.large-size {
+  padding: 15px 60px 11px;
+  border-radius: 8px;
+}
+
+.medium-size {
+  padding: 15px 35.3px 11px;
+  border-radius: 4px;
+}
 
 .default {background: none; cursor: default;}
 
@@ -29,5 +37,53 @@
 
   &:active {
     background: @gradient-accept-20;
+  }
+}
+
+.green-theme {
+  background: @gradient-dark-green;
+
+  &:hover {
+    background: @gradient-dark-green-10;
+  }
+
+  &:active {
+    background: @gradient-dark-green-20;
+  }
+}
+
+.dark-blue-theme {
+  background: @gradient-blue;
+
+  &:hover {
+    background: @gradient-blue-10;
+  }
+
+  &:active {
+    background: @gradient-blue-20;
+  }
+}
+
+.fail-theme {
+  background: @gradient-fail;
+
+  &:hover {
+    background: @gradient-fail-10;
+  }
+
+  &:active {
+    background: @gradient-fail-20;
+  }
+}
+
+.purple-theme {
+  background: @gradient-purple;
+
+  &:hover {
+    background: @gradient-purple-10;
+  }
+
+  &:active {
+    background: @gradient-purple-20;
   }
 }

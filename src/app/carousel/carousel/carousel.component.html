@@ -1,0 +1,43 @@
+<div *ngIf="sliders && sliders.length > 0">
+  <div *ngFor="let slider of sliders, let i = index" class="carousel__container">
+    <img
+      [ngStyle]="{}"
+      [src]="slider.url"
+      [ngClass]="{'slider-active': selectedIndex === i}"
+      [style.width.%]="100"
+      class="fade">
+
+    <div class="carousel__desc" [ngClass]="{'slider-active': selectedIndex === i}">
+      <h2 class="white-text">{{slider.heading}}</h2>
+      <p class="white-text description-text">{{slider.description}}</p>
+      <app-button [theme]="slider.theme" [size]="'medium'" text="Подробнее"></app-button>
+    </div>
+
+    <div class="btn_carousel btn-prev" (click)="onPrevClick()" [class]="[slider.theme]">
+      <svg class="arow-left__icon btn__icon">
+        <use xlink:href="assets/sprite/symbol-defs.svg#arow-left"></use>
+      </svg>
+    </div>
+
+    <div class="btn_carousel btn-next" (click)="onNextClick()" [class]="[slider.theme]">
+      <svg class="arow-right__icon btn__icon">
+        <use xlink:href="assets/sprite/symbol-defs.svg#arow-right"></use>
+      </svg>
+    </div>
+  </div>
+
+  <div class="carousel_dot__container">
+    <span class="dot"
+      (click)="selectSlide(i)"
+      *ngFor="let dot of sliders, let i = index"
+      [ngClass]="{'active-dot': selectedIndex === i}"></span>
+  </div>
+
+  <div *ngIf="overlay" class="overlay"></div>
+</div>
+
+
+
+
+
+

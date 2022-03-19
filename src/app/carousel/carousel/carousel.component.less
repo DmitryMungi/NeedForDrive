@@ -1,0 +1,138 @@
+@import '../../../common-styles/variables.less';
+
+:host {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel__container {
+  position: relative;
+  // overflow: hidden;
+}
+
+.carousel__desc {
+  width: 72%;
+  position: absolute;
+  top: 30%;
+  left: 15%;
+  display: none;
+}
+
+.carousel__desc.slider-active {
+  display: block;
+}
+
+.carousel__container img {
+  display: none;
+}
+
+.carousel__container img.slider-active {
+  display: block;
+  width: 100%;
+  height: 100%;
+  // overflow: hidden;
+}
+
+.carousel_dot__container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 32px;
+  display: flex;
+  justify-content: center;
+  color: white;
+
+  .dot {
+    cursor: pointer;
+    width: 8px;
+    height: 8px;
+    margin: 0 4px;
+    background-color: @color-grey-light;
+    border-radius: 50%;
+  }
+
+  .active-dot {
+    background-color: @color-green;
+  }
+}
+
+.fade {
+  animation-name: fade;
+  animation-duration: 1s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.btn_carousel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.green-theme {
+  &:hover {
+    background-color: fade( @color-green, 20%);
+  }
+}
+
+.dark-blue-theme {
+  &:hover {
+    background-color: fade( @color-blue, 20%);
+  }
+}
+
+.fail-theme {
+  &:hover {
+    background-color: fade( @color-orange, 20%);
+  }
+}
+
+.purple-theme {
+  &:hover {
+    background-color: fade( @color-purple, 20%);
+  }
+}
+
+.btn-prev {
+  left: 0;
+}
+.btn-next {
+  right: 0;
+}
+
+.btn__icon {
+  width: 10px;
+  height: 20px;
+  fill: transparent;
+  stroke: @color-grey-light;
+}
+
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: fade( @color-black, 80%);
+  z-index: 10;
+}
+
+
+

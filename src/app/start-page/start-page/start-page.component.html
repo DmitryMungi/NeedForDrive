@@ -1,10 +1,6 @@
-<!-- <p>start-page works!</p>
-<h1>Главная страница</h1>
-<h2>Проверка шрифтов</h2>
-<p>Текст параграф, здесь должен быть 400</p>
-<span>Текст Спан, здесь должен быть 300</span> -->
 <div class="start-page_wrapp">
-  <app-side-bar></app-side-bar>
+  <app-side-bar (menuIsVisible)="sliderOverlay()"></app-side-bar>
   <app-main></app-main>
+  <app-carousel [overlay]="sideMenuIsVisible" [sliders]="sliders"></app-carousel>
 </div>
 

@@ -8,6 +8,7 @@ import { LocationComponent } from './location/location.component';
 import { FooterComponent } from './footer/footer.component';
 import { ButtonModule } from '../button/button.module';
 import { SideBarComponent } from './side-bar/side-bar.component';
+import { CarouselModule } from '../carousel/carousel.module';
 
 @NgModule({
   declarations: [
@@ -16,12 +17,13 @@ import { SideBarComponent } from './side-bar/side-bar.component';
     HeaderComponent,
     LocationComponent,
     FooterComponent,
-    SideBarComponent
+    SideBarComponent,
   ],
   imports: [
     CommonModule,
     BrowserModule,
-    ButtonModule
+    ButtonModule,
+    CarouselModule
   ],
   exports: [
     StartPageComponent

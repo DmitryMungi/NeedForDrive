@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-side-bar',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./side-bar.component.less']
 })
 export class SideBarComponent implements OnInit {
+
+  @Output() menuIsVisible = new EventEmitter();
 
   public toggle = true;
   public visibleMenu = false;
@@ -21,5 +23,6 @@ export class SideBarComponent implements OnInit {
 
   toggleMenu(){
     this.visibleMenu = !this.visibleMenu;
+    this.menuIsVisible.emit();
   }
 }
