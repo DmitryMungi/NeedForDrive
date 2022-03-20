@@ -9,30 +9,34 @@
 
 .carousel__container {
   position: relative;
-  // overflow: hidden;
+  height: 100%;
+  display: none;
+}
+
+.carousel__container.slider-active {
+  display: block;
+}
+
+.carousel__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
 }
 
 .carousel__desc {
   width: 72%;
   position: absolute;
-  top: 30%;
-  left: 15%;
-  display: none;
+  top: 29%;
+  left: 14%;
 }
 
-.carousel__desc.slider-active {
-  display: block;
-}
-
-.carousel__container img {
-  display: none;
-}
-
-.carousel__container img.slider-active {
-  display: block;
-  width: 100%;
-  height: 100%;
-  // overflow: hidden;
+.carousel__desc_text {
+  font-family: 'Roboto-Light';
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 100%;
+  margin-bottom: 32px;
 }
 
 .carousel_dot__container {
@@ -79,32 +83,32 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 10%;
+  width: 9.1%;
   text-align: center;
   cursor: pointer;
 }
 
 .green-theme {
   &:hover {
-    background-color: fade( @color-green, 20%);
+    background-color: fade( @color-green, 10%);
   }
 }
 
 .dark-blue-theme {
   &:hover {
-    background-color: fade( @color-blue, 20%);
+    background-color: fade( @color-blue, 10%);
   }
 }
 
 .fail-theme {
   &:hover {
-    background-color: fade( @color-orange, 20%);
+    background-color: fade( @color-orange, 10%);
   }
 }
 
 .purple-theme {
   &:hover {
-    background-color: fade( @color-purple, 20%);
+    background-color: fade( @color-purple, 10%);
   }
 }
 
@@ -132,6 +136,15 @@
   bottom: 0;
   background: fade( @color-black, 80%);
   z-index: 10;
+}
+
+@media (max-width: 1024px) {
+  .carousel__desc {
+    top: 34%;
+  }
+  .carousel__desc_text {
+    font-size: 22px;
+  }
 }
 
 

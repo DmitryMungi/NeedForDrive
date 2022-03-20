@@ -1,25 +1,24 @@
-<div *ngIf="sliders && sliders.length > 0">
-  <div *ngFor="let slider of sliders, let i = index" class="carousel__container">
+<div *ngIf="sliders && sliders.length > 0" [style.height.%]="100">
+  <div *ngFor="let slider of sliders, let i = index" class="carousel__container" [ngClass]="{'slider-active': selectedIndex === i}">
     <img
       [ngStyle]="{}"
       [src]="slider.url"
-      [ngClass]="{'slider-active': selectedIndex === i}"
       [style.width.%]="100"
-      class="fade">
+      class="fade carousel__img">
 
-    <div class="carousel__desc" [ngClass]="{'slider-active': selectedIndex === i}">
+    <div class="carousel__desc">
       <h2 class="white-text">{{slider.heading}}</h2>
-      <p class="white-text description-text">{{slider.description}}</p>
+      <p class="white-text carousel__desc_text">{{slider.description}}</p>
       <app-button [theme]="slider.theme" [size]="'medium'" text="Подробнее"></app-button>
     </div>
 
-    <div class="btn_carousel btn-prev" (click)="onPrevClick()" [class]="[slider.theme]">
+    <div class="btn_carousel btn-prev" (click)="onPrevClick()" [ngClass]="[slider.theme]">
       <svg class="arow-left__icon btn__icon">
         <use xlink:href="assets/sprite/symbol-defs.svg#arow-left"></use>
       </svg>
     </div>
 
-    <div class="btn_carousel btn-next" (click)="onNextClick()" [class]="[slider.theme]">
+    <div class="btn_carousel btn-next" (click)="onNextClick()" [ngClass]="[slider.theme]">
       <svg class="arow-right__icon btn__icon">
         <use xlink:href="assets/sprite/symbol-defs.svg#arow-right"></use>
       </svg>

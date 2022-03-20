@@ -54,6 +54,15 @@
         </li>
       </ul>
     </nav>
+
+    <div class="select-lang" >
+      <div *ngIf="toggle">
+        <a (click)="toggleLang()" class="lang_item">Eng</a>
+      </div>
+      <div *ngIf="!toggle">
+        <a (click)="toggleLang()" class="lang_item">Rus</a>
+      </div>
+    </div>
   </div>
 </div>
 
