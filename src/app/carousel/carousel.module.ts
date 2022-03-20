@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CarouselComponent } from './carousel/carousel.component';
-import { ButtonModule } from '../button/button.module';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {CarouselComponent} from './carousel/carousel.component';
+import {ButtonModule} from '../button/button.module';
 
 @NgModule({
   declarations: [
@@ -15,4 +15,4 @@ import { ButtonModule } from '../button/button.module';
     ButtonModule
   ]
 })
-export class CarouselModule { }
+export class CarouselModule {}

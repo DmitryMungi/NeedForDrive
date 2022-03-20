@@ -1,11 +1,11 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-side-bar',
   templateUrl: './side-bar.component.html',
   styleUrls: ['./side-bar.component.less']
 })
-export class SideBarComponent implements OnInit {
+export class SideBarComponent {
 
   @Output() menuIsVisible = new EventEmitter();
 
@@ -13,9 +13,6 @@ export class SideBarComponent implements OnInit {
   public visibleMenu = false;
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
   toggleLang(){
     this.toggle = !this.toggle;

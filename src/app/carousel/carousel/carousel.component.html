@@ -1,10 +1,6 @@
 <div *ngIf="sliders && sliders.length > 0" [style.height.%]="100">
   <div *ngFor="let slider of sliders, let i = index" class="carousel__container" [ngClass]="{'slider-active': selectedIndex === i}">
-    <img
-      [ngStyle]="{}"
-      [src]="slider.url"
-      [style.width.%]="100"
-      class="fade carousel__img">
+    <img [src]="slider.url" class="fade carousel__img">
 
     <div class="carousel__desc">
       <h2 class="white-text">{{slider.heading}}</h2>
@@ -29,7 +25,8 @@
     <span class="dot"
       (click)="selectSlide(i)"
       *ngFor="let dot of sliders, let i = index"
-      [ngClass]="{'active-dot': selectedIndex === i}"></span>
+      [ngClass]="{'active-dot': selectedIndex === i}">
+    </span>
   </div>
 
   <div *ngIf="overlay" class="overlay"></div>

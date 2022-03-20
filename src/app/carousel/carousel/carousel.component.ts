@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 export interface SliderContent {
   url: string,
@@ -31,8 +31,8 @@ export class CarouselComponent implements OnInit {
 
   autoSlideImages(): void {
     setInterval(() => {
-      this.onNextClick()
-    }, this.slideInterval)
+      this.onNextClick();
+    }, this.slideInterval);
   }
 
   selectSlide(index: number): void{
@@ -54,5 +54,4 @@ export class CarouselComponent implements OnInit {
       this.selectedIndex++;
     }
   }
-
 }

@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, Input, SimpleChanges } from '@angular/core';
+import {Component, OnChanges, Input, SimpleChanges} from '@angular/core';
 
 type buttonColors = 'accept';
 
@@ -7,7 +7,7 @@ type buttonColors = 'accept';
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.less']
 })
-export class ButtonComponent implements OnInit, OnChanges {
+export class ButtonComponent implements OnChanges {
 
   @Input() text = 'click me';
   @Input() color?: buttonColors;
@@ -23,15 +23,12 @@ export class ButtonComponent implements OnInit, OnChanges {
 
     const {color, size}  = changes;
 
-    if ( color && color.currentValue ) {
+    if (color && color.currentValue) {
       this.innerColor = color.currentValue;
     }
 
-    if (size && size.currentValue ) {
+    if (size && size.currentValue) {
       this.innerSize = size.currentValue;
     }
-  }
-
-  ngOnInit(): void {
   }
 }

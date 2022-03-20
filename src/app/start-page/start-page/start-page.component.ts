@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-start-page',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./start-page.component.less']
 })
 
-export class StartPageComponent implements OnInit {
+export class StartPageComponent {
 
   public sideMenuIsVisible = false;
 
@@ -35,12 +35,9 @@ export class StartPageComponent implements OnInit {
       description: 'Автомобиль проходит еженедельное ТО',
       theme: 'purple-theme'
     }
-  ]
+  ];
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
   sliderOverlay(){
     this.sideMenuIsVisible = !this.sideMenuIsVisible;
