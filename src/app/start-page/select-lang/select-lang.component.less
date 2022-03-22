@@ -1,0 +1,35 @@
+@import "../../../common-styles/variables.less";
+
+.select-lang {
+  .lang_item {
+    padding: 16px 12px;
+    color: @color-green;
+    border: 1px solid @color-black-10;
+    border-radius: 50%;
+    font-family: "Roboto-Bold";
+    font-size: 13px;
+    cursor: pointer;
+
+    &:hover {
+      color: @color-grey-light;
+      border-color: @color-grey-light;
+    }
+    &:active {
+      color: @color-green;
+      border-color: @color-grey-light;
+    }
+  }
+}
+.select-lang.mobile {
+  display: none;
+}
+
+@media (max-width: 580px) {
+  .select-lang.desk {
+    display: none;
+  }
+
+  .select-lang.mobile {
+    display: block;
+  }
+}

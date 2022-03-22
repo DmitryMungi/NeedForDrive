@@ -1,18 +1,17 @@
 <div class="side-bar">
-  <app-burger-button [toggleBtn]="visibleMenu" (toggle)="toggleMenu()"></app-burger-button>
+  <app-burger-button
+    [toggleBtn]="visibleMenu"
+    (toggle)="toggleMenu()"
+  ></app-burger-button>
 
-  <div class="select-lang">
-    <div *ngIf="toggle">
-      <a (click)="toggleLang()" class="lang_item">Eng</a>
-    </div>
-    <div *ngIf="!toggle">
-      <a (click)="toggleLang()" class="lang_item">Rus</a>
-    </div>
-  </div>
+  <app-select-lang media="desk"></app-select-lang>
 </div>
 
 <div class="visible-menu" *ngIf="visibleMenu">
-  <app-burger-button [toggleBtn]="visibleMenu" (toggle)="toggleMenu()"></app-burger-button>
+  <app-burger-button
+    [toggleBtn]="visibleMenu"
+    (toggle)="toggleMenu()"
+  ></app-burger-button>
   <div class="nav-menu__wrapp">
     <nav class="nav-menu">
       <ul class="nav-menu__list">
@@ -34,36 +33,33 @@
         <li class="social_item">
           <a>
             <svg class="social__icon">
-              <use xlink:href = "assets/sprite/symbol-defs.svg#telegram-icon"></use>
+              <use
+                xlink:href="assets/sprite/symbol-defs.svg#telegram-icon"
+              ></use>
             </svg>
           </a>
         </li>
         <li class="social_item">
           <a>
             <svg class="social__icon">
-              <use xlink:href = "assets/sprite/symbol-defs.svg#facebook-icon"></use>
+              <use
+                xlink:href="assets/sprite/symbol-defs.svg#facebook-icon"
+              ></use>
             </svg>
           </a>
         </li>
         <li class="social_item">
           <a>
             <svg class="social__icon">
-              <use xlink:href = "assets/sprite/symbol-defs.svg#instagram-icon"></use>
+              <use
+                xlink:href="assets/sprite/symbol-defs.svg#instagram-icon"
+              ></use>
             </svg>
           </a>
         </li>
       </ul>
     </nav>
 
-    <div class="select-lang">
-      <div *ngIf="toggle">
-        <a (click)="toggleLang()" class="lang_item">Eng</a>
-      </div>
-      <div *ngIf="!toggle">
-        <a (click)="toggleLang()" class="lang_item">Rus</a>
-      </div>
-    </div>
+    <app-select-lang media="mobile"></app-select-lang>
   </div>
 </div>
-
-

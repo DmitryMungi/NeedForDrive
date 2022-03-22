@@ -1,0 +1,6 @@
+<div class="select-lang" [class]="media">
+  <a (click)="toggleLang()" class="lang_item">
+    <span *ngIf="toggle; else rusTemplate"> Eng </span>
+    <ng-template #rusTemplate> Rus </ng-template>
+  </a>
+</div>
