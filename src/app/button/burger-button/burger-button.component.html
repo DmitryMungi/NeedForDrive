@@ -1,0 +1,8 @@
+<button class="burger" (click)="toggleMenu()">
+  <svg class="burger__icon burger__icon-open" *ngIf="!toggleBtn">
+    <use xlink:href="assets/sprite/symbol-defs.svg#burger-icon"></use>
+  </svg>
+  <svg class="burger__icon burger__icon-close" *ngIf="toggleBtn">
+    <use xlink:href="assets/sprite/symbol-defs.svg#close-icon"></use>
+  </svg>
+</button>

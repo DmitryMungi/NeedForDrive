@@ -1,0 +1,21 @@
+@import "../../../common-styles/variables.less";
+
+.burger {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  &__icon {
+    width: 32px;
+    height: 32px;
+    stroke: @color-white;
+  }
+}
+
+@media (max-width: 580px) {
+  .burger {
+    .burger__icon {
+      stroke: @color-black;
+    }
+  }
+}

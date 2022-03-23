@@ -1,0 +1,31 @@
+@import "../../../common-styles/variables.less";
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 32px 64px;
+
+  &__logo {
+    .logo_img {
+      height: 32px;
+      width: 193px;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .header {
+    padding: 32px;
+  }
+}
+
+@media (max-width: 580px) {
+  .header {
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 16px;
+  }
+}

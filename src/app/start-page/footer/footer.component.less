@@ -1,0 +1,60 @@
+@import "../../../common-styles/variables.less";
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 32px 64px;
+
+  &__iso-sign,
+  &__iso-name {
+    color: @color-grey;
+  }
+
+  &__iso-sign,
+  &__tel {
+    display: inline-block;
+  }
+
+  &__tel-link {
+    color: @color-black;
+
+    &:hover {
+      color: @color-green;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .footer {
+    padding: 32px;
+  }
+}
+
+@media (max-width: 580px) {
+  .footer {
+    padding: 16px;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    background-color: @color-black-10;
+
+    &__iso-sign,
+    &__iso-name {
+      color: @color-grey-light;
+    }
+
+    .footer__tel {
+      margin-bottom: 8px;
+
+      .footer__tel-link {
+        color: @color-green;
+
+        &:hover {
+          color: @color-grey-light;
+        }
+      }
+    }
+  }
+}
