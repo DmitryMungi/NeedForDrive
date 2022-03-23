@@ -1,0 +1,28 @@
+@import "../../../../../common-styles/variables.less";
+@import "../../../../../common-styles/text.less";
+
+.steps_nav {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-top: 1px solid @color-grey-light;
+  border-bottom: 1px solid @color-grey-light;
+
+  &__link {
+    font-family: "Roboto-Bold";
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 120%;
+    color: @color-grey;
+    cursor: pointer;
+  }
+
+  &__link.active {
+    color: @color-green;
+  }
+}
+
+.triangle__icon {
+  width: 6px;
+  height: 8px;
+  margin: 0 16px;
+}
