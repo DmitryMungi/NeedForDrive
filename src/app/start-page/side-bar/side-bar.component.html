@@ -1,0 +1,65 @@
+<div class="side-bar">
+  <app-burger-button
+    [toggleBtn]="visibleMenu"
+    (toggle)="toggleMenu()"
+  ></app-burger-button>
+
+  <app-select-lang media="desk"></app-select-lang>
+</div>
+
+<div class="visible-menu" *ngIf="visibleMenu">
+  <app-burger-button
+    [toggleBtn]="visibleMenu"
+    (toggle)="toggleMenu()"
+  ></app-burger-button>
+  <div class="nav-menu__wrapp">
+    <nav class="nav-menu">
+      <ul class="nav-menu__list">
+        <li>
+          <a class="nav-menu__item">парковка</a>
+        </li>
+        <li>
+          <a class="nav-menu__item">страховка</a>
+        </li>
+        <li>
+          <a class="nav-menu__item">бензин</a>
+        </li>
+        <li>
+          <a class="nav-menu__item">обслуживание</a>
+        </li>
+      </ul>
+
+      <ul class="nav-menu__social">
+        <li class="social_item">
+          <a>
+            <svg class="social__icon">
+              <use
+                xlink:href="assets/sprite/symbol-defs.svg#telegram-icon"
+              ></use>
+            </svg>
+          </a>
+        </li>
+        <li class="social_item">
+          <a>
+            <svg class="social__icon">
+              <use
+                xlink:href="assets/sprite/symbol-defs.svg#facebook-icon"
+              ></use>
+            </svg>
+          </a>
+        </li>
+        <li class="social_item">
+          <a>
+            <svg class="social__icon">
+              <use
+                xlink:href="assets/sprite/symbol-defs.svg#instagram-icon"
+              ></use>
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <app-select-lang media="mobile"></app-select-lang>
+  </div>
+</div>

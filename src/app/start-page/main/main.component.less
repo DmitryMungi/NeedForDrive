@@ -1,0 +1,57 @@
+@import "../../../common-styles/variables.less";
+:host {
+  min-width: 47.8%;
+  width: auto;
+}
+.main__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  .main__title_wrapp {
+    padding: 0 64px 60px;
+
+    .title {
+      margin-bottom: 34px;
+
+      &___heading {
+        color: @color-black;
+      }
+      &__heading-color {
+        color: @color-green;
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  :host {
+    min-width: 53.8%;
+  }
+
+  .main__container {
+    .main__title_wrapp {
+      padding: 0 32px 60px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  :host {
+    min-width: auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 580px) {
+  .main__container {
+    .main__title_wrapp {
+      padding: 16px 16px 160px;
+
+      .title {
+        margin-bottom: 16px;
+      }
+    }
+  }
+}
