@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { FormBlogComponent } from "./order-page/form-blog/form-blog.component";
 import { StepAdditComponent } from "./order-page/form-blog/form-steps/step-addit/step-addit.component";
 import { StepConfirmComponent } from "./order-page/form-blog/form-steps/step-confirm/step-confirm.component";
 import { StepFinalComponent } from "./order-page/form-blog/form-steps/step-final/step-final.component";
@@ -30,14 +29,6 @@ const stepsRoutes: Routes = [
     component: StepFinalComponent,
   },
 ];
-
-// const itemRoutes: Routes = [
-//   {
-//     path: "step-1",
-//     component: FormBlogComponent,
-//     children: stepsRoutes,
-//   },
-// ];
 
 const routes: Routes = [
   {

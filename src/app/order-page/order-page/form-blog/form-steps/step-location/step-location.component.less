@@ -1,0 +1,133 @@
+@import "../../../../../../common-styles/variables.less";
+@import "../../../../../../common-styles/text.less";
+
+:host {
+  display: flex;
+  height: 100%;
+}
+
+.form-container {
+  width: 70%;
+  height: 100%;
+}
+
+.form__wrapp {
+  display: inline-block;
+  margin: 32px 0 45px;
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}
+
+.form_group {
+  margin-bottom: 12px;
+
+  &__input {
+    width: 224px;
+    padding: 0 8px;
+    border: none;
+    border-bottom: 1px solid @color-grey;
+    outline: none;
+  }
+
+  &__label {
+    margin-right: 8px;
+  }
+}
+
+.form_group__input,
+.label_form {
+  font-size: 14px;
+  font-family: "Roboto-Light";
+  font-weight: 300;
+  color: @color-black;
+}
+
+.map__wrapp {
+  width: 78%;
+
+  .map_img {
+    width: 100%;
+  }
+}
+
+.map__label {
+  margin-bottom: 16px;
+}
+
+.order-info {
+  border-left: 1px solid @color-grey-light;
+  padding: 32px 0 0 32px;
+  width: 30%; // нужно будет заменить на проценты
+  text-align: end;
+}
+
+.order_title {
+  margin-bottom: 26px;
+}
+
+.order_date {
+  margin-bottom: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px dotted @color-grey;
+  position: relative;
+  min-height: 32px;
+}
+
+.order_label {
+  padding-right: 8px;
+  left: 0;
+  color: black;
+}
+.order_item {
+  padding-left: 8px;
+  right: 0;
+  color: @color-grey;
+}
+
+.order_label,
+.order_item {
+  position: absolute;
+  bottom: -4px;
+  background: @color-white;
+  font-family: "Roboto-Light";
+  font-weight: 300;
+  font-size: 14px;
+}
+
+.order_item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.order_price {
+  margin-bottom: 32px;
+  width: 100%;
+  text-align: left;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 16px;
+  color: @color-black;
+
+  .order_price_label {
+    font-family: "Roboto-Bold";
+    margin-right: 4px;
+  }
+}
+
+@media (max-width: 1020px) {
+  :host {
+    flex-direction: column;
+  }
+
+  .order-info {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid @color-grey-light;
+  }
+}
