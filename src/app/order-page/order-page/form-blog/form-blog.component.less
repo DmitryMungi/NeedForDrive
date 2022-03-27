@@ -1,6 +1,153 @@
+@import "../../../../common-styles/variables.less";
+@import "../../../../common-styles/text.less";
+
 :host {
   width: 100%;
 }
-.set-height {
+.order_page__container {
   height: calc(100% - 139px);
+  display: flex;
+}
+
+.steps_nav {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-top: 1px solid @color-grey-light;
+  border-bottom: 1px solid @color-grey-light;
+
+  &__link {
+    font-family: "Roboto-Bold";
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 120%;
+    color: @color-black;
+    cursor: pointer;
+  }
+
+  &__link.active {
+    color: @color-green;
+  }
+
+  a.disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    color: @color-grey;
+  }
+}
+
+.triangle__icon {
+  width: 6px;
+  height: 8px;
+  margin: 0 16px;
+}
+////// wrapp for form
+.order-steps_wrapp {
+  width: 70%;
+  height: 100%;
+
+  .order-form {
+    width: 100%;
+  }
+}
+////////////// order info
+.order-info_wrapp {
+  width: 30%;
+}
+
+.order-info {
+  border-left: 1px solid @color-grey-light;
+  padding: 32px 0 0 32px;
+  width: 100%;
+  height: 100%;
+  text-align: end;
+
+  .order_title {
+    margin-bottom: 26px;
+  }
+
+  .order_date {
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px dotted @color-grey;
+    position: relative;
+    min-height: 32px;
+
+    &__label {
+      padding-right: 8px;
+      left: 0;
+      color: black;
+    }
+    &__item {
+      padding-left: 8px;
+      right: 0;
+      color: @color-grey;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    &__label,
+    &__item {
+      position: absolute;
+      bottom: -4px;
+      background: @color-white;
+      font-family: "Roboto-Light";
+      font-weight: 300;
+      font-size: 14px;
+    }
+  }
+
+  .order_price {
+    margin-bottom: 32px;
+    width: 100%;
+    text-align: left;
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 16px;
+    color: @color-black;
+
+    .order_price_label {
+      font-family: "Roboto-Bold";
+      margin-right: 4px;
+    }
+  }
+}
+
+@media (max-width: 1020px) {
+  .order-steps_wrapp {
+    width: 60%;
+  }
+  .order-info_wrapp {
+    width: 40%;
+    min-width: 245px;
+  }
+}
+
+@media (max-width: 580px) {
+  .order_page__container {
+    flex-direction: column;
+    .order-steps_wrapp {
+      width: 100%;
+    }
+  }
+
+  .order-info_wrapp {
+    width: 100%;
+
+    .order-info {
+      margin-top: 32px;
+      padding: 16px 0 64px 0;
+      border-left: none;
+      border-top: 1px solid @color-grey-light;
+    }
+  }
+
+  .steps_nav__link {
+    font-size: 12px;
+  }
+  .triangle__icon {
+    margin: 0 8px;
+  }
 }

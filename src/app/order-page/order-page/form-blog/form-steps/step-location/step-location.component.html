@@ -1,50 +1,35 @@
-<div class="form-container">
-  <div class="form__wrapp">
-    <form action="" class="form">
-      <div class="form_group">
-        <label class="form_group__label label_form"> Город </label>
-        <input
-          id="search-city"
-          class="form_group__input"
-          type="text"
-          placeholder="Начните вводить пункт ..."
-        />
-      </div>
-      <div class="form_group">
-        <label class="form_group__label label_form" for=""> Пункт выдачи</label>
-        <input
-          id="sarch-address"
-          class="form_group__input"
-          type="text"
-          placeholder="Начните вводить пункт ..."
-        />
-      </div>
-    </form>
+<div class="inputs__wrapp">
+  <div class="form_group">
+    <label class="form_group__label label_form"> Город </label>
+    <input
+      id="search-city"
+      class="form_group__input"
+      name="city"
+      placeholder="Начните вводить пункт ..."
+      [(ngModel)]="city"
+      (change)="getValueCity()"
+      value="city"
+      ngModel
+      required
+    />
   </div>
-
-  <div class="map__wrapp">
-    <div class="label_form map__label" for="">Выбрать на карте:</div>
-    <img
-      class="map_img"
-      src="../../../../../../assets/img/map-img.jpg"
-      alt=""
+  <div class="form_group">
+    <label class="form_group__label label_form" for=""> Пункт выдачи</label>
+    <input
+      id="sarch-address"
+      class="form_group__input"
+      name="address"
+      placeholder="Начните вводить пункт ..."
+      [(ngModel)]="address"
+      (change)="getValueAddress()"
+      value="address"
+      ngModel
+      required
     />
   </div>
 </div>
 
-<div class="order-info">
-  <h3 class="order_title">Ваш заказ:</h3>
-  <div class="order_date">
-    <span class="order_label">Пункт выдачи</span>
-    <span class="dote-border"></span>
-    <span class="order_item">
-      <span>Ульяновск,</span>
-      <span>Нариманова 42</span>
-    </span>
-  </div>
-  <div class="order_price">
-    <span class="order_price_label">Цена:</span>
-    <span class="order_price_range">от 8 000 до 12 000 ₽</span>
-  </div>
-  <app-button [isDisabled]="true" size="max" text="Выбрать модель"></app-button>
+<div class="map__wrapp">
+  <div class="label_form map__label" for="">Выбрать на карте:</div>
+  <img class="map_img" src="../../../../../../assets/img/map-img.jpg" alt="" />
 </div>

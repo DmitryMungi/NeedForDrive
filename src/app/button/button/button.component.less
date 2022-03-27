@@ -31,10 +31,6 @@
   cursor: default;
 }
 
-.disabled {
-  cursor: not-allowed;
-}
-
 .accept {
   background: @gradient-accept;
 
@@ -96,6 +92,14 @@
 
   &:active {
     background: @gradient-purple-20;
+  }
+}
+
+.disabled {
+  background: @color-grey-light;
+  cursor: not-allowed;
+  &:hover {
+    background: @color-grey-light;
   }
 }
 

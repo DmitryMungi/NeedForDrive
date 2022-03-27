@@ -7,34 +7,34 @@ import { StepLocationComponent } from "./order-page/form-blog/form-steps/step-lo
 import { StepModelComponent } from "./order-page/form-blog/form-steps/step-model/step-model.component";
 import { OrderPageComponent } from "./order-page/order-page.component";
 
-const stepsRoutes: Routes = [
-  {
-    path: "step-1",
-    component: StepLocationComponent,
-  },
-  {
-    path: "step-2",
-    component: StepModelComponent,
-  },
-  {
-    path: "step-3",
-    component: StepAdditComponent,
-  },
-  {
-    path: "step-4",
-    component: StepConfirmComponent,
-  },
-  {
-    path: "step-5",
-    component: StepFinalComponent,
-  },
-];
+// const stepsRoutes: Routes = [
+//   {
+//     path: "step-1",
+//     component: StepLocationComponent,
+//   },
+//   {
+//     path: "step-2",
+//     component: StepModelComponent,
+//   },
+//   {
+//     path: "step-3",
+//     component: StepAdditComponent,
+//   },
+//   {
+//     path: "step-4",
+//     component: StepConfirmComponent,
+//   },
+//   {
+//     path: "step-5",
+//     component: StepFinalComponent,
+//   },
+// ];
 
 const routes: Routes = [
   {
     path: "",
     component: OrderPageComponent,
-    children: stepsRoutes,
+    // children: stepsRoutes,
   },
 ];
 

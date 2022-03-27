@@ -1,0 +1,22 @@
+<div class="order-info">
+  <h3 class="order_title">Ваш заказ:</h3>
+  <div class="order_date">
+    <span class="order_date__label">Пункт выдачи</span>
+    <span class="dote-border"></span>
+    <span class="order_date__item">
+      <span>{{ form?.value.city }},</span>
+      <span>{{ form?.value.address }}</span>
+    </span>
+  </div>
+  <div class="order_price">
+    <span class="order_price_label">Цена:</span>
+    <span class="order_price_range">от 8 000 до 12 000 ₽</span>
+  </div>
+  <app-button
+    (click)="submit()"
+    [isDisabled]="form?.invalid"
+    color="accept"
+    size="max"
+    [text]="textBtn"
+  ></app-button>
+</div>

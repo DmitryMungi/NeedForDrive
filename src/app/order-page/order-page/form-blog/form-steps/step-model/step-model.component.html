@@ -1,1 +1,12 @@
-<p>step-model works!</p>
+<label class="form_group__label label_form"> Город </label>
+<input
+  id="search-city"
+  class="form_group__input"
+  name="model"
+  placeholder="Начните вводить пункт ..."
+  [(ngModel)]="model"
+  (change)="getValueModel()"
+  value="model"
+  ngModel
+  required
+/>

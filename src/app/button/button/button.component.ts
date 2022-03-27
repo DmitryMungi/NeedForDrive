@@ -12,7 +12,7 @@ export class ButtonComponent implements OnChanges {
   @Input() color?: buttonColors;
   @Input() size: "large" | "medium" | "max" = "large";
   @Input() theme?: string;
-  @Input() isDisabled = false;
+  @Input() isDisabled: boolean | null | undefined = false;
 
   public innerColor: buttonColors = "accept";
   public innerSize: "large" | "medium" | "max" = "large";

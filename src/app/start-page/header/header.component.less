@@ -5,7 +5,8 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  padding: 32px 64px;
+  padding-top: 32px;
+  padding-bottom: 32px;
 
   &__logo {
     .logo_img {
@@ -15,17 +16,12 @@
   }
 }
 
-@media (max-width: 1024px) {
-  .header {
-    padding: 32px;
-  }
-}
-
 @media (max-width: 580px) {
   .header {
     justify-content: flex-start;
     flex-direction: column;
     align-items: flex-end;
-    padding: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
   }
 }

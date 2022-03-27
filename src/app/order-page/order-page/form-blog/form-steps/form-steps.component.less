@@ -12,12 +12,18 @@
     font-size: 14px;
     font-weight: 700;
     line-height: 120%;
-    color: @color-grey;
+    color: @color-black;
     cursor: pointer;
   }
 
   &__link.active {
     color: @color-green;
+  }
+
+  a.disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    color: @color-grey;
   }
 }
 
@@ -25,4 +31,13 @@
   width: 6px;
   height: 8px;
   margin: 0 16px;
+}
+
+@media (max-width: 580px) {
+  .steps_nav__link {
+    font-size: 12px;
+  }
+  .triangle__icon {
+    margin: 0 8px;
+  }
 }
