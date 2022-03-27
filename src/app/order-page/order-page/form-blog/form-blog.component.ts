@@ -16,7 +16,6 @@ export enum activeStepEnum {
 export class FormBlogComponent {
   public activeStep: activeStepEnum = activeStepEnum.step1;
   public activeStepEnum = activeStepEnum;
-  // public nextStep: activeStepEnum = activeStepEnum.step1;
 
   public textBtn: string = "Выбрать модель";
   public cityValue: string = "";
@@ -26,34 +25,27 @@ export class FormBlogComponent {
 
   constructor() {}
 
-  toStep1() {
+  toStep1(): void {
     this.activeStep = activeStepEnum.step1;
     this.textBtn = "Выбрать модель";
   }
 
-  toStep2() {
+  toStep2(): void {
     this.activeStep = activeStepEnum.step2;
     this.textBtn = "Дополнительно";
   }
 
-  toStep3() {
+  toStep3(): void {
     this.activeStep = activeStepEnum.step3;
+    this.textBtn = "Итого";
   }
 
-  toStep4() {
+  toStep4(): void {
     this.activeStep = activeStepEnum.step4;
+    this.textBtn = "Заказать";
   }
 
-  // showStep() {
-  //   console.log(this.activeStep);
-  // }
-
-  // submit(form: NgForm) {
-  //   console.log(form, this.cityValue);
-  // }
-
-  setCityValue(city: string, form: NgForm) {
-    // console.log(city);
+  setCityValue(city: string, form: NgForm): void {
     this.cityValue = city;
 
     if (form.valid) {
@@ -61,7 +53,7 @@ export class FormBlogComponent {
     }
   }
 
-  setAddressValue(address: string, form: NgForm) {
+  setAddressValue(address: string, form: NgForm): void {
     this.addressValue = address;
 
     if (form.valid) {
@@ -69,12 +61,11 @@ export class FormBlogComponent {
     }
   }
 
-  toNextStep() {
+  toNextStep(): void {
     if (this.activeStep === activeStepEnum.step1) {
       this.toStep2();
     } else if (this.activeStep === activeStepEnum.step2) {
       this.toStep3();
     }
-    console.log(this.activeStep);
   }
 }
