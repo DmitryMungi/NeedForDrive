@@ -13,6 +13,7 @@
         <use xlink:href="assets/sprite/symbol-defs.svg#triangle"></use>
       </svg>
     </span>
+    <!-- disabled: !addressValid -->
     <a
       (click)="toStep2()"
       [ngClass]="{
@@ -79,6 +80,11 @@
         <ng-template #nonaddress>
           <span class="order_date__item">Не выбран</span>
         </ng-template>
+      </div>
+      <div *ngIf="addressValid" class="order_date">
+        <span class="order_date__label">Модель</span>
+        <span class="dote-border"></span>
+        <span class="order_date__item">Не выбран</span>
       </div>
       <div class="order_price">
         <span class="order_price_label">Цена:</span>

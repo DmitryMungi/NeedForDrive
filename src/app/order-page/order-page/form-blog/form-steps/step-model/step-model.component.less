@@ -1,0 +1,132 @@
+@import "../../../../../../common-styles/text.less";
+@import "../../../../../../common-styles/variables.less";
+
+:host {
+  overflow: hidden;
+  overflow-y: auto;
+
+  // scrollbar-width: thin;
+  // scrollbar-color: #e3e4e5 #f1f3f4;
+}
+// :host::-webkit-scrollbar {
+//   background: #f1f3f4;
+//   width: 8px;
+// }
+// :host::-webkit-scrollbar-thumb {
+//   background: #e3e4e5;
+// }
+// /*firefox*/
+// .order_page__container {
+
+// }
+
+input[type="radio"] {
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  position: relative;
+  height: 22px;
+  width: 22px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+}
+
+input[type="radio"]::before {
+  content: "";
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid @color-grey;
+}
+
+input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 3px solid @color-green;
+  transform: translate(-50%, -50%);
+  visibility: visible;
+}
+
+input[type="radio"]:checked ~ span.sort-radio__label {
+  color: @color-black;
+}
+
+.model_sort__wrapp {
+  padding: 32px 0 48px;
+
+  .sort-radio {
+    margin-right: 16px;
+    &__input {
+      margin-right: 6px;
+    }
+
+    &__label {
+      font-family: "Roboto-Light";
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 120%;
+      color: @color-grey;
+    }
+
+    // .sort-radio__input:checked > .sort-radio__label {
+
+    // }
+  }
+}
+
+.car_list {
+  display: flex;
+  flex-wrap: wrap;
+  &__card {
+    padding: 16px;
+    border: 1px solid @color-grey-light;
+    font-family: "Roboto";
+    font-weight: 400;
+
+    line-height: 120%;
+    cursor: pointer;
+
+    &:hover {
+      border-color: @color-grey;
+    }
+
+    &:focus {
+      border-color: @color-green;
+    }
+
+    .card-model {
+      font-size: 18px;
+      color: @color-black;
+    }
+
+    .card-price {
+      font-size: 14px;
+      margin-bottom: 36px;
+    }
+
+    .card-img {
+      margin-left: 80px;
+    }
+  }
+
+  &__card.active {
+    border-color: @color-green;
+  }
+}
+
+.form_group__input-modal {
+  display: none;
+}

@@ -1,10 +1,54 @@
-<label class="form_group__label label_form"> Модель </label>
+<div class="model_sort__wrapp">
+  <span class="sort-radio">
+    <input
+      type="radio"
+      class="sort-radio__input"
+      name="model-sort"
+      value="Все модели"
+    />
+    <span class="sort-radio__label">Все модели </span>
+  </span>
+
+  <span class="sort-radio">
+    <input
+      type="radio"
+      class="sort-radio__input"
+      name="model-sort"
+      value="Эконом"
+    />
+    <span class="sort-radio__label">Эконом</span>
+  </span>
+
+  <span class="sort-radio">
+    <input
+      type="radio"
+      class="sort-radio__input"
+      name="model-sort"
+      value="Премиум"
+    />
+    <span class="sort-radio__label">Премиум</span>
+  </span>
+</div>
+<div class="car_list">
+  <div
+    *ngFor="let car of carList; let i = index"
+    (click)="onCardClick(i, car.model)"
+    class="car_list__card"
+    [class.active]="car.checked"
+  >
+    <div class="card-model">{{ car.model }}</div>
+    <div class="card-price gray-text">
+      {{ car.priceRange }}
+    </div>
+    <img class="card-img" [src]="car.img" alt="" />
+  </div>
+</div>
 <input
-  class="form_group__input"
+  id="model"
+  class="form_group__input-modal"
   name="model"
-  placeholder="Начните вводить пункт ..."
-  [(ngModel)]="model"
-  value="model"
+  [(ngModel)]="checkedModel"
+  value="checkedModel"
   ngModel
   required
 />
