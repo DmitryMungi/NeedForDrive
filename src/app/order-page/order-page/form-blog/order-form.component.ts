@@ -1,23 +1,22 @@
 import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { activeStepEnum } from "./order-form.interface";
 
-export enum activeStepEnum {
-  step1,
-  step2,
-  step3,
-  step4,
-}
+const TEXTBTN1 = "Выбрать модель";
+const TEXTBTN2 = "Дополнительно";
+const TEXTBTN3 = "Итого";
+const TEXTBTN4 = "Заказать";
 
 @Component({
-  selector: "app-form-blog",
-  templateUrl: "./form-blog.component.html",
-  styleUrls: ["./form-blog.component.less"],
+  selector: "app-order-form",
+  templateUrl: "./order-form.component.html",
+  styleUrls: ["./order-form.component.less"],
 })
-export class FormBlogComponent {
+export class OrderFormComponent {
   public activeStep: activeStepEnum = activeStepEnum.step1;
   public activeStepEnum = activeStepEnum;
 
-  public textBtn: string = "Выбрать модель";
+  public textBtn = TEXTBTN1;
   public cityValue: string = "";
   public addressValue: string = "";
 
@@ -27,22 +26,36 @@ export class FormBlogComponent {
 
   toStep1(): void {
     this.activeStep = activeStepEnum.step1;
-    this.textBtn = "Выбрать модель";
+    console.log(this.activeStep);
+    this.setTextBtn();
   }
 
   toStep2(): void {
     this.activeStep = activeStepEnum.step2;
-    this.textBtn = "Дополнительно";
+    console.log(this.activeStep, this.textBtn);
+    this.setTextBtn();
   }
 
   toStep3(): void {
     this.activeStep = activeStepEnum.step3;
-    this.textBtn = "Итого";
+    this.setTextBtn();
   }
 
   toStep4(): void {
     this.activeStep = activeStepEnum.step4;
-    this.textBtn = "Заказать";
+    this.setTextBtn();
+  }
+
+  setTextBtn() {
+    if (this.activeStep === activeStepEnum.step1) {
+      this.textBtn = TEXTBTN1;
+    } else if (this.activeStep === activeStepEnum.step2) {
+      this.textBtn = TEXTBTN2;
+    } else if (this.activeStep === activeStepEnum.step3) {
+      this.textBtn = TEXTBTN3;
+    } else if (this.activeStep === activeStepEnum.step4) {
+      this.textBtn = TEXTBTN4;
+    }
   }
 
   setCityValue(city: string, form: NgForm): void {

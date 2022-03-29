@@ -4,7 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { OrderPageComponent } from "./order-page/order-page.component";
 import { OrderPageRoutingModule } from "./order-page.routing.module";
 import { StartPageModule } from "../start-page/start-page.module";
-import { FormBlogComponent } from "./order-page/form-blog/form-blog.component";
+import { OrderFormComponent } from "./order-page/form-blog/order-form.component";
 import { ButtonModule } from "../button/button.module";
 import { StepLocationComponent } from "./order-page/form-blog/form-steps/step-location/step-location.component";
 import { StepModelComponent } from "./order-page/form-blog/form-steps/step-model/step-model.component";
@@ -15,7 +15,7 @@ import { StepFinalComponent } from "./order-page/form-blog/form-steps/step-final
 @NgModule({
   declarations: [
     OrderPageComponent,
-    FormBlogComponent,
+    OrderFormComponent,
     StepLocationComponent,
     StepModelComponent,
     StepAdditComponent,
