@@ -1,11 +1,12 @@
 import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import { activeStepEnum } from "./order-form.interface";
-
-const TEXTBTN1 = "Выбрать модель";
-const TEXTBTN2 = "Дополнительно";
-const TEXTBTN3 = "Итого";
-const TEXTBTN4 = "Заказать";
+import {
+  activeStepEnum,
+  TEXTBTN1,
+  TEXTBTN2,
+  TEXTBTN3,
+  TEXTBTN4,
+} from "./order-form.interface";
 
 @Component({
   selector: "app-order-form",
@@ -15,47 +16,29 @@ const TEXTBTN4 = "Заказать";
 export class OrderFormComponent {
   public activeStep: activeStepEnum = activeStepEnum.step1;
   public activeStepEnum = activeStepEnum;
-
-  public textBtn = TEXTBTN1;
   public cityValue: string = "";
   public addressValue: string = "";
-
   public addressValid: boolean = false;
 
+  public get textBtn() {
+    return getTextBtn(this.activeStep);
+  }
   constructor() {}
 
   toStep1(): void {
     this.activeStep = activeStepEnum.step1;
-    console.log(this.activeStep);
-    this.setTextBtn();
   }
 
   toStep2(): void {
     this.activeStep = activeStepEnum.step2;
-    console.log(this.activeStep, this.textBtn);
-    this.setTextBtn();
   }
 
   toStep3(): void {
     this.activeStep = activeStepEnum.step3;
-    this.setTextBtn();
   }
 
   toStep4(): void {
     this.activeStep = activeStepEnum.step4;
-    this.setTextBtn();
-  }
-
-  setTextBtn() {
-    if (this.activeStep === activeStepEnum.step1) {
-      this.textBtn = TEXTBTN1;
-    } else if (this.activeStep === activeStepEnum.step2) {
-      this.textBtn = TEXTBTN2;
-    } else if (this.activeStep === activeStepEnum.step3) {
-      this.textBtn = TEXTBTN3;
-    } else if (this.activeStep === activeStepEnum.step4) {
-      this.textBtn = TEXTBTN4;
-    }
   }
 
   setCityValue(city: string, form: NgForm): void {
@@ -80,5 +63,20 @@ export class OrderFormComponent {
     } else if (this.activeStep === activeStepEnum.step2) {
       this.toStep3();
     }
+  }
+}
+
+function getTextBtn(item: number) {
+  switch (item) {
+    case 0:
+      return TEXTBTN1;
+    case 1:
+      return TEXTBTN2;
+    case 2:
+      return TEXTBTN3;
+    case 3:
+      return TEXTBTN4;
+    default:
+      return "Далее";
   }
 }
