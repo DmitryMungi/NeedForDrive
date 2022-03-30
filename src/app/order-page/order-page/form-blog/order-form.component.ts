@@ -68,13 +68,13 @@ export class OrderFormComponent {
 
 function getTextBtn(item: number) {
   switch (item) {
-    case 0:
+    case activeStepEnum.step1:
       return TEXTBTN1;
-    case 1:
+    case activeStepEnum.step2:
       return TEXTBTN2;
-    case 2:
+    case activeStepEnum.step3:
       return TEXTBTN3;
-    case 3:
+    case activeStepEnum.step4:
       return TEXTBTN4;
     default:
       return "Далее";
