@@ -1,5 +1,4 @@
 import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
 import { CommonModule } from "@angular/common";
 import { StartPageComponent } from "./start-page/start-page.component";
 import { MainComponent } from "./main/main.component";
@@ -22,13 +21,7 @@ import { StartPageRoutingModule } from "./start-page.routing.module";
     SideBarComponent,
     SelectLangComponent,
   ],
-  imports: [
-    CommonModule,
-    // BrowserModule,
-    ButtonModule,
-    CarouselModule,
-    StartPageRoutingModule,
-  ],
+  imports: [CommonModule, ButtonModule, CarouselModule, StartPageRoutingModule],
   exports: [
     StartPageComponent,
     HeaderComponent,

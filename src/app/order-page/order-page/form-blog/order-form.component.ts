@@ -1,48 +1,44 @@
 import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
-
-export enum activeStepEnum {
-  step1,
-  step2,
-  step3,
-  step4,
-}
+import {
+  activeStepEnum,
+  TEXTBTN1,
+  TEXTBTN2,
+  TEXTBTN3,
+  TEXTBTN4,
+} from "./order-form.interface";
 
 @Component({
-  selector: "app-form-blog",
-  templateUrl: "./form-blog.component.html",
-  styleUrls: ["./form-blog.component.less"],
+  selector: "app-order-form",
+  templateUrl: "./order-form.component.html",
+  styleUrls: ["./order-form.component.less"],
 })
-export class FormBlogComponent {
+export class OrderFormComponent {
   public activeStep: activeStepEnum = activeStepEnum.step1;
   public activeStepEnum = activeStepEnum;
-
-  public textBtn: string = "Выбрать модель";
   public cityValue: string = "";
   public addressValue: string = "";
-
   public addressValid: boolean = false;
 
+  public get textBtn() {
+    return getTextBtn(this.activeStep);
+  }
   constructor() {}
 
   toStep1(): void {
     this.activeStep = activeStepEnum.step1;
-    this.textBtn = "Выбрать модель";
   }
 
   toStep2(): void {
     this.activeStep = activeStepEnum.step2;
-    this.textBtn = "Дополнительно";
   }
 
   toStep3(): void {
     this.activeStep = activeStepEnum.step3;
-    this.textBtn = "Итого";
   }
 
   toStep4(): void {
     this.activeStep = activeStepEnum.step4;
-    this.textBtn = "Заказать";
   }
 
   setCityValue(city: string, form: NgForm): void {
@@ -67,5 +63,20 @@ export class FormBlogComponent {
     } else if (this.activeStep === activeStepEnum.step2) {
       this.toStep3();
     }
+  }
+}
+
+function getTextBtn(item: number) {
+  switch (item) {
+    case activeStepEnum.step1:
+      return TEXTBTN1;
+    case activeStepEnum.step2:
+      return TEXTBTN2;
+    case activeStepEnum.step3:
+      return TEXTBTN3;
+    case activeStepEnum.step4:
+      return TEXTBTN4;
+    default:
+      return "Далее";
   }
 }
