@@ -30,5 +30,8 @@
   <symbol id="arow-right" viewBox="0 0 10 20">
     <path d="M1 1L9 10L1 19" stroke="#EEEEEE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </symbol>
+  <symbol id="triangle" viewBox="0 0 6 8" >
+    <path d="M0 0L6 4.03L0 8V0Z" fill="#999999"/>
+  </symbol>
 </defs>
 </svg>

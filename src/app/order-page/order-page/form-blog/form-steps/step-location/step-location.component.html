@@ -1,0 +1,35 @@
+<div class="inputs__wrapp">
+  <div class="form_group">
+    <label class="form_group__label label_form"> Город </label>
+    <input
+      id="search-city"
+      class="form_group__input"
+      name="city"
+      placeholder="Начните вводить пункт ..."
+      [(ngModel)]="city"
+      (change)="getValueCity()"
+      value="city"
+      ngModel
+      required
+    />
+  </div>
+  <div class="form_group">
+    <label class="form_group__label label_form" for=""> Пункт выдачи</label>
+    <input
+      id="sarch-address"
+      class="form_group__input"
+      name="address"
+      placeholder="Начните вводить пункт ..."
+      [(ngModel)]="address"
+      (change)="getValueAddress()"
+      value="address"
+      ngModel
+      required
+    />
+  </div>
+</div>
+
+<div class="map__wrapp">
+  <div class="label_form map__label" for="">Выбрать на карте:</div>
+  <img class="map_img" src="../../../../../../assets/img/map-img.jpg" alt="" />
+</div>
