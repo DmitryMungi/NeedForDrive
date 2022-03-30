@@ -13,7 +13,6 @@
         <use xlink:href="assets/sprite/symbol-defs.svg#triangle"></use>
       </svg>
     </span>
-    <!-- disabled: !addressValid -->
     <a
       (click)="toStep2()"
       [ngClass]="{
@@ -32,6 +31,7 @@
       (click)="toStep3()"
       class="steps_nav__link"
       [ngClass]="{
+        active: activeStep === activeStepEnum.step3,
         disabled: true
       }"
       >Дополнительно</a
