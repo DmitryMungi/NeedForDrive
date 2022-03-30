@@ -4,21 +4,7 @@
 :host {
   overflow: hidden;
   overflow-y: auto;
-
-  // scrollbar-width: thin;
-  // scrollbar-color: #e3e4e5 #f1f3f4;
 }
-// :host::-webkit-scrollbar {
-//   background: #f1f3f4;
-//   width: 8px;
-// }
-// :host::-webkit-scrollbar-thumb {
-//   background: #e3e4e5;
-// }
-// /*firefox*/
-// .order_page__container {
-
-// }
 
 input[type="radio"] {
   cursor: pointer;
@@ -69,6 +55,8 @@ input[type="radio"]:checked ~ span.sort-radio__label {
 
   .sort-radio {
     margin-right: 16px;
+    display: inline-block;
+
     &__input {
       margin-right: 6px;
     }
@@ -80,10 +68,6 @@ input[type="radio"]:checked ~ span.sort-radio__label {
       line-height: 120%;
       color: @color-grey;
     }
-
-    // .sort-radio__input:checked > .sort-radio__label {
-
-    // }
   }
 }
 
@@ -129,4 +113,15 @@ input[type="radio"]:checked ~ span.sort-radio__label {
 
 .form_group__input-modal {
   display: none;
+}
+
+@media (max-width: 1300px) {
+  .car_list {
+    &__card {
+      .card-img {
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+  }
 }

@@ -8,7 +8,6 @@
 .order_page__container::-webkit-scrollbar-thumb {
   background: #e3e4e5;
 }
-/*firefox*/
 .order_page__container {
   scrollbar-width: thin;
   scrollbar-color: #e3e4e5 #f1f3f4;
@@ -20,7 +19,6 @@
 .order_page__container {
   height: calc(100% - 139px);
   display: flex;
-
   overflow: hidden;
   overflow-y: auto;
 }
@@ -63,6 +61,9 @@
 
   .order-form {
     width: 100%;
+    min-height: 100%;
+    border-right: 1px solid @color-grey-light;
+    padding-right: 16px;
   }
 }
 
@@ -71,7 +72,6 @@
 }
 
 .order-info {
-  border-left: 1px solid @color-grey-light;
   padding: 32px 0 0 32px;
   width: 100%;
   height: 100%;
@@ -147,6 +147,11 @@
     height: auto;
     .order-steps_wrapp {
       width: 100%;
+
+      .order-form {
+        border-right: none;
+        padding-right: 0;
+      }
     }
   }
 

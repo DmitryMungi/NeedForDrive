@@ -8,6 +8,10 @@ import {
   TEXTBTN4,
 } from "./order-form.interface";
 
+import { CarInterface } from "./form-steps/step-model/carsList.const";
+
+const STARTPRICE = "8 000 до 12 000 ₽";
+
 @Component({
   selector: "app-order-form",
   templateUrl: "./order-form.component.html",
@@ -16,9 +20,17 @@ import {
 export class OrderFormComponent {
   public activeStep: activeStepEnum = activeStepEnum.step1;
   public activeStepEnum = activeStepEnum;
+
+  public checkedCar?: CarInterface;
+
+  public priceRance: string = STARTPRICE;
   public cityValue: string = "";
   public addressValue: string = "";
+  public modelValue: string = "";
+  public brandValue: string = "";
+
   public addressValid: boolean = false;
+  public modelValid: boolean = false;
 
   public get textBtn() {
     return getTextBtn(this.activeStep);
@@ -63,6 +75,14 @@ export class OrderFormComponent {
     } else if (this.activeStep === activeStepEnum.step2) {
       this.toStep3();
     }
+  }
+
+  selectedCar(car: CarInterface) {
+    this.modelValue = car.model;
+    this.brandValue = car.brand;
+    this.checkedCar = car;
+    this.priceRance = car.priceRange;
+    this.modelValid = true;
   }
 }
 

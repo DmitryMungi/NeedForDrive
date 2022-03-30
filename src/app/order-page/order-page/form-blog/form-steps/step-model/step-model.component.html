@@ -1,38 +1,21 @@
 <div class="model_sort__wrapp">
-  <span class="sort-radio">
+  <div class="sort-radio" *ngFor="let t of radioToggles">
     <input
       type="radio"
       class="sort-radio__input"
       name="model-sort"
-      value="Все модели"
+      [value]="t.value"
+      (change)="filter(t)"
+      [checked]="t.checked"
     />
-    <span class="sort-radio__label">Все модели </span>
-  </span>
-
-  <span class="sort-radio">
-    <input
-      type="radio"
-      class="sort-radio__input"
-      name="model-sort"
-      value="Эконом"
-    />
-    <span class="sort-radio__label">Эконом</span>
-  </span>
-
-  <span class="sort-radio">
-    <input
-      type="radio"
-      class="sort-radio__input"
-      name="model-sort"
-      value="Премиум"
-    />
-    <span class="sort-radio__label">Премиум</span>
-  </span>
+    <span class="sort-radio__label">{{ t.value }} </span>
+  </div>
 </div>
+
 <div class="car_list">
   <div
-    *ngFor="let car of carList; let i = index"
-    (click)="onCardClick(i, car.model)"
+    *ngFor="let car of filterCarList"
+    (click)="onCardClick(car)"
     class="car_list__card"
     [class.active]="car.checked"
   >

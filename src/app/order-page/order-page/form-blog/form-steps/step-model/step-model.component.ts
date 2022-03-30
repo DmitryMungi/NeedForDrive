@@ -1,19 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { ControlContainer, NgForm } from "@angular/forms";
-
-export interface CarInterface {
-  id: number;
-  model: string;
-
-  priceRange: string;
-  img: string;
-  colors?: {
-    color: string;
-  };
-  steering?: string;
-  class: string;
-  checked: boolean;
-}
+import { ActivatedRoute, Router } from "@angular/router";
+import { cars, CarInterface, Toggle, toggles } from "./carsList.const";
 
 @Component({
   selector: "app-step-model",
@@ -21,83 +9,50 @@ export interface CarInterface {
   styleUrls: ["./step-model.component.less"],
   viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
 })
-export class StepModelComponent {
-  public carList: CarInterface[] = [
-    {
-      id: 1,
-      model: "ELANTRA",
-      priceRange: "12 000 - 25 000 ₽",
-      img: "../../../assets/img/car-1.jpg",
-      class: "economy",
-      checked: false,
-    },
-    {
-      id: 2,
-      model: "i30 N",
-      priceRange: "10 000 - 32 000 ₽",
-      img: "../../../assets/img/car-2.jpg",
-      class: "economy",
-      checked: false,
-    },
-    {
-      id: 3,
-      model: "CRETA",
-      priceRange: "12 000 - 25 000 ₽",
-      img: "../../../assets/img/car-3.jpg",
-      class: "premium",
-      checked: false,
-    },
-    {
-      id: 4,
-      model: "SONATA",
-      priceRange: "10 000 - 32 000 ₽",
-      img: "../../../assets/img/car-4.jpg",
-      class: "premium",
-      checked: false,
-    },
-    {
-      id: 5,
-      model: "ELANTRA",
-      priceRange: "12 000 - 25 000 ₽",
-      img: "../../../assets/img/car-1.jpg",
-      class: "economy",
-      checked: false,
-    },
-    {
-      id: 6,
-      model: "i30 N",
-      priceRange: "10 000 - 32 000 ₽",
-      img: "../../../assets/img/car-2.jpg",
-      class: "economy",
-      checked: false,
-    },
-    {
-      id: 7,
-      model: "CRETA",
-      priceRange: "12 000 - 25 000 ₽",
-      img: "../../../assets/img/car-3.jpg",
-      class: "premium",
-      checked: false,
-    },
-    {
-      id: 8,
-      model: "SONATA",
-      priceRange: "10 000 - 32 000 ₽",
-      img: "../../../assets/img/car-4.jpg",
-      class: "premium",
-      checked: false,
-    },
-  ];
-  public model: string | undefined; // пока не используется
+export class StepModelComponent implements OnInit {
+  @Output() selectCar = new EventEmitter<CarInterface>();
 
+  public carList: CarInterface[] = cars;
+  public filterCarList: CarInterface[] = [];
+  public radioToggles: Toggle[] = toggles;
   public checkedModel?: string;
-  constructor() {}
 
-  onCardClick(index: number, model: string): void {
-    this.carList.map(
-      (item: CarInterface, i: number) => (item.checked = i === index)
-    );
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
-    this.checkedModel = model;
+  ngOnInit(): void {
+    this.filterCarList = this.carList;
+  }
+
+  onCardClick(car: CarInterface): void {
+    this.carList.forEach((i) => (i.checked = false));
+    car.checked = true;
+    this.selectCar.emit(car);
+
+    this.checkedModel = car.model;
+  }
+
+  filter(item: any) {
+    this.radioToggles.forEach((i) => (i.checked = false));
+    item.checked = true;
+
+    switch (item.label) {
+      case 0:
+        this.filterCarList = this.carList;
+        break;
+      case 1:
+        this.filterCarList = this.carList.filter((x) => x.class === "economy");
+        break;
+      case 2:
+        this.filterCarList = this.carList.filter((x) => x.class === "premium");
+        break;
+      default:
+        this.filterCarList = this.carList;
+        break;
+    }
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { filter: item.label },
+    });
   }
 }

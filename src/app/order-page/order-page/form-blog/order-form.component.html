@@ -62,6 +62,7 @@
       ></app-step-location>
 
       <app-step-model
+        (selectCar)="selectedCar($event)"
         *ngIf="activeStep === activeStepEnum.step2"
       ></app-step-model>
     </form>
@@ -84,11 +85,17 @@
       <div *ngIf="addressValid" class="order_date">
         <span class="order_date__label">Модель</span>
         <span class="dote-border"></span>
-        <span class="order_date__item">Не выбран</span>
+        <span *ngIf="modelValid; else nonmodel" class="order_date__item">
+          <span>{{ brandValue }},</span>
+          <span>{{ modelValue }}</span>
+        </span>
+        <ng-template #nonmodel>
+          <span class="order_date__item">Не выбран</span>
+        </ng-template>
       </div>
       <div class="order_price">
         <span class="order_price_label">Цена:</span>
-        <span class="order_price_range">от 8 000 до 12 000 ₽</span>
+        <span class="order_price_range">от {{ priceRance }}</span>
       </div>
       <app-button
         (click)="toNextStep()"
