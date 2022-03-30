@@ -20,6 +20,12 @@
   border-radius: 4px;
 }
 
+.max-size {
+  padding: 15px 30px 11px;
+  width: 100%;
+  border-radius: 8px;
+}
+
 .default {
   background: none;
   cursor: default;
@@ -86,6 +92,14 @@
 
   &:active {
     background: @gradient-purple-20;
+  }
+}
+
+.disabled {
+  background: @color-grey-light;
+  cursor: not-allowed;
+  &:hover {
+    background: @color-grey-light;
   }
 }
 

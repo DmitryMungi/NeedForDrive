@@ -3,6 +3,9 @@
   [class.accept]="color === 'accept'"
   [class.large-size]="size === 'large'"
   [class.medium-size]="size === 'medium'"
+  [class.max-size]="size === 'max'"
+  [class.disabled]="isDisabled"
+  [attr.disabled]="isDisabled ? '' : null"
   [class]="theme"
 >
   {{ text }}
