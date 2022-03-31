@@ -1,3 +1,7 @@
+export const LABEL0 = 0;
+export const LABEL1 = 1;
+export const LABEL2 = 2;
+
 export interface CarInterface {
   id: number;
   model: string;
@@ -19,9 +23,9 @@ export interface Toggle {
 }
 
 export const toggles: Toggle[] = [
-  { value: "Все модели", label: 0, checked: true },
-  { value: "Эконом", label: 1, checked: false },
-  { value: "Премиум", label: 2, checked: false },
+  { value: "Все модели", label: LABEL0, checked: true },
+  { value: "Эконом", label: LABEL1, checked: false },
+  { value: "Премиум", label: LABEL2, checked: false },
 ];
 
 export const cars: CarInterface[] = [

@@ -29,6 +29,16 @@
   border-top: 1px solid @color-grey-light;
   border-bottom: 1px solid @color-grey-light;
 
+  .steps-title_wrapp {
+    display: inline-block;
+
+    &:last-child {
+      .triangle__icon {
+        display: none;
+      }
+    }
+  }
+
   &__link {
     font-family: "Roboto-Bold";
     font-size: 14px;
@@ -69,6 +79,8 @@
 
 .order-info_wrapp {
   width: 30%;
+  position: sticky;
+  top: 0;
 }
 
 .order-info {
@@ -99,6 +111,9 @@
       padding-left: 8px;
       right: 0;
       color: @color-grey;
+    }
+
+    &__item.column-item {
       display: flex;
       flex-direction: column;
       align-items: flex-end;

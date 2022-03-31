@@ -1,7 +1,15 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 import { ControlContainer, NgForm } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { cars, CarInterface, Toggle, toggles } from "./carsList.const";
+import {
+  cars,
+  CarInterface,
+  Toggle,
+  toggles,
+  LABEL0,
+  LABEL1,
+  LABEL2,
+} from "./carsList.const";
 
 @Component({
   selector: "app-step-model",
@@ -10,6 +18,7 @@ import { cars, CarInterface, Toggle, toggles } from "./carsList.const";
   viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
 })
 export class StepModelComponent implements OnInit {
+  @Input() carModel?: string;
   @Output() selectCar = new EventEmitter<CarInterface>();
 
   public carList: CarInterface[] = cars;
@@ -21,28 +30,29 @@ export class StepModelComponent implements OnInit {
 
   ngOnInit(): void {
     this.filterCarList = this.carList;
+    this.filter(this.radioToggles[0]);
   }
 
   onCardClick(car: CarInterface): void {
-    this.carList.forEach((i) => (i.checked = false));
+    this.removeChecked(this.carList);
     car.checked = true;
     this.selectCar.emit(car);
 
     this.checkedModel = car.model;
   }
 
-  filter(item: any) {
-    this.radioToggles.forEach((i) => (i.checked = false));
+  filter(item: Toggle) {
+    this.removeChecked(this.radioToggles);
     item.checked = true;
 
     switch (item.label) {
-      case 0:
+      case LABEL0:
         this.filterCarList = this.carList;
         break;
-      case 1:
+      case LABEL1:
         this.filterCarList = this.carList.filter((x) => x.class === "economy");
         break;
-      case 2:
+      case LABEL2:
         this.filterCarList = this.carList.filter((x) => x.class === "premium");
         break;
       default:
@@ -54,5 +64,9 @@ export class StepModelComponent implements OnInit {
       relativeTo: this.route,
       queryParams: { filter: item.label },
     });
+  }
+
+  removeChecked(array: CarInterface[] | Toggle[]) {
+    array.forEach((i) => (i.checked = false));
   }
 }

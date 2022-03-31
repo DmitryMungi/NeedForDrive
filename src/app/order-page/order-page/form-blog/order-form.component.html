@@ -2,51 +2,20 @@
 
 <nav class="steps_nav">
   <div class="container">
-    <a
-      (click)="toStep1()"
-      [ngClass]="{ active: activeStep === activeStepEnum.step1 }"
-      class="steps_nav__link"
-      >Местоположение</a
-    >
-    <span>
+    <div class="steps-title_wrapp" *ngFor="let title of pageStepsTitles">
+      <a
+        [ngClass]="{
+          active: activeStep === title.step,
+          disabled: !title.isValid
+        }"
+        (click)="toStep(title)"
+        class="steps_nav__link"
+        >{{ title.title }}</a
+      >
       <svg class="triangle__icon">
         <use xlink:href="assets/sprite/symbol-defs.svg#triangle"></use>
       </svg>
-    </span>
-    <a
-      (click)="toStep2()"
-      [ngClass]="{
-        active: activeStep === activeStepEnum.step2,
-        disabled: !addressValid
-      }"
-      class="steps_nav__link"
-      >Модель</a
-    >
-    <span>
-      <svg class="triangle__icon">
-        <use xlink:href="assets/sprite/symbol-defs.svg#triangle"></use>
-      </svg>
-    </span>
-    <a
-      (click)="toStep3()"
-      class="steps_nav__link"
-      [ngClass]="{
-        active: activeStep === activeStepEnum.step3,
-        disabled: true
-      }"
-      >Дополнительно</a
-    >
-    <span>
-      <svg class="triangle__icon">
-        <use xlink:href="assets/sprite/symbol-defs.svg#triangle"></use>
-      </svg>
-    </span>
-    <a
-      (click)="toStep4()"
-      class="steps_nav__link"
-      [ngClass]="{ disabled: true }"
-      >Итого</a
-    >
+    </div>
   </div>
 </nav>
 
@@ -62,9 +31,13 @@
       ></app-step-location>
 
       <app-step-model
+        [carModel]="checkedCar?.model"
         (selectCar)="selectedCar($event)"
         *ngIf="activeStep === activeStepEnum.step2"
       ></app-step-model>
+      <app-step-addit
+        *ngIf="activeStep === activeStepEnum.step3"
+      ></app-step-addit>
     </form>
   </div>
 
@@ -74,7 +47,10 @@
       <div class="order_date">
         <span class="order_date__label">Пункт выдачи</span>
         <span class="dote-border"></span>
-        <span *ngIf="addressValid; else nonaddress" class="order_date__item">
+        <span
+          *ngIf="addressValid; else nonaddress"
+          class="order_date__item column-item"
+        >
           <span>{{ cityValue }},</span>
           <span>{{ addressValue }}</span>
         </span>
@@ -86,8 +62,7 @@
         <span class="order_date__label">Модель</span>
         <span class="dote-border"></span>
         <span *ngIf="modelValid; else nonmodel" class="order_date__item">
-          <span>{{ brandValue }},</span>
-          <span>{{ modelValue }}</span>
+          <span>{{ checkedCar?.brand }}, {{ checkedCar?.model }}</span>
         </span>
         <ng-template #nonmodel>
           <span class="order_date__item">Не выбран</span>
