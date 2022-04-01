@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+import { AngularYandexMapsModule } from "angular8-yandex-maps";
 import { OrderPageComponent } from "./order-page/order-page.component";
 import { OrderPageRoutingModule } from "./order-page.routing.module";
 import { StartPageModule } from "../start-page/start-page.module";
@@ -30,6 +31,7 @@ import { OrderInfoComponent } from "./order-page/form-blog/order-info/order-info
     StartPageModule,
     ButtonModule,
     FormsModule,
+    AngularYandexMapsModule,
   ],
 })
 export class OrderPageModule {}

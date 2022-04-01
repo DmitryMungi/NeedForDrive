@@ -31,5 +31,11 @@
 
 <div class="map__wrapp">
   <div class="label_form map__label" for="">Выбрать на карте:</div>
-  <img class="map_img" src="../../../../../../assets/img/map-img.jpg" alt="" />
+  <!-- <img class="map_img" src="../../../../../../assets/img/map-img.jpg" alt="" /> -->
+  <div class="map-container">
+    <ya-map [center]="cityList.geometry" [zoom]="12">
+      <ya-placemark [geometry]="[55.817866, 37.952644]"></ya-placemark>
+    </ya-map>
+  </div>
 </div>
+<!-- [center]="[55.751952, 37.600739]" -->

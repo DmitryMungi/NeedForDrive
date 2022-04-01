@@ -3,8 +3,11 @@ import { ControlContainer, NgForm } from "@angular/forms";
 
 export interface Branches {
   city: string;
-  address: string[];
+  geometry: number[];
+  address?: Address;
 }
+
+export interface Address {}
 
 @Component({
   selector: "app-step-location",
@@ -20,6 +23,14 @@ export class StepLocationComponent implements OnInit {
 
   public city: string | undefined;
   public address: string | undefined;
+
+  public cityList: Branches = {
+    city: "Москва",
+    geometry: [55.817866, 37.952644],
+    // 1: 55.817866,
+    // 2: 37.952644,
+    // },
+  };
 
   constructor() {}
 
