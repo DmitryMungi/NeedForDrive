@@ -11,6 +11,7 @@ import { StepModelComponent } from "./order-page/form-blog/form-steps/step-model
 import { StepAdditComponent } from "./order-page/form-blog/form-steps/step-addit/step-addit.component";
 import { StepConfirmComponent } from "./order-page/form-blog/form-steps/step-confirm/step-confirm.component";
 import { StepFinalComponent } from "./order-page/form-blog/form-steps/step-final/step-final.component";
+import { OrderInfoComponent } from "./order-page/form-blog/order-info/order-info.component";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { StepFinalComponent } from "./order-page/form-blog/form-steps/step-final
     StepAdditComponent,
     StepConfirmComponent,
     StepFinalComponent,
+    OrderInfoComponent,
   ],
   imports: [
     CommonModule,
