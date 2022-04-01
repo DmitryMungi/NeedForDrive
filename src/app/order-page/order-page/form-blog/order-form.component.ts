@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { activeStepEnum, PageSteps, pageTitles } from "./order-form.interface";
 
@@ -11,7 +11,7 @@ const STARTPRICE = "8 000 до 12 000 ₽";
   templateUrl: "./order-form.component.html",
   styleUrls: ["./order-form.component.less"],
 })
-export class OrderFormComponent {
+export class OrderFormComponent implements OnInit {
   public pageStepsTitles: PageSteps[] = pageTitles;
   public activeStep: activeStepEnum = activeStepEnum.step1;
   public activeStepEnum = activeStepEnum;
@@ -25,6 +25,11 @@ export class OrderFormComponent {
   public modelValid: boolean = false;
 
   constructor() {}
+
+  ngOnInit(): void {
+    this.pageStepsTitles.forEach((i) => (i.isValid = false));
+    this.pageStepsTitles[0].isValid = true;
+  }
 
   setCityValue(city: string, form: NgForm): void {
     this.cityValue = city;
