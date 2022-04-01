@@ -1,14 +1,6 @@
 import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import {
-  activeStepEnum,
-  TEXTBTN1,
-  TEXTBTN2,
-  TEXTBTN3,
-  TEXTBTN4,
-  PageSteps,
-  pageTitles,
-} from "./order-form.interface";
+import { activeStepEnum, PageSteps, pageTitles } from "./order-form.interface";
 
 import { CarInterface } from "./form-steps/step-model/carsList.const";
 
@@ -27,14 +19,11 @@ export class OrderFormComponent {
   public cityValue: string = "";
   public addressValue: string = "";
   public checkedCar?: CarInterface;
-  public priceRance: string = STARTPRICE;
+  public priceRange: string = STARTPRICE;
 
   public addressValid: boolean = false;
   public modelValid: boolean = false;
 
-  public get textBtn() {
-    return getTextBtn(this.activeStep);
-  }
   constructor() {}
 
   setCityValue(city: string, form: NgForm): void {
@@ -67,23 +56,8 @@ export class OrderFormComponent {
 
   selectedCar(car: CarInterface) {
     this.checkedCar = car;
-    this.priceRance = car.priceRange;
+    this.priceRange = car.priceRange;
     this.modelValid = true;
     this.pageStepsTitles[2].isValid = true;
-  }
-}
-
-function getTextBtn(item: number) {
-  switch (item) {
-    case activeStepEnum.step1:
-      return TEXTBTN1;
-    case activeStepEnum.step2:
-      return TEXTBTN2;
-    case activeStepEnum.step3:
-      return TEXTBTN3;
-    case activeStepEnum.step4:
-      return TEXTBTN4;
-    default:
-      return "Далее";
   }
 }
