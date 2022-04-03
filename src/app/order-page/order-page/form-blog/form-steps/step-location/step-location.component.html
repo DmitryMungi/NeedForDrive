@@ -1,31 +1,93 @@
 <div class="inputs__wrapp">
   <div class="form_group">
     <label class="form_group__label label_form"> Город </label>
-    <input
-      id="search-city"
-      class="form_group__input"
-      name="city"
-      placeholder="Начните вводить пункт ..."
-      [(ngModel)]="city"
-      (change)="getValueCity()"
-      value="city"
-      ngModel
-      required
-    />
+    <div class="form_group__input-wrapp">
+      <input
+        id="search-city"
+        class="form_group__input"
+        autocomplete="off"
+        name="city"
+        placeholder="Начните вводить пункт ..."
+        [(ngModel)]="city"
+        value="city"
+        (change)="getValueCity(city)"
+        ngModel
+        required
+      />
+      <div *ngIf="!cityIsCorrect" class="form_group__no-correct">
+        <div class="no-correct__item">Нет совпадений</div>
+      </div>
+      <div
+        class="form_group__search-box"
+        *ngIf="searchCityResult$ | async as searchCityResult"
+      >
+        <ng-container *ngIf="searchCityResult.length > 0; else notFound">
+          <div
+            class="search-box__item"
+            *ngFor="let result of searchCityResult"
+            (click)="onSearchCityItem(result)"
+          >
+            {{ result.name }}
+          </div>
+        </ng-container>
+        <ng-template #notFound>
+          <div
+            class="search-box__item"
+            *ngFor="let item of cityList"
+            (click)="onSearchCityItem(item)"
+          >
+            {{ item.name }}
+          </div>
+        </ng-template>
+      </div>
+    </div>
   </div>
   <div class="form_group">
-    <label class="form_group__label label_form" for=""> Пункт выдачи</label>
-    <input
-      id="sarch-address"
-      class="form_group__input"
-      name="address"
-      placeholder="Начните вводить пункт ..."
-      [(ngModel)]="address"
-      (change)="getValueAddress()"
-      value="address"
-      ngModel
-      required
-    />
+    <label class="form_group__label label_form" for="">
+      Пункт&nbsp;выдачи</label
+    >
+    <div class="form_group__input-wrapp">
+      <input
+        id="sarch-address"
+        class="form_group__input"
+        name="address"
+        autocomplete="off"
+        placeholder="Начните вводить пункт ..."
+        [(ngModel)]="address"
+        (change)="getValueAddress(address)"
+        value="address"
+        disabled="disabled"
+        ngModel
+        required
+        #inputAddress
+      />
+      <div *ngIf="!addressIsCorrect" class="form_group__no-correct">
+        <div class="no-correct__item">Нет совпадений</div>
+      </div>
+      <div
+        class="form_group__search-box"
+        *ngIf="searchAddressResult$ | async as searchAddressResult"
+      >
+        <ng-container *ngIf="searchAddressResult.length > 0; else notFound">
+          <div
+            class="search-box__item"
+            *ngFor="let result of searchAddressResult"
+            (click)="onSearchAddressItem(result)"
+          >
+            {{ result.name }}
+          </div>
+        </ng-container>
+        <ng-template #notFound>
+          <div
+            class="search-box__item"
+            *ngFor="let item of addressList"
+            (click)="onSearchAddressItem(item)"
+          >
+            {{ item.name }}
+          </div>
+        </ng-template>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -33,9 +95,11 @@
   <div class="label_form map__label" for="">Выбрать на карте:</div>
   <!-- <img class="map_img" src="../../../../../../assets/img/map-img.jpg" alt="" /> -->
   <div class="map-container">
-    <ya-map [center]="cityList.geometry" [zoom]="12">
-      <ya-placemark [geometry]="[55.817866, 37.952644]"></ya-placemark>
+    <ya-map [center]="cityGiometry" [zoom]="15">
+      <ya-placemark
+        *ngFor="let plase of addressList"
+        [geometry]="plase.geometry"
+      ></ya-placemark>
     </ya-map>
   </div>
 </div>
-<!-- [center]="[55.751952, 37.600739]" -->

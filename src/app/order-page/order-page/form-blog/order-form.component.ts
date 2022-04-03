@@ -34,7 +34,7 @@ export class OrderFormComponent implements OnInit {
   setCityValue(city: string, form: NgForm): void {
     this.cityValue = city;
 
-    if (form.valid) {
+    if (form.valid && this.addressValue != "") {
       this.pageStepsTitles[1].isValid = true;
       this.addressValid = true;
     }
@@ -47,7 +47,7 @@ export class OrderFormComponent implements OnInit {
   setAddressValue(address: string, form: NgForm): void {
     this.addressValue = address;
 
-    if (form.valid) {
+    if (form.valid && this.addressValue != "") {
       this.pageStepsTitles[1].isValid = true;
       this.addressValid = true;
     }
