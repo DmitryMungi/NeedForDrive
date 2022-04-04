@@ -8,18 +8,22 @@
         autocomplete="off"
         name="city"
         placeholder="Начните вводить пункт ..."
-        [(ngModel)]="city"
-        value="city"
-        (change)="getValueCity(city)"
+        [(ngModel)]="addressValues.city"
+        value="addressValues.city"
+        (change)="getValuesAddress(addressValues)"
         ngModel
         required
+        #inputCity
       />
-      <div *ngIf="!cityIsCorrect" class="form_group__no-correct">
-        <div class="no-correct__item">Нет совпадений</div>
-      </div>
+      <button (click)="onDeleteValue(inputCity)" class="clear-input__btn">
+        <svg class="close-icon">
+          <use xlink:href="assets/sprite/symbol-defs.svg#close-icon"></use>
+        </svg>
+      </button>
       <div
         class="form_group__search-box"
-        *ngIf="searchCityResult$ | async as searchCityResult"
+        *ngIf="searchCityResult$ | async as searchCityResult; else listArray"
+        #listDropDown
       >
         <ng-container *ngIf="searchCityResult.length > 0; else notFound">
           <div
@@ -40,12 +44,21 @@
           </div>
         </ng-template>
       </div>
+      <ng-template #listArray>
+        <div class="form_group__search-box" #listDropDown>
+          <div
+            class="search-box__item"
+            *ngFor="let item of cityList"
+            (click)="onSearchCityItem(item)"
+          >
+            {{ item.name }}
+          </div>
+        </div>
+      </ng-template>
     </div>
   </div>
   <div class="form_group">
-    <label class="form_group__label label_form" for="">
-      Пункт&nbsp;выдачи</label
-    >
+    <label class="form_group__label label_form" for=""> Пункт выдачи</label>
     <div class="form_group__input-wrapp">
       <input
         id="sarch-address"
@@ -53,20 +66,25 @@
         name="address"
         autocomplete="off"
         placeholder="Начните вводить пункт ..."
-        [(ngModel)]="address"
-        (change)="getValueAddress(address)"
+        [(ngModel)]="addressValues.address"
+        (change)="getValuesAddress(addressValues)"
         value="address"
-        disabled="disabled"
         ngModel
         required
         #inputAddress
       />
-      <div *ngIf="!addressIsCorrect" class="form_group__no-correct">
-        <div class="no-correct__item">Нет совпадений</div>
-      </div>
+      <button (click)="onDeleteValue(inputAddress)" class="clear-input__btn">
+        <svg class="close-icon">
+          <use xlink:href="assets/sprite/symbol-defs.svg#close-icon"></use>
+        </svg>
+      </button>
       <div
         class="form_group__search-box"
-        *ngIf="searchAddressResult$ | async as searchAddressResult"
+        *ngIf="
+          searchAddressResult$ | async as searchAddressResult;
+          else listAddress
+        "
+        #AddressDropDown
       >
         <ng-container *ngIf="searchAddressResult.length > 0; else notFound">
           <div
@@ -87,13 +105,23 @@
           </div>
         </ng-template>
       </div>
+      <ng-template #listAddress>
+        <div class="form_group__search-box" #AddressDropDown>
+          <div
+            class="search-box__item"
+            *ngFor="let item of addressList"
+            (click)="onSearchAddressItem(item)"
+          >
+            {{ item.name }}
+          </div>
+        </div>
+      </ng-template>
     </div>
   </div>
 </div>
 
 <div class="map__wrapp">
   <div class="label_form map__label" for="">Выбрать на карте:</div>
-  <!-- <img class="map_img" src="../../../../../../assets/img/map-img.jpg" alt="" /> -->
   <div class="map-container">
     <ya-map
       [center]="cityGiometry"
@@ -105,6 +133,7 @@
       <ya-placemark
         *ngFor="let plase of addressList"
         [geometry]="plase.geometry"
+        [options]="optionsPlacemark"
       ></ya-placemark>
     </ya-map>
   </div>

@@ -6,6 +6,7 @@ import {
   TEXTBTN2,
   TEXTBTN3,
   TEXTBTN4,
+  ValueAddressInterface,
 } from "../order-form.interface";
 
 @Component({
@@ -16,8 +17,7 @@ import {
 export class OrderInfoComponent {
   @Input() addressValid: boolean = false;
   @Input() modelValid: boolean = false;
-  @Input() cityValue: string = "";
-  @Input() addressValue: string = "";
+  @Input() addressValues!: ValueAddressInterface;
   @Input() checkedCar?: CarInterface;
   @Input() priceRance?: string;
   @Input() activeStep: activeStepEnum = activeStepEnum.step1;

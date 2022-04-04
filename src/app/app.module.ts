@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "./app-routing.module";
@@ -7,7 +8,13 @@ import { StartPageModule } from "./start-page/start-page.module";
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, StartPageModule, ButtonModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    StartPageModule,
+    ButtonModule,
+    CommonModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

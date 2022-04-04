@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { NgForm } from "@angular/forms";
 import { activeStepEnum, PageSteps, pageTitles } from "./order-form.interface";
+import { LocationService } from "src/app/services/location.service";
 
 import { CarInterface } from "./form-steps/step-model/carsList.const";
+import { ValueAddressInterface } from "./order-form.interface";
 
 const STARTPRICE = "8 000 до 12 000 ₽";
 
@@ -16,41 +17,32 @@ export class OrderFormComponent implements OnInit {
   public activeStep: activeStepEnum = activeStepEnum.step1;
   public activeStepEnum = activeStepEnum;
 
-  public cityValue: string = "";
-  public addressValue: string = "";
+  public addressValues: ValueAddressInterface = {
+    city: "",
+    address: "",
+  };
   public checkedCar?: CarInterface;
   public priceRange: string = STARTPRICE;
 
   public addressValid: boolean = false;
   public modelValid: boolean = false;
 
-  constructor() {}
+  constructor(private locationService: LocationService) {}
 
   ngOnInit(): void {
     this.pageStepsTitles.forEach((i) => (i.isValid = false));
     this.pageStepsTitles[0].isValid = true;
+    this.addressValues.city = this.locationService.getCityValue();
   }
 
-  setCityValue(city: string, form: NgForm): void {
-    this.cityValue = city;
-
-    if (form.valid && this.addressValue != "") {
-      this.pageStepsTitles[1].isValid = true;
-      this.addressValid = true;
-    }
+  addressValueChange(item: ValueAddressInterface) {
+    this.addressValues = item;
+    this.pageStepsTitles[1].isValid = true;
+    this.addressValid = true;
   }
 
   toStep(item: PageSteps): void {
     this.activeStep = item.step;
-  }
-
-  setAddressValue(address: string, form: NgForm): void {
-    this.addressValue = address;
-
-    if (form.valid && this.addressValue != "") {
-      this.pageStepsTitles[1].isValid = true;
-      this.addressValid = true;
-    }
   }
 
   toNextStep(): void {

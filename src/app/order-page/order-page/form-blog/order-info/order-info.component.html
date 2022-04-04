@@ -7,8 +7,8 @@
       *ngIf="addressValid; else nonaddress"
       class="order-item__item column-item"
     >
-      <span>{{ cityValue }},</span>
-      <span>{{ addressValue }}</span>
+      <span>{{ addressValues.city }},</span>
+      <span>{{ addressValues.address }}</span>
     </span>
     <ng-template #nonaddress>
       <span class="order-item__item">Не выбран</span>

@@ -16,6 +16,12 @@ export interface PageSteps {
   isValid: boolean;
 }
 
+export interface ValueAddressInterface {
+  city: string;
+  address: string;
+  valid?: boolean;
+}
+
 export const pageTitles: PageSteps[] = [
   {
     title: "Местоположение",

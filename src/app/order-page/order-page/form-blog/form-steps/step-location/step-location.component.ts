@@ -10,25 +10,15 @@ import {
 import { ControlContainer, NgForm } from "@angular/forms";
 import { from, fromEvent, Observable } from "rxjs";
 import {
-  delay,
   toArray,
   filter,
   pluck,
-  debounceTime,
   distinctUntilChanged,
   switchMap,
 } from "rxjs/operators";
-
-export interface Branches {
-  name: string;
-  geometry: number[];
-  address: Address[];
-}
-
-export interface Address {
-  name: string;
-  geometry: number[];
-}
+import { addressArray } from "./address.const";
+import { CityInterface, AddressInterface } from "./address.interface";
+import { ValueAddressInterface } from "../../order-form.interface";
 
 @Component({
   selector: "app-step-location",
@@ -37,93 +27,44 @@ export interface Address {
   viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
 })
 export class StepLocationComponent implements OnInit {
-  @Input() cityValue: string = "";
-  @Input() addressValue: string = "";
-  @Output() changeCityValue = new EventEmitter();
-  @Output() changeAddressValue = new EventEmitter();
-  @ViewChild("inputAddress") inputAddress: ElementRef | undefined;
-  public city!: string;
-  public address!: string;
-  public searchCityResult$!: Observable<Array<Branches>>;
-  public searchAddressResult$!: Observable<Array<Address>>;
-  public cityIsCorrect: boolean = true;
-  public addressIsCorrect: boolean = true;
-  public cityGiometry: number[] = [54.314192, 48.403132];
-  public addressGiometry: number[][] = [
-    [54.306859, 48.291876],
-    [54.300008, 48.367792],
-    [54.352688, 48.385103],
-    [54.338266, 48.542263],
-  ];
+  @Input() addressValues!: ValueAddressInterface;
+  @Output() addressValueChange = new EventEmitter();
+  @ViewChild("inputCity") inputCity!: ElementRef;
+  @ViewChild("inputAddress") inputAddress!: ElementRef;
+  @ViewChild("listDropDown") listDropDown!: ElementRef;
+  @ViewChild("AddressDropDown") addressDropDown!: ElementRef;
+  public searchCityResult$!: Observable<Array<CityInterface>>;
+  public searchAddressResult$!: Observable<Array<AddressInterface>>;
+  public cityGiometry!: number[];
 
-  public cityList: Array<Branches> = [
-    {
-      name: "Москва",
-      geometry: [55.817866, 37.952644],
-      address: [
-        {
-          name: "Стрельбищенский переулок, 21",
-          geometry: [55.763229, 37.539895],
-        },
-        {
-          name: "проспект Мира, 186Бс2",
-          geometry: [55.829977, 37.652346],
-        },
-        {
-          name: "9-я Парковая улица, 47к2",
-          geometry: [55.805285, 37.797819],
-        },
-        {
-          name: "улица Дыбенко, 38к1",
-          geometry: [55.876703, 37.484065],
-        },
-      ],
-    },
-    {
-      name: "Ульяновск",
-      geometry: [54.314192, 48.403132],
-      address: [
-        {
-          name: "Московское шоссе, 52",
-          geometry: [54.306859, 48.291876],
-        },
-        {
-          name: "Транспортная улица, 6",
-          geometry: [54.300008, 48.367792],
-        },
-        {
-          name: "улица Розы Люксембург, 34Г",
-          geometry: [54.352688, 48.385103],
-        },
-        {
-          name: "улица Димитрова, 3",
-          geometry: [54.338266, 48.542263],
-        },
-      ],
-    },
-  ];
+  public optionsPlacemark = {
+    preset: "islands#circleIcon",
+    iconColor: "#0ec261",
+  };
 
-  public addressList: Address[] = [];
+  public cityList: Array<CityInterface> = addressArray;
+
+  public addressList: AddressInterface[] = [];
 
   constructor() {}
 
   ngOnInit(): void {
-    this.city = this.cityValue;
-    this.address = this.addressValue;
-
     const searchcity: any = document.querySelector("#search-city");
     const searchAddress: any = document.querySelector("#sarch-address");
+    const activeCity = this.cityList.filter(
+      (x) => x.name === this.addressValues.city
+    );
+    this.cityGiometry = activeCity[0].geometry;
+    this.addressList = activeCity[0].address;
 
     this.searchCityResult$ = fromEvent(searchcity, "input").pipe(
       pluck("target", "value"),
-      // debounceTime(200),
       distinctUntilChanged(),
       switchMap((searchTerm: any) => this.searchCity(searchTerm.toLowerCase()))
     );
 
     this.searchAddressResult$ = fromEvent(searchAddress, "input").pipe(
       pluck("target", "value"),
-      // debounceTime(200),
       distinctUntilChanged(),
       switchMap((searchTerm: any) =>
         this.searchAddress(searchTerm.toLowerCase())
@@ -131,9 +72,8 @@ export class StepLocationComponent implements OnInit {
     );
   }
 
-  searchCity(searchTerm: string): Observable<Array<Branches>> {
+  searchCity(searchTerm: string): Observable<Array<CityInterface>> {
     return from(this.cityList).pipe(
-      delay(200),
       filter(
         (cityName) =>
           cityName.name.toLocaleLowerCase().indexOf(searchTerm) !== -1
@@ -142,9 +82,8 @@ export class StepLocationComponent implements OnInit {
     );
   }
 
-  searchAddress(searchTerm: string): Observable<Array<Address>> {
+  searchAddress(searchTerm: string): Observable<Array<AddressInterface>> {
     return from(this.addressList).pipe(
-      delay(200),
       filter(
         (addressName) =>
           addressName.name.toLocaleLowerCase().indexOf(searchTerm) !== -1
@@ -153,37 +92,38 @@ export class StepLocationComponent implements OnInit {
     );
   }
 
-  onSearchCityItem(item: Branches) {
-    this.city = item.name;
+  onSearchCityItem(item: CityInterface) {
+    this.inputCity.nativeElement.value = item.name;
     this.addressList = item.address;
-    this.inputAddress?.nativeElement.removeAttribute("disabled");
-    this.getValueCity(item.name);
+    this.inputAddress.nativeElement.value = "";
+    this.cityGiometry = item.geometry;
+    this.addressValues.city = item.name;
+    this.getValuesAddress(this.addressValues);
   }
 
-  onSearchAddressItem(item: Address) {
-    this.address = item.name;
-    this.getValueAddress(item.name);
+  onSearchAddressItem(item: AddressInterface) {
+    this.inputAddress.nativeElement.value = item.name;
+    this.cityGiometry = item.geometry;
+    this.addressValues.address = item.name;
+    this.getValuesAddress(this.addressValues);
   }
 
-  getValueCity(item: string) {
-    this.cityIsCorrect = true;
+  getValuesAddress(item: ValueAddressInterface) {
     for (let i = 0; i < this.cityList.length; i++) {
-      if (this.cityList[i].name.toLowerCase() === item.toLowerCase()) {
-        this.changeCityValue.emit(item);
-        return;
+      if (this.cityList[i].name.toLowerCase() === item.city.toLowerCase()) {
+        for (let y = 0; y < this.addressList.length; y++) {
+          if (
+            this.addressList[y].name.toLowerCase() ===
+            item.address.toLowerCase()
+          ) {
+            this.addressValueChange.emit(item);
+            return;
+          }
+        }
       }
     }
-    this.cityIsCorrect = false;
   }
-
-  getValueAddress(item: string): void {
-    this.addressIsCorrect = true;
-    for (let i = 0; i < this.addressList.length; i++) {
-      if (this.addressList[i].name.toLowerCase() === item.toLowerCase()) {
-        this.changeAddressValue.emit(item);
-        return;
-      }
-    }
-    this.addressIsCorrect = false;
+  onDeleteValue(el: HTMLInputElement) {
+    el.value = "";
   }
 }
