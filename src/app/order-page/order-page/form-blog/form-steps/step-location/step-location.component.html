@@ -95,7 +95,13 @@
   <div class="label_form map__label" for="">Выбрать на карте:</div>
   <!-- <img class="map_img" src="../../../../../../assets/img/map-img.jpg" alt="" /> -->
   <div class="map-container">
-    <ya-map [center]="cityGiometry" [zoom]="15">
+    <ya-map
+      [center]="cityGiometry"
+      [zoom]="12"
+      [state]="{
+        controls: ['zoomControl']
+      }"
+    >
       <ya-placemark
         *ngFor="let plase of addressList"
         [geometry]="plase.geometry"
