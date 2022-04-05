@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-import { AngularYandexMapsModule } from "angular8-yandex-maps";
+import { AngularYandexMapsModule, YaConfig } from "angular8-yandex-maps";
 import { OrderPageComponent } from "./order-page/order-page.component";
 import { OrderPageRoutingModule } from "./order-page.routing.module";
 import { StartPageModule } from "../start-page/start-page.module";
@@ -13,6 +13,11 @@ import { StepAdditComponent } from "./order-page/form-blog/form-steps/step-addit
 import { StepConfirmComponent } from "./order-page/form-blog/form-steps/step-confirm/step-confirm.component";
 import { StepFinalComponent } from "./order-page/form-blog/form-steps/step-final/step-final.component";
 import { OrderInfoComponent } from "./order-page/form-blog/order-info/order-info.component";
+
+const mapConfig: YaConfig = {
+  apikey: "fa1fe0ab-37b7-4d26-a68c-7372986f7de9",
+  lang: "ru_RU",
+};
 
 @NgModule({
   declarations: [

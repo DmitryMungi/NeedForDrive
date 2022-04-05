@@ -1,5 +1,7 @@
 import { CityInterface } from "./address.interface";
 
+export const API_KEY = "fa1fe0ab-37b7-4d26-a68c-7372986f7de9";
+
 export const addressArray: CityInterface[] = [
   {
     name: "Москва",
