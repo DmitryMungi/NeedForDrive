@@ -1,14 +1,14 @@
 <div class="model_sort__wrapp">
-  <div class="sort-radio" *ngFor="let t of radioToggles">
+  <div class="input-radio" *ngFor="let t of radioToggles">
     <input
       type="radio"
-      class="sort-radio__input"
+      class="input-radio__input"
       name="model-sort"
       [value]="t.value"
       (change)="filter(t)"
       [checked]="t.checked"
     />
-    <span class="sort-radio__label">{{ t.value }} </span>
+    <span class="input-radio__label">{{ t.value }} </span>
   </div>
 </div>
 
