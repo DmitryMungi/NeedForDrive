@@ -1,6 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { activeStepEnum, PageSteps, pageTitles } from "./order-form.interface";
 import { LocationService } from "src/app/services/location.service";
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+} from "@angular/forms";
 
 import { CarInterface } from "./form-steps/step-model/carsList.const";
 import { ValueAddressInterface } from "./order-form.interface";
@@ -26,8 +32,15 @@ export class OrderFormComponent implements OnInit {
 
   public addressValid: boolean = false;
   public modelValid: boolean = false;
-
-  constructor(private locationService: LocationService) {}
+  public orderForm = new FormGroup({
+    cityName: new FormControl("", Validators.required),
+    addressName: new FormControl("", Validators.required),
+    modelName: new FormControl("", Validators.required),
+  });
+  constructor(
+    private locationService: LocationService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.pageStepsTitles.forEach((i) => (i.isValid = false));

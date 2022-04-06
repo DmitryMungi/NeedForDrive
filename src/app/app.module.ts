@@ -5,6 +5,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { ButtonModule } from "./button/button.module";
 import { StartPageModule } from "./start-page/start-page.module";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,6 +15,8 @@ import { StartPageModule } from "./start-page/start-page.module";
     StartPageModule,
     ButtonModule,
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

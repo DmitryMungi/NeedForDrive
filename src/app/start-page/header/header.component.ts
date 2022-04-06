@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import { LocationService } from "src/app/services/location.service";
 
 @Component({
   selector: "app-header",
@@ -6,6 +7,7 @@ import { Component, Input } from "@angular/core";
   styleUrls: ["./header.component.less"],
 })
 export class HeaderComponent {
-  @Input() cityValue: string = "";
-  constructor() {}
+  constructor(private locationService: LocationService) {}
+
+  @Input() cityValue: string = this.locationService.getCityValue();
 }

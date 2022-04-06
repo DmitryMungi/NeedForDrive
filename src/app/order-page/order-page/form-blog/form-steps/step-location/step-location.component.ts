@@ -6,8 +6,14 @@ import {
   EventEmitter,
   ViewChild,
   ElementRef,
+  AfterViewInit,
 } from "@angular/core";
-import { ControlContainer, NgForm } from "@angular/forms";
+import {
+  ControlContainer,
+  FormGroup,
+  FormControl,
+  FormGroupDirective,
+} from "@angular/forms";
 import { from, fromEvent, Observable } from "rxjs";
 import {
   toArray,
@@ -15,6 +21,7 @@ import {
   pluck,
   distinctUntilChanged,
   switchMap,
+  map,
 } from "rxjs/operators";
 import { addressArray } from "./address.const";
 import { CityInterface, AddressInterface } from "./address.interface";
@@ -24,18 +31,21 @@ import { ValueAddressInterface } from "../../order-form.interface";
   selector: "app-step-location",
   templateUrl: "./step-location.component.html",
   styleUrls: ["./step-location.component.less"],
-  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+  viewProviders: [
+    { provide: ControlContainer, useExisting: FormGroupDirective },
+  ],
 })
 export class StepLocationComponent implements OnInit {
   @Input() addressValues!: ValueAddressInterface;
+  @Input() form!: FormGroup;
   @Output() addressValueChange = new EventEmitter();
-  @ViewChild("inputCity") inputCity!: ElementRef;
-  @ViewChild("inputAddress") inputAddress!: ElementRef;
-  @ViewChild("listDropDown") listDropDown!: ElementRef;
-  @ViewChild("AddressDropDown") addressDropDown!: ElementRef;
+  @ViewChild("inputCityEl") inputCity!: ElementRef;
+  @ViewChild("inputAddressEl") inputAddress!: ElementRef;
+
   public searchCityResult$!: Observable<Array<CityInterface>>;
   public searchAddressResult$!: Observable<Array<AddressInterface>>;
   public cityGiometry!: number[];
+  public orderForm: FormGroup = this.form;
 
   public optionsPlacemark = {
     preset: "islands#circleIcon",
@@ -49,66 +59,49 @@ export class StepLocationComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    const searchcity: any = document.querySelector("#search-city");
-    const searchAddress: any = document.querySelector("#sarch-address");
     const activeCity = this.cityList.filter(
       (x) => x.name === this.addressValues.city
     );
     this.cityGiometry = activeCity[0].geometry;
     this.addressList = activeCity[0].address;
-
-    this.searchCityResult$ = fromEvent(searchcity, "input").pipe(
-      pluck("target", "value"),
-      distinctUntilChanged(),
-      switchMap((searchTerm: any) => this.searchCity(searchTerm.toLowerCase()))
-    );
-
-    this.searchAddressResult$ = fromEvent(searchAddress, "input").pipe(
-      pluck("target", "value"),
-      distinctUntilChanged(),
-      switchMap((searchTerm: any) =>
-        this.searchAddress(searchTerm.toLowerCase())
-      )
-    );
+    console.log(this.addressValues.address);
   }
 
   searchCity(searchTerm: string): Observable<Array<CityInterface>> {
     return from(this.cityList).pipe(
-      filter(
-        (cityName) =>
-          cityName.name.toLocaleLowerCase().indexOf(searchTerm) !== -1
-      ),
+      filter((cityName) => this.checkForMatch(cityName, searchTerm)),
       toArray()
     );
   }
 
   searchAddress(searchTerm: string): Observable<Array<AddressInterface>> {
     return from(this.addressList).pipe(
-      filter(
-        (addressName) =>
-          addressName.name.toLocaleLowerCase().indexOf(searchTerm) !== -1
-      ),
+      filter((addressName) => this.checkForMatch(addressName, searchTerm)),
       toArray()
     );
   }
 
-  onSearchCityItem(item: CityInterface) {
-    this.inputCity.nativeElement.value = item.name;
+  checkForMatch(el: CityInterface | AddressInterface, item: string): boolean {
+    return el.name.toLocaleLowerCase().indexOf(item) !== -1;
+  }
+
+  onSearchCityItem(item: any) {
+    // this.form.form.value.city = item.name;
     this.addressList = item.address;
-    this.inputAddress.nativeElement.value = "";
     this.cityGiometry = item.geometry;
     this.addressValues.city = item.name;
     this.getValuesAddress(this.addressValues);
+    // console.log(this.form);
   }
 
-  onSearchAddressItem(item: AddressInterface) {
-    this.inputAddress.nativeElement.value = item.name;
+  onSearchAddressItem(item: any) {
+    // this.form.form.value.address = item.name;
     this.cityGiometry = item.geometry;
     this.addressValues.address = item.name;
     this.getValuesAddress(this.addressValues);
   }
 
-  getValuesAddress(item: ValueAddressInterface) {
+  getValuesAddress(item: any) {
     for (let i = 0; i < this.cityList.length; i++) {
       if (this.cityList[i].name.toLowerCase() === item.city.toLowerCase()) {
         for (let y = 0; y < this.addressList.length; y++) {
@@ -122,8 +115,5 @@ export class StepLocationComponent implements OnInit {
         }
       }
     }
-  }
-  onDeleteValue(el: HTMLInputElement) {
-    el.value = "";
   }
 }

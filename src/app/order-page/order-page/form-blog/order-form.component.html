@@ -18,11 +18,12 @@
     </div>
   </div>
 </nav>
-
 <div class="container order_page__container">
   <div class="order-steps_wrapp">
-    <form class="order-form" #orderForm="ngForm">
+    <form class="order-form" [formGroup]="orderForm">
       <app-step-location
+        [formGroup]="orderForm"
+        [form]="orderForm"
         [addressValues]="addressValues"
         (addressValueChange)="addressValueChange($event)"
         *ngIf="activeStep === activeStepEnum.step1"
