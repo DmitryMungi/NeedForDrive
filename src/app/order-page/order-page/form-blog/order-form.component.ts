@@ -45,13 +45,14 @@ export class OrderFormComponent implements OnInit {
   ngOnInit(): void {
     this.pageStepsTitles.forEach((i) => (i.isValid = false));
     this.pageStepsTitles[0].isValid = true;
-    this.addressValues.city = this.locationService.getCityValue();
   }
 
   addressValueChange(item: ValueAddressInterface) {
-    this.addressValues = item;
-    this.pageStepsTitles[1].isValid = true;
-    this.addressValid = true;
+    if (item.city != "" && item.address != "") {
+      this.addressValues = item;
+      this.pageStepsTitles[1].isValid = true;
+      this.addressValid = true;
+    }
   }
 
   toStep(item: PageSteps): void {

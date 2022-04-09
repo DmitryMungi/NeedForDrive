@@ -1,4 +1,5 @@
 import { NgModule } from "@angular/core";
+import { HttpClientModule } from "@angular/common/http";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AngularYandexMapsModule, YaConfig } from "angular8-yandex-maps";
@@ -16,9 +17,13 @@ import { OrderInfoComponent } from "./order-page/form-blog/order-info/order-info
 import { InputModule } from "../input/input.module";
 
 const mapConfig: YaConfig = {
-  apikey: "fa1fe0ab-37b7-4d26-a68c-7372986f7de9",
+  apikey: "5c6ecc94-70fb-402b-b36b-c554bee31024",
   lang: "ru_RU",
 };
+
+// 5c6ecc94-70fb-402b-b36b-c554bee31024
+
+// "fa1fe0ab-37b7-4d26-a68c-7372986f7de9"
 
 @NgModule({
   declarations: [
@@ -38,8 +43,9 @@ const mapConfig: YaConfig = {
     ButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularYandexMapsModule,
+    AngularYandexMapsModule.forRoot(mapConfig),
     InputModule,
+    HttpClientModule,
   ],
   exports: [FormsModule, ReactiveFormsModule],
 })

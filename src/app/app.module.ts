@@ -6,6 +6,10 @@ import { AppComponent } from "./app.component";
 import { ButtonModule } from "./button/button.module";
 import { StartPageModule } from "./start-page/start-page.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { CityService } from "./services/city.service";
+import { ErrorInterceptor } from "./interceptors/error.interceptor";
+import { TokenInterceptor } from "./interceptors/tocen.interceptor";
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,8 +21,13 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    CityService,
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

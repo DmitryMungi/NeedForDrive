@@ -23,11 +23,6 @@ import {
   switchMap,
   map,
 } from "rxjs/operators";
-import {
-  AddressInterface,
-  CityInterface,
-} from "src/app/order-page/order-page/form-blog/form-steps/step-location/address.interface";
-import { ValueAddressInterface } from "src/app/order-page/order-page/form-blog/order-form.interface";
 
 @Component({
   selector: "app-input",
@@ -42,15 +37,15 @@ export class InputComponent implements OnInit, AfterViewInit {
   @Input() labelValue: string = "";
   @Input() name: string = "";
   @Input() value: string = "";
-  @Input() addressValues: ValueAddressInterface = { city: "", address: "" };
-  @Input() list: CityInterface[] | AddressInterface[] = [];
+  @Input() list: string[] = [];
 
+  @Output() deleteItem = new EventEmitter();
   @Output() valueChange = new EventEmitter();
   @Output() onSearchItem = new EventEmitter();
 
   @ViewChild("input") input!: ElementRef;
 
-  public searchResult$!: Observable<Array<CityInterface | AddressInterface>>;
+  public searchResult$!: Observable<Array<string>>;
   public formGroup = new FormGroup({
     name: new FormControl(this.value, Validators.required),
   });
@@ -71,31 +66,30 @@ export class InputComponent implements OnInit, AfterViewInit {
     );
   }
 
-  onClickSearchItem(item: CityInterface | AddressInterface) {
+  onClickSearchItem(item: string) {
     this.onSearchItem.emit(item);
-    this.input.nativeElement.value = item.name;
-    this.formGroup.value.name = item.name;
+    this.input.nativeElement.value = item;
+    this.formGroup.value.name = item;
   }
 
-  search(
-    searchTerm: string
-  ): Observable<Array<CityInterface | AddressInterface>> {
+  search(searchTerm: string): Observable<Array<string>> {
     return from(this.list).pipe(
       filter((cityName) => this.checkForMatch(cityName, searchTerm)),
       toArray()
     );
   }
 
-  checkForMatch(el: CityInterface | AddressInterface, item: string): boolean {
-    return el.name.toLocaleLowerCase().indexOf(item) !== -1;
+  checkForMatch(el: string, item: string): boolean {
+    return el.toLocaleLowerCase().indexOf(item) !== -1;
   }
 
-  changeValue(item: ValueAddressInterface) {
+  changeValue(item: string) {
     this.valueChange.emit(item);
   }
 
   onDeleteValue(el: HTMLInputElement) {
     el.value = "";
     this.formGroup.value.name = el.value;
+    this.deleteItem.emit();
   }
 }

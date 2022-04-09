@@ -3,21 +3,20 @@
     groupName="cityName"
     labelValue="Город"
     name="city"
-    [addressValues]="addressValues"
-    [list]="cityList"
+    [list]="citiesList"
     [value]="addressValues.city"
-    (valueChange)="getValuesAddress($event)"
+    (valueChange)="changeCityValue($event)"
     (onSearchItem)="onSearchCityItem($event)"
+    (deleteItem)="resetAddressList()"
   ></app-input>
   <app-input
-    [ngClass]="{ disabled: addressValues.city === '' }"
+    [ngClass]="{ disabled: activeAddress.length <= 0 }"
     groupName="addressName"
     labelValue="Пункт выдачи"
     name="address"
-    [addressValues]="addressValues"
-    [list]="addressList"
+    [list]="activeAddress"
     [value]="addressValues.address"
-    (valueChange)="getValuesAddress($event)"
+    (valueChange)="changeaddressValue($event)"
     (onSearchItem)="onSearchAddressItem($event)"
   ></app-input>
 </div>
@@ -26,17 +25,27 @@
   <div class="label_form map__label" for="">Выбрать на карте:</div>
   <div class="map-container">
     <ya-map
-      [center]="cityGiometry"
+      [center]="[55.753994, 37.622093]"
       [zoom]="12"
       [state]="{
         controls: ['zoomControl']
       }"
-    >
-      <ya-placemark
-        *ngFor="let plase of addressList"
-        [geometry]="plase.geometry"
-        [options]="optionsPlacemark"
-      ></ya-placemark>
-    </ya-map>
+    ></ya-map>
+    <!-- (ready)="onMapReady($event)" -->
   </div>
 </div>
+<!--
+<ya-map
+[center]="[55.753994, 37.622093]"
+[zoom]="12"
+[state]="{
+  controls: ['zoomControl']
+}"
+(ready)="onMapReady($event)"
+>
+<ya-placemark
+  *ngFor="let plase of addressList"
+  [geometry]="plase.geometry"
+  [options]="optionsPlacemark"
+></ya-placemark>
+</ya-map> -->
