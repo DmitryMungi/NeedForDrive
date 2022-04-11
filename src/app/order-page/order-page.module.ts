@@ -15,9 +15,11 @@ import { StepConfirmComponent } from "./order-page/form-blog/form-steps/step-con
 import { StepFinalComponent } from "./order-page/form-blog/form-steps/step-final/step-final.component";
 import { OrderInfoComponent } from "./order-page/form-blog/order-info/order-info.component";
 import { InputModule } from "../input/input.module";
+import { environment } from "../../environments/environment";
+// import { LocatoinApiService } from "../services/location.api.service";
 
 const mapConfig: YaConfig = {
-  apikey: "5c6ecc94-70fb-402b-b36b-c554bee31024",
+  apikey: environment.apiKeyMap,
   lang: "ru_RU",
 };
 
@@ -47,6 +49,7 @@ const mapConfig: YaConfig = {
     InputModule,
     HttpClientModule,
   ],
+  // providers: [LocatoinApiService],
   exports: [FormsModule, ReactiveFormsModule],
 })
 export class OrderPageModule {}

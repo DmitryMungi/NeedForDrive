@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
-
-export const CITY_DEFAULT = "Ульяновск";
+import { CITY_DEFAULT } from "../order-page/order-page/form-blog/form-steps/step-location/address.const";
 
 @Injectable({ providedIn: "root" })
 export class LocationService {

@@ -11,23 +11,17 @@ import {
   FormGroup,
   FormGroupDirective,
 } from "@angular/forms";
-// import { HttpService } from "../../../../../services/http.service";
-import { YaReadyEvent, YaGeocoderService } from "angular8-yandex-maps";
-import { CityAddress } from "./address.const";
-import { CityInterface, AddressInterface } from "./address.interface";
+// import { CityAddress } from "./address.const";
+import { ICity, IAddress, Igeo, Iplacemark } from "./address.interface";
 import { ValueAddressInterface } from "../../order-form.interface";
-// import { AddressService } from "src/app/services/address.service";
-import { CityService } from "src/app/services/city.service";
-export const NO_MATCHES = "Совпадений не найдено";
+import { LocatoinApiService } from "src/app/services/location.api.service";
+import { LocationService } from "src/app/services/location.service";
+import { DEFAULT_GEO, NO_MATCHES, OPTION_PLACEMARK } from "./address.const";
 
 @Component({
   selector: "app-step-location",
   templateUrl: "./step-location.component.html",
   styleUrls: ["./step-location.component.less"],
-  // viewProviders: [
-  //   { provide: ControlContainer, useExisting: FormGroupDirective },
-  // ],
-  // providers: [HttpService],
 })
 export class StepLocationComponent implements OnInit, OnDestroy {
   @Input() addressValues!: ValueAddressInterface;
@@ -37,31 +31,27 @@ export class StepLocationComponent implements OnInit, OnDestroy {
   public cityGiometry!: number[];
   public orderForm: FormGroup = this.form;
 
-  public optionsPlacemark = {
-    preset: "islands#circleIcon",
-    iconColor: "#0ec261",
-  };
-
-  cityList: CityAddress[] = [];
-  public cities: CityInterface[] = [];
-  public address: AddressInterface[] = [];
+  // cityList: CityAddress[] = [];
+  public cities: ICity[] = [];
+  public address: IAddress[] = [];
   public activeAddress: string[] = [];
   public citiesList: string[] = [];
   public adressString: string[] = [];
 
-  public addressList: AddressInterface[] = [];
+  public optionsPlacemark: Iplacemark = OPTION_PLACEMARK;
+  public coordinate: Igeo = DEFAULT_GEO;
+  public textNoMathces: string = NO_MATCHES;
+  public fullAddress!: string;
+
+  public addressList: IAddress[] = [];
 
   constructor(
     // private httpService: HttpService,
     // private address: AddressService,
-    private cityService: CityService,
-    private yaGeocoderService: YaGeocoderService
+    private cityService: LocatoinApiService
   ) {}
 
   ngOnInit(): void {
-    // this.httpService
-    //   .getAddress()
-    //   .subscribe((data: CityAddress[]) => (this.cityList = data));
     this.cityService
       .getCity()
       .subscribe(
@@ -77,32 +67,6 @@ export class StepLocationComponent implements OnInit, OnDestroy {
       );
   }
 
-  onMapReady({ target }: YaReadyEvent<ymaps.Map>): void {
-    const geocodeResult = this.yaGeocoderService.geocode(
-      "Вихоревка Советская, 39",
-      {
-        results: 1,
-      }
-    );
-    geocodeResult.subscribe((result: any) => {
-      const firstGeoObject = result.geoObjects.get(0);
-      const coords = firstGeoObject.geometry.getCoordinates();
-      const bounds = firstGeoObject.properties.get("boundedBy");
-      firstGeoObject.options.set(
-        "preset",
-        "islands#darkBlueDotIconWithCaption"
-      );
-      firstGeoObject.properties.set(
-        "iconCaption",
-        firstGeoObject.getAddressLine()
-      );
-      target.geoObjects.add(firstGeoObject);
-      target.setBounds(bounds, {
-        checkZoomRange: true,
-      });
-    });
-  }
-
   onSearchCityItem(item: string) {
     const addressObj = this.address.filter((x) => x.cityId?.name === item);
     for (let i = 0; i < addressObj.length; i++) {
@@ -111,15 +75,19 @@ export class StepLocationComponent implements OnInit, OnDestroy {
     this.addressValues.city = item;
     this.addressValues.address = "";
     this.setValuesAddress(this.addressValues);
+    this.fullAddress = item;
+    this.getCoordinate(this.fullAddress);
   }
 
   onSearchAddressItem(item: string) {
     this.addressValues.address = item;
     this.setValuesAddress(this.addressValues);
+    this.fullAddress = this.fullAddress + item;
+    this.getCoordinate(this.fullAddress);
   }
 
   resetAddressList() {
-    this.addressList = [];
+    this.activeAddress.length = 0;
     this.addressValues.city = "";
     this.addressValues.address = "";
   }
@@ -134,7 +102,7 @@ export class StepLocationComponent implements OnInit, OnDestroy {
     if (value != undefined) {
       this.addressValues.city = item;
     } else {
-      console.log("совпадений нет");
+      console.log(this.textNoMathces);
     }
   }
 
@@ -143,7 +111,7 @@ export class StepLocationComponent implements OnInit, OnDestroy {
     if (value != undefined) {
       this.addressValues.address = item; // при сохранении инпут остается пустым и данные пока не отправляются
     } else {
-      console.log("совпадений нет"); // попробовать переписать в одну строку
+      console.log(this.textNoMathces); // попробовать переписать в одну строку
     }
   }
 
@@ -153,6 +121,12 @@ export class StepLocationComponent implements OnInit, OnDestroy {
     if (match.length != 0) {
       return match[0];
     }
+  }
+
+  getCoordinate(item: string) {
+    this.cityService
+      .getCoordinates(item)
+      .subscribe((res) => (this.coordinate = res));
   }
 
   ngOnDestroy(): void {}

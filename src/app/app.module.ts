@@ -7,7 +7,7 @@ import { ButtonModule } from "./button/button.module";
 import { StartPageModule } from "./start-page/start-page.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { CityService } from "./services/city.service";
+import { LocatoinApiService } from "./services/location.api.service";
 import { ErrorInterceptor } from "./interceptors/error.interceptor";
 import { TokenInterceptor } from "./interceptors/tocen.interceptor";
 
@@ -24,7 +24,7 @@ import { TokenInterceptor } from "./interceptors/tocen.interceptor";
     HttpClientModule,
   ],
   providers: [
-    CityService,
+    LocatoinApiService,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ],

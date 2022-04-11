@@ -25,12 +25,17 @@
   <div class="label_form map__label" for="">Выбрать на карте:</div>
   <div class="map-container">
     <ya-map
-      [center]="[55.753994, 37.622093]"
+      [center]="[coordinate.lat, coordinate.lng]"
       [zoom]="12"
       [state]="{
         controls: ['zoomControl']
       }"
-    ></ya-map>
+    >
+      <ya-placemark
+        [options]="optionsPlacemark"
+        [geometry]="[coordinate.lat, coordinate.lng]"
+      ></ya-placemark>
+    </ya-map>
     <!-- (ready)="onMapReady($event)" -->
   </div>
 </div>

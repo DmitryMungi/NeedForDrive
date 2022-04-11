@@ -1,19 +1,19 @@
 import { Injectable } from "@angular/core";
 import {
-  CityInterface,
-  AddressInterface,
+  ICity,
+  IAddress,
 } from "../order-page/order-page/form-blog/form-steps/step-location/address.interface";
 
 @Injectable({ providedIn: "root" })
 export class AddressService {
-  public cityList: CityInterface[] = [];
+  public cityList: ICity[] = [];
 
-  setCityList(list: CityInterface[]): CityInterface[] {
+  setCityList(list: ICity[]): ICity[] {
     this.cityList = list.slice();
     return this.cityList;
   }
 
-  getCityList(): CityInterface[] {
+  getCityList(): ICity[] {
     return this.cityList;
   }
 }
