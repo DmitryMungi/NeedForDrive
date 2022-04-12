@@ -1,4 +1,14 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
+
+export interface Icar {
+  priceMax: number;
+  priceMin: number;
+  name: string;
+  thumbnail: {};
+  description: string;
+  categoryId: {};
+  colors: string[];
+}
 
 @Component({
   selector: "app-step-addit",
@@ -7,4 +17,14 @@ import { Component } from "@angular/core";
 })
 export class StepAdditComponent {
   constructor() {}
+
+  public car: Icar = {
+    priceMax: 35000,
+    priceMin: 10000,
+    name: "skoda",
+    thumbnail: {},
+    description: "description",
+    categoryId: {},
+    colors: ["Красный", "Голубой"],
+  };
 }
