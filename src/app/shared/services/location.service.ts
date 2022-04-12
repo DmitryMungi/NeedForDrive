@@ -1,8 +1,5 @@
 import { Injectable } from "@angular/core";
-import {
-  CITY_DEFAULT,
-  NO_CHOSEN,
-} from "../../order-page/order-page/form-blog/form-steps/step-location/location.const";
+import { CITY_DEFAULT } from "../../order-page/order-page/form-blog/form-steps/step-location/location.const";
 
 @Injectable({ providedIn: "root" })
 export class LocationService {
@@ -13,11 +10,7 @@ export class LocationService {
   }
 
   setCityValue(city: string): string {
-    if (city === "") {
-      this.cityValue = NO_CHOSEN;
-    } else {
-      this.cityValue = city;
-    }
+    this.cityValue = city;
     return this.cityValue;
   }
 }

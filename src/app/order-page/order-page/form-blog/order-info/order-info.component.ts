@@ -7,8 +7,9 @@ import {
   TEXTBTN2,
   TEXTBTN3,
   TEXTBTN4,
-  ILocationValue,
 } from "../order-form.interface";
+
+import { ILocationValue } from "src/app/shared/interfaces/order.interface";
 
 @Component({
   selector: "app-order-info",
@@ -16,9 +17,7 @@ import {
   styleUrls: ["./order-info.component.less"],
 })
 export class OrderInfoComponent {
-  // @Input() addressValid: boolean = false; //  пока что отвечает за шаги кнопки.
   @Input() modelValid: boolean = false;
-  // @Input() addressValues!: ILocationValue;
   @Input() checkedCar?: CarInterface;
   @Input() priceRance?: string;
   @Input() activeStep: activeStepEnum = activeStepEnum.step1;
@@ -33,7 +32,7 @@ export class OrderInfoComponent {
     return getTextBtn(this.activeStep);
   }
 
-  isValidBtn(item: activeStepEnum): boolean | undefined {
+  isValidBtn(item: activeStepEnum): boolean {
     switch (item) {
       case activeStepEnum.step1:
         return this.addressValues.valid;
@@ -44,7 +43,7 @@ export class OrderInfoComponent {
     }
   }
 
-  public get btnIsValid(): boolean | undefined {
+  public get btnIsValid(): boolean {
     return this.isValidBtn(this.activeStep);
   }
 

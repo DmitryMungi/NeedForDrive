@@ -9,7 +9,6 @@ import {
 } from "@angular/forms";
 
 import { CarInterface } from "./form-steps/step-model/carsList.const";
-// import { ILocationValue } from "../../../shared/interfaces/order.interface";
 
 const STARTPRICE = "8 000 до 12 000 ₽";
 
@@ -23,14 +22,9 @@ export class OrderFormComponent implements OnInit {
   public activeStep: activeStepEnum = activeStepEnum.step1;
   public activeStepEnum = activeStepEnum;
 
-  // public addressValues: ILocationValue = {
-  //   city: "",
-  //   address: "",
-  // };
   public checkedCar?: CarInterface;
   public priceRange: string = STARTPRICE;
 
-  // public addressValid: boolean = false;
   public modelValid: boolean = false;
   public orderForm = new FormGroup({
     cityName: new FormControl("", Validators.required),
@@ -48,11 +42,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   addressValueChange() {
-    // if (item.city != "" && item.address != "") {
-    // this.addressValues = item;
     this.pageStepsTitles[1].isValid = true;
-    // this.addressValid = true;
-    // }
   }
 
   toStep(item: PageSteps): void {

@@ -1,7 +1,6 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, pipe, map } from "rxjs";
-import { Igeo } from "../../order-page/order-page/form-blog/form-steps/step-location/location.interface";
+import { Observable, map } from "rxjs";
 import { environment } from "src/environments/environment";
 
 @Injectable({ providedIn: "root" })
@@ -27,7 +26,7 @@ export class LocatoinApiService {
             response.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos
               .split(" ")
               .map(Number);
-          return { lat, lng } as unknown as any; //ICoordinates;
+          return { lat, lng } as unknown as any;
         })
       );
   }

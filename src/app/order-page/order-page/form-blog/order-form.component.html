@@ -22,13 +22,9 @@
   <div class="order-steps_wrapp">
     <form class="order-form" [formGroup]="orderForm">
       <app-step-location
-        [formGroup]="orderForm"
-        [form]="orderForm"
         (addressValueChange)="addressValueChange()"
         *ngIf="activeStep === activeStepEnum.step1"
       ></app-step-location>
-
-      <!-- [addressValues]="addressValues" -->
 
       <app-step-model
         [carModel]="checkedCar?.model"
@@ -49,6 +45,4 @@
     (nextStep)="toNextStep()"
   >
   </app-order-info>
-  <!-- [addressValid]="addressValid" -->
-  <!-- [addressValues]="addressValues" -->
 </div>
