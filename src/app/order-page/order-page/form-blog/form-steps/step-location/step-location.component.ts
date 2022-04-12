@@ -11,12 +11,12 @@ import {
   FormGroup,
   FormGroupDirective,
 } from "@angular/forms";
-// import { CityAddress } from "./address.const";
-import { ICity, IAddress, Igeo, Iplacemark } from "./address.interface";
-import { ValueAddressInterface } from "../../order-form.interface";
-import { LocatoinApiService } from "src/app/services/location.api.service";
-import { LocationService } from "src/app/services/location.service";
-import { DEFAULT_GEO, NO_MATCHES, OPTION_PLACEMARK } from "./address.const";
+import { ICity, IAddress, Igeo, Iplacemark } from "./location.interface";
+import { ILocationValue } from "../../order-form.interface";
+import { LocatoinApiService } from "src/app/shared/services/location.api.service";
+import { LocationService } from "src/app/shared/services/location.service";
+import { OrderService } from "src/app/shared/services/order.service";
+import { DEFAULT_GEO, NO_MATCHES, OPTION_PLACEMARK } from "./location.const";
 
 @Component({
   selector: "app-step-location",
@@ -24,19 +24,15 @@ import { DEFAULT_GEO, NO_MATCHES, OPTION_PLACEMARK } from "./address.const";
   styleUrls: ["./step-location.component.less"],
 })
 export class StepLocationComponent implements OnInit, OnDestroy {
-  @Input() addressValues!: ValueAddressInterface;
   @Input() form!: FormGroup;
   @Output() addressValueChange = new EventEmitter();
 
-  public cityGiometry!: number[];
   public orderForm: FormGroup = this.form;
 
-  // cityList: CityAddress[] = [];
   public cities: ICity[] = [];
   public address: IAddress[] = [];
   public activeAddress: string[] = [];
   public citiesList: string[] = [];
-  public adressString: string[] = [];
 
   public optionsPlacemark: Iplacemark = OPTION_PLACEMARK;
   public coordinate: Igeo = DEFAULT_GEO;
@@ -45,26 +41,23 @@ export class StepLocationComponent implements OnInit, OnDestroy {
 
   public addressList: IAddress[] = [];
 
+  public addressValues: ILocationValue = this.orderService.getLocationValue();
+
   constructor(
-    // private httpService: HttpService,
-    // private address: AddressService,
-    private cityService: LocatoinApiService
+    private orderService: OrderService,
+    private locationService: LocationService,
+    private locationApiService: LocatoinApiService
   ) {}
 
   ngOnInit(): void {
-    this.cityService
+    this.locationApiService
       .getCity()
       .subscribe(
         (res) => (this.citiesList = res.data.map((val: any) => val.name))
       );
-    this.cityService
+    this.locationApiService
       .getPoint()
-      .subscribe(
-        (res) => (
-          (this.address = res.data),
-          (this.adressString = res.data.map((val: any) => val.address))
-        )
-      );
+      .subscribe((res) => (this.address = res.data));
   }
 
   onSearchCityItem(item: string) {
@@ -75,6 +68,7 @@ export class StepLocationComponent implements OnInit, OnDestroy {
     this.addressValues.city = item;
     this.addressValues.address = "";
     this.setValuesAddress(this.addressValues);
+    this.locationService.setCityValue(item); // может сделать это в родительском компоненте
     this.fullAddress = item;
     this.getCoordinate(this.fullAddress);
   }
@@ -92,8 +86,13 @@ export class StepLocationComponent implements OnInit, OnDestroy {
     this.addressValues.address = "";
   }
 
-  setValuesAddress(item: ValueAddressInterface) {
-    this.addressValueChange.emit(item);
+  setValuesAddress(item: ILocationValue) {
+    if (item.address != "" && item.city != "") {
+      item.valid = true;
+      this.orderService.setLocationValue(item);
+      this.addressValueChange.emit();
+    }
+
     return;
   }
 
@@ -101,8 +100,7 @@ export class StepLocationComponent implements OnInit, OnDestroy {
     const value = this.checkForMatch(item, this.citiesList);
     if (value != undefined) {
       this.addressValues.city = item;
-    } else {
-      console.log(this.textNoMathces);
+      // this.addressValueChange.emit();
     }
   }
 
@@ -110,8 +108,7 @@ export class StepLocationComponent implements OnInit, OnDestroy {
     const value = this.checkForMatch(item, this.activeAddress);
     if (value != undefined) {
       this.addressValues.address = item; // при сохранении инпут остается пустым и данные пока не отправляются
-    } else {
-      console.log(this.textNoMathces); // попробовать переписать в одну строку
+      // this.addressValueChange.emit();
     }
   }
 
@@ -124,7 +121,7 @@ export class StepLocationComponent implements OnInit, OnDestroy {
   }
 
   getCoordinate(item: string) {
-    this.cityService
+    this.locationApiService
       .getCoordinates(item)
       .subscribe((res) => (this.coordinate = res));
   }

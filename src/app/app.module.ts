@@ -7,9 +7,11 @@ import { ButtonModule } from "./button/button.module";
 import { StartPageModule } from "./start-page/start-page.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { LocatoinApiService } from "./services/location.api.service";
+import { LocatoinApiService } from "./shared/services/location.api.service";
 import { ErrorInterceptor } from "./interceptors/error.interceptor";
 import { TokenInterceptor } from "./interceptors/tocen.interceptor";
+import { LocationService } from "./shared/services/location.service";
+import { OrderService } from "./shared/services/order.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +27,8 @@ import { TokenInterceptor } from "./interceptors/tocen.interceptor";
   ],
   providers: [
     LocatoinApiService,
+    LocationService,
+    OrderService,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ],

@@ -17,7 +17,7 @@ export class TokenInterceptor implements HttpInterceptor {
     const modifiedRequest = req.clone({
       headers: req.headers.set(
         "X-Api-Factory-Application-Id",
-        environment["X-Api-Factory-Application-Id"]
+        environment["apiFactoryId"]
       ),
     });
     return next.handle(modifiedRequest);

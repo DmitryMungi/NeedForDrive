@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { OrderService } from "src/app/shared/services/order.service";
 import { CarInterface } from "../form-steps/step-model/carsList.const";
 import {
   activeStepEnum,
@@ -6,7 +7,7 @@ import {
   TEXTBTN2,
   TEXTBTN3,
   TEXTBTN4,
-  ValueAddressInterface,
+  ILocationValue,
 } from "../order-form.interface";
 
 @Component({
@@ -15,25 +16,27 @@ import {
   styleUrls: ["./order-info.component.less"],
 })
 export class OrderInfoComponent {
-  @Input() addressValid: boolean = false;
+  // @Input() addressValid: boolean = false; //  пока что отвечает за шаги кнопки.
   @Input() modelValid: boolean = false;
-  @Input() addressValues!: ValueAddressInterface;
+  // @Input() addressValues!: ILocationValue;
   @Input() checkedCar?: CarInterface;
   @Input() priceRance?: string;
   @Input() activeStep: activeStepEnum = activeStepEnum.step1;
 
   @Output() nextStep = new EventEmitter();
 
-  constructor() {}
+  constructor(private orderService: OrderService) {}
+
+  public addressValues: ILocationValue = this.orderService.getLocationValue();
 
   public get textBtn() {
     return getTextBtn(this.activeStep);
   }
 
-  isValidBtn(item: activeStepEnum): boolean {
+  isValidBtn(item: activeStepEnum): boolean | undefined {
     switch (item) {
       case activeStepEnum.step1:
-        return this.addressValid;
+        return this.addressValues.valid;
       case activeStepEnum.step2:
         return this.modelValid;
       default:
@@ -41,7 +44,7 @@ export class OrderInfoComponent {
     }
   }
 
-  public get btnIsValid(): boolean {
+  public get btnIsValid(): boolean | undefined {
     return this.isValidBtn(this.activeStep);
   }
 

@@ -16,16 +16,11 @@ import { StepFinalComponent } from "./order-page/form-blog/form-steps/step-final
 import { OrderInfoComponent } from "./order-page/form-blog/order-info/order-info.component";
 import { InputModule } from "../input/input.module";
 import { environment } from "../../environments/environment";
-// import { LocatoinApiService } from "../services/location.api.service";
 
 const mapConfig: YaConfig = {
   apikey: environment.apiKeyMap,
   lang: "ru_RU",
 };
-
-// 5c6ecc94-70fb-402b-b36b-c554bee31024
-
-// "fa1fe0ab-37b7-4d26-a68c-7372986f7de9"
 
 @NgModule({
   declarations: [
@@ -49,7 +44,6 @@ const mapConfig: YaConfig = {
     InputModule,
     HttpClientModule,
   ],
-  // providers: [LocatoinApiService],
   exports: [FormsModule, ReactiveFormsModule],
 })
 export class OrderPageModule {}

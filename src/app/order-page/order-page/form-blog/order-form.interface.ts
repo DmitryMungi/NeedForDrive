@@ -16,10 +16,10 @@ export interface PageSteps {
   isValid: boolean;
 }
 
-export interface ValueAddressInterface {
+export interface ILocationValue {
   city: string;
   address: string;
-  valid?: boolean;
+  valid?: boolean; // повторяется
 }
 
 export const pageTitles: PageSteps[] = [

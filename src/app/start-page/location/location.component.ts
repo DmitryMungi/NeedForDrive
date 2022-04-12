@@ -1,5 +1,5 @@
-import { Component, Input } from "@angular/core";
-import { LocationService } from "src/app/services/location.service";
+import { Component } from "@angular/core";
+import { LocationService } from "src/app/shared/services/location.service";
 
 @Component({
   selector: "app-location",
@@ -9,5 +9,7 @@ import { LocationService } from "src/app/services/location.service";
 export class LocationComponent {
   constructor(private locationService: LocationService) {}
 
-  @Input() cityValue: string = this.locationService.getCityValue();
+  public get getCity() {
+    return this.locationService.getCityValue();
+  }
 }

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import {
   ICity,
   IAddress,
-} from "../order-page/order-page/form-blog/form-steps/step-location/address.interface";
+} from "../../order-page/order-page/form-blog/form-steps/step-location/location.interface";
 
 @Injectable({ providedIn: "root" })
 export class AddressService {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { activeStepEnum, PageSteps, pageTitles } from "./order-form.interface";
-import { LocationService } from "src/app/services/location.service";
+import { LocationService } from "src/app/shared/services/location.service";
 import {
   FormGroup,
   FormControl,
@@ -9,7 +9,7 @@ import {
 } from "@angular/forms";
 
 import { CarInterface } from "./form-steps/step-model/carsList.const";
-import { ValueAddressInterface } from "./order-form.interface";
+// import { ILocationValue } from "../../../shared/interfaces/order.interface";
 
 const STARTPRICE = "8 000 до 12 000 ₽";
 
@@ -23,14 +23,14 @@ export class OrderFormComponent implements OnInit {
   public activeStep: activeStepEnum = activeStepEnum.step1;
   public activeStepEnum = activeStepEnum;
 
-  public addressValues: ValueAddressInterface = {
-    city: "",
-    address: "",
-  };
+  // public addressValues: ILocationValue = {
+  //   city: "",
+  //   address: "",
+  // };
   public checkedCar?: CarInterface;
   public priceRange: string = STARTPRICE;
 
-  public addressValid: boolean = false;
+  // public addressValid: boolean = false;
   public modelValid: boolean = false;
   public orderForm = new FormGroup({
     cityName: new FormControl("", Validators.required),
@@ -47,12 +47,12 @@ export class OrderFormComponent implements OnInit {
     this.pageStepsTitles[0].isValid = true;
   }
 
-  addressValueChange(item: ValueAddressInterface) {
-    if (item.city != "" && item.address != "") {
-      this.addressValues = item;
-      this.pageStepsTitles[1].isValid = true;
-      this.addressValid = true;
-    }
+  addressValueChange() {
+    // if (item.city != "" && item.address != "") {
+    // this.addressValues = item;
+    this.pageStepsTitles[1].isValid = true;
+    // this.addressValid = true;
+    // }
   }
 
   toStep(item: PageSteps): void {

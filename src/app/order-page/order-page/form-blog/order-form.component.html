@@ -1,4 +1,4 @@
-<app-header [cityValue]="addressValues.city"></app-header>
+<app-header></app-header>
 
 <nav class="steps_nav">
   <div class="container">
@@ -24,10 +24,11 @@
       <app-step-location
         [formGroup]="orderForm"
         [form]="orderForm"
-        [addressValues]="addressValues"
-        (addressValueChange)="addressValueChange($event)"
+        (addressValueChange)="addressValueChange()"
         *ngIf="activeStep === activeStepEnum.step1"
       ></app-step-location>
+
+      <!-- [addressValues]="addressValues" -->
 
       <app-step-model
         [carModel]="checkedCar?.model"
@@ -42,12 +43,12 @@
 
   <app-order-info
     [activeStep]="activeStep"
-    [addressValid]="addressValid"
-    [addressValues]="addressValues"
     [checkedCar]="checkedCar"
     [modelValid]="modelValid"
     [priceRance]="priceRange"
     (nextStep)="toNextStep()"
   >
   </app-order-info>
+  <!-- [addressValid]="addressValid" -->
+  <!-- [addressValues]="addressValues" -->
 </div>

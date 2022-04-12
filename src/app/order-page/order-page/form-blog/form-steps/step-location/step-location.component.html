@@ -36,21 +36,5 @@
         [geometry]="[coordinate.lat, coordinate.lng]"
       ></ya-placemark>
     </ya-map>
-    <!-- (ready)="onMapReady($event)" -->
   </div>
 </div>
-<!--
-<ya-map
-[center]="[55.753994, 37.622093]"
-[zoom]="12"
-[state]="{
-  controls: ['zoomControl']
-}"
-(ready)="onMapReady($event)"
->
-<ya-placemark
-  *ngFor="let plase of addressList"
-  [geometry]="plase.geometry"
-  [options]="optionsPlacemark"
-></ya-placemark>
-</ya-map> -->

@@ -1,4 +1,4 @@
-import { ICity, IAddress, Igeo, Iplacemark } from "./address.interface";
+import { ICity, IAddress, Igeo, Iplacemark } from "./location.interface";
 
 export const CITY_DEFAULT = "Ульяновск";
 
@@ -12,6 +12,7 @@ export const DEFAULT_GEO: Igeo = {
 };
 
 export const NO_MATCHES: string = "Совпадений не найдено";
+export const NO_CHOSEN: string = "Не выбран";
 
 export const OPTION_PLACEMARK: Iplacemark = {
   preset: "islands#circleIcon",
