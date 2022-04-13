@@ -25,6 +25,6 @@ export class StepAdditComponent {
     thumbnail: {},
     description: "description",
     categoryId: {},
-    colors: ["Красный", "Голубой"],
+    colors: ["Любой", "Красный", "Голубой"],
   };
 }

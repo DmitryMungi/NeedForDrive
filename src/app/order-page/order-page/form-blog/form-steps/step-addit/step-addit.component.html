@@ -34,20 +34,22 @@
 <div class="section">
   <h5>Дата аренды</h5>
   <div>
-    <label>С</label> <input type="date" placeholder="Введите дату и время" />
+    <label>С</label>
+    <input type="datetime-local" placeholder="Введите дату и время" />
   </div>
   <div>
-    <label>По</label> <input type="date" placeholder="Введите дату и время" />
+    <label>По</label>
+    <input type="datetime" placeholder="Введите дату и время" />
   </div>
 </div>
 <div class="section">
   <h5>Тариф</h5>
   <div>
-    <!-- <app-radio-button
+    <app-radio-button
       *ngFor="let c of car.colors"
       name="sortColor"
       [label]="c"
-    ></app-radio-button> -->
+    ></app-radio-button>
   </div>
 </div>
 <div class="section">
