@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { activeStepEnum, PageSteps, pageTitles } from "./order-form.interface";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-
-import { CarInterface } from "./form-steps/step-model/carsList.const";
+import { CarModel } from "./form-steps/step-model/module.interface";
 
 const STARTPRICE = "8 000 до 12 000 ₽";
 
@@ -16,7 +15,7 @@ export class OrderFormComponent implements OnInit {
   public activeStep: activeStepEnum = activeStepEnum.step1;
   public activeStepEnum = activeStepEnum;
 
-  public checkedCar?: CarInterface;
+  public checkedCar?: CarModel;
   public priceRange: string = STARTPRICE;
 
   public modelValid: boolean = false;
@@ -46,9 +45,9 @@ export class OrderFormComponent implements OnInit {
     }
   }
 
-  selectedCar(car: CarInterface) {
+  selectedCar(car: CarModel) {
     this.checkedCar = car;
-    this.priceRange = car.priceRange;
+    // this.priceRange = car.priceRange;// нужно переделать
     this.modelValid = true;
     this.pageStepsTitles[activeStepEnum.step3].isValid = true;
   }

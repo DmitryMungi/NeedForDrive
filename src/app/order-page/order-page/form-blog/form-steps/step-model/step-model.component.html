@@ -1,31 +1,32 @@
+<app-loader *ngIf="isLoading | async"> </app-loader>
 <div class="model_sort__wrapp">
-  <div class="sort-radio" *ngFor="let t of radioToggles">
+  <div class="sort-radio" *ngFor="let c of category">
     <input
       type="radio"
       class="sort-radio__input"
       name="model-sort"
-      [value]="t.value"
-      (change)="filter(t)"
-      [checked]="t.checked"
+      [value]="c.name"
+      (change)="onFilter(c)"
     />
-    <span class="sort-radio__label">{{ t.value }} </span>
+    <span class="sort-radio__label">{{ c.name }} </span>
   </div>
 </div>
 
 <div class="car_list">
   <div
-    *ngFor="let car of filterCarList"
+    *ngFor="let car of filterCar"
     (click)="onCardClick(car)"
     class="car_list__card"
-    [class.active]="car.checked"
+    [class.active]="car.isActive"
   >
-    <div class="card-model">{{ car.model }}</div>
+    <div class="card-model">{{ car.name }}</div>
     <div class="card-price gray-text">
-      {{ car.priceRange }}
+      {{ car.priceMin }} до {{ car.priceMax }}
     </div>
-    <img class="card-img" [src]="car.img" alt="" />
+    <img class="card-img" [src]="car.thumbnailUrl" alt="" />
   </div>
 </div>
+
 <input
   id="model"
   class="form_group__input-modal"

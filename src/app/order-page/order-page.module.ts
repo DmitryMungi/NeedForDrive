@@ -16,6 +16,7 @@ import { StepFinalComponent } from "./order-page/form-blog/form-steps/step-final
 import { OrderInfoComponent } from "./order-page/form-blog/order-info/order-info.component";
 import { InputModule } from "../input/input.module";
 import { environment } from "../../environments/environment";
+import { LoaderComponent } from "./shared-components/loader/loader.component";
 
 const mapConfig: YaConfig = {
   apikey: environment.apiKeyMap,
@@ -32,6 +33,7 @@ const mapConfig: YaConfig = {
     StepConfirmComponent,
     StepFinalComponent,
     OrderInfoComponent,
+    LoaderComponent,
   ],
   imports: [
     CommonModule,
