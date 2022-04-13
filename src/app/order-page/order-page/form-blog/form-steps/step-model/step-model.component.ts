@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { UntilDestroy } from "@ngneat/until-destroy";
 import { Observable, Subject } from "rxjs";
 import {
   CarModel,
@@ -7,7 +8,7 @@ import {
 } from "src/app/order-page/order-page/form-blog/form-steps/step-model/module.interface";
 import { ModuleApiService } from "./module.api.service";
 import { LoadingService } from "src/app/shared/services/loading.service";
-
+@UntilDestroy({ checkProperties: true })
 @Component({
   selector: "app-step-model",
   templateUrl: "./step-model.component.html",
