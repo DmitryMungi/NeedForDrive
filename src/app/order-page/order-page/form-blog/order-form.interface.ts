@@ -3,6 +3,11 @@ export const TEXTBTN2 = "Дополнительно";
 export const TEXTBTN3 = "Итого";
 export const TEXTBTN4 = "Заказать";
 
+export const ORDER_CONTROLS = {
+  cityName: "cityName",
+  addressName: "adressName",
+};
+
 export enum activeStepEnum {
   step1,
   step2,

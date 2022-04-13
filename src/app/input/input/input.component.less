@@ -1,0 +1,111 @@
+@import '../../../common-styles/variables.less';
+@import '../../../common-styles/text.less';
+
+.input {
+  margin-bottom: 12px;
+  display: flex;
+  &__input-wrapp {
+    width: 224px;
+    position: relative;
+    height: 20px;
+    box-sizing: border-box;
+  }
+  &__search-box {
+    max-height: 106px;
+    overflow: hidden;
+    overflow-y: auto;
+    display: none;
+    &:hover {
+      display: block;
+    }
+    .search-box__item {
+      cursor: pointer;
+      &:hover {
+        color: @color-green;
+      }
+    }
+  }
+  .clear-input__btn {
+    position: absolute;
+    background-color: @color-white;
+    border: none;
+    outline: none;
+    right: 6px;
+    top: 2px;
+    cursor: pointer;
+    .close-icon {
+      stroke: black;
+      width: 12px;
+      height: 12px;
+    }
+  }
+  .search-box__item, .no-correct__item {
+    padding: 4px 8px;
+    font-family: 'Roboto-Light';
+    font-weight: 300;
+    font-size: 14px;
+    color: @color-grey;
+  }
+  &__no-correct, &__search-box {
+    background-color: @color-white;
+    position: absolute;
+    left: 0;
+    overflow-y: auto;
+    width: 100%;
+    z-index: 5;
+    border: 1px solid @color-grey-light;
+  }
+  &__input {
+    width: 100%;
+    padding: 0 22px 0 8px;
+    border: none;
+    border-bottom: 1px solid @color-grey;
+    outline: none;
+  }
+  &__label {
+    margin-right: 8px;
+    white-space: nowrap;;
+  }
+}
+
+.input__input:focus ~ .input__search-box{
+  display: block;
+}
+.input__input,
+.label_form {
+  font-size: 14px;
+  font-family: "Roboto-Light";
+  font-weight: 300;
+  color: @color-black;
+}
+.input__input.ng-touched.ng-invalid {
+  border-bottom: solid @color-red 2px;
+}
+
+@media (max-width: 750px) {
+  .input {
+    width: 90%;
+    flex-direction: column;
+    .input__input {
+      padding-top: 8px;
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 580px) {
+  .form_group {
+    width: 100%;
+    flex-direction: row;
+    justify-content: end;
+    .form_group__input {
+      padding-top: 0;
+    }
+  }
+}
+
+@media (max-width: 380px) {
+  .form_group {
+    flex-direction: column;
+  }
+}

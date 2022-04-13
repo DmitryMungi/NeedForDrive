@@ -4,53 +4,28 @@
 :host {
   width: 100%;
 }
-
 .inputs__wrapp {
   margin: 32px 0 45px;
   display: inline-flex;
   flex-direction: column;
   align-items: flex-end;
 
-  .form_group {
-    margin-bottom: 12px;
-
-    &__input {
-      width: 224px;
-      padding: 0 8px;
-      border: none;
-      border-bottom: 1px solid @color-grey;
-      outline: none;
-    }
-
-    &__label {
-      margin-right: 8px;
-    }
-  }
 }
-
-.form_group__input,
-.label_form {
-  font-size: 14px;
-  font-family: "Roboto-Light";
-  font-weight: 300;
-  color: @color-black;
-}
-
-.form_group__input.ng-touched.ng-invalid {
-  border-bottom: solid @color-red 2px;
-}
-
 .map__wrapp {
   width: 78%;
-
   .map__label {
     margin-bottom: 16px;
   }
-  .map_img {
+  .map-container {
     width: 100%;
+    height: 352px;
   }
 }
 
+.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+}
 @media (max-width: 1020px) {
   .map__wrapp {
     width: 90%;
@@ -59,32 +34,20 @@
 @media (max-width: 750px) {
   .inputs__wrapp {
     align-items: center;
-
-    .form_group {
-      width: 90%;
-
-      .form_group__input {
-        padding-top: 8px;
-        width: 100%;
-      }
-    }
   }
 }
-
 @media (max-width: 580px) {
   .inputs__wrapp {
     align-items: flex-end;
-    .form_group {
-      width: 100%;
-      text-align: end;
-      .form_group__input {
-        padding-top: 0;
-        width: auto;
-      }
-    }
   }
-
   .map__wrapp {
     width: 100%;
+  }
+}
+@media (max-width: 380px) {
+  .inputs__wrapp {
+    .form_group {
+      flex-direction: column;
+    }
   }
 }
