@@ -1,129 +1,124 @@
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { ICity, IAddress, Igeo, Iplacemark } from "./location.interface";
+import { LocatoinApiService } from "src/app/shared/services/location.api.service";
+import { LocationService } from "src/app/shared/services/location.service";
+import { OrderService } from "src/app/shared/services/order.service";
+import { ILocationValue } from "src/app/shared/interfaces/order.interface";
 import {
-  Component,
-  Input,
-  OnInit,
-  Output,
-  EventEmitter,
-  ViewChild,
-  ElementRef,
-} from "@angular/core";
-import { ControlContainer, NgForm } from "@angular/forms";
-import { from, fromEvent, Observable } from "rxjs";
-import {
-  toArray,
-  filter,
-  pluck,
-  distinctUntilChanged,
-  switchMap,
-} from "rxjs/operators";
-import { addressArray } from "./address.const";
-import { CityInterface, AddressInterface } from "./address.interface";
-import { ValueAddressInterface } from "../../order-form.interface";
+  DEFAULT_GEO,
+  NO_MATCHES,
+  OPTION_PLACEMARK,
+  CITY_DEFAULT,
+} from "./location.const";
+import { ORDER_CONTROLS } from "../../order-form.interface";
+import { Subject } from "rxjs";
 
+@UntilDestroy({ checkProperties: true })
 @Component({
   selector: "app-step-location",
   templateUrl: "./step-location.component.html",
   styleUrls: ["./step-location.component.less"],
-  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
 })
 export class StepLocationComponent implements OnInit {
-  @Input() addressValues!: ValueAddressInterface;
   @Output() addressValueChange = new EventEmitter();
-  @ViewChild("inputCity") inputCity!: ElementRef;
-  @ViewChild("inputAddress") inputAddress!: ElementRef;
-  @ViewChild("listDropDown") listDropDown!: ElementRef;
-  @ViewChild("AddressDropDown") addressDropDown!: ElementRef;
-  public searchCityResult$!: Observable<Array<CityInterface>>;
-  public searchAddressResult$!: Observable<Array<AddressInterface>>;
-  public cityGiometry!: number[];
 
-  public optionsPlacemark = {
-    preset: "islands#circleIcon",
-    iconColor: "#0ec261",
-  };
+  public cities: ICity[] = [];
+  public address: IAddress[] = [];
+  public activeAddress: string[] = [];
+  public citiesList: string[] = [];
 
-  public cityList: Array<CityInterface> = addressArray;
+  public optionsPlacemark: Iplacemark = OPTION_PLACEMARK;
+  public coordinate: Igeo = DEFAULT_GEO;
+  public textNoMathces: string = NO_MATCHES;
+  public orderConrtrols = ORDER_CONTROLS;
+  public fullAddress: string = CITY_DEFAULT;
 
-  public addressList: AddressInterface[] = [];
+  public addressList: IAddress[] = [];
 
-  constructor() {}
+  public subj: Subject<string> = new Subject();
+  public addressValues: ILocationValue = this.orderService.getLocationValue();
+
+  constructor(
+    private orderService: OrderService,
+    private locationService: LocationService,
+    private locationApiService: LocatoinApiService
+  ) {}
 
   ngOnInit(): void {
-    const searchcity: any = document.querySelector("#search-city");
-    const searchAddress: any = document.querySelector("#sarch-address");
-    const activeCity = this.cityList.filter(
-      (x) => x.name === this.addressValues.city
-    );
-    this.cityGiometry = activeCity[0].geometry;
-    this.addressList = activeCity[0].address;
+    this.locationApiService
+      .getCity()
+      .subscribe(
+        (res) => (this.citiesList = res.data.map((val: ICity) => val.name))
+      );
+    this.locationApiService
+      .getPoint()
+      .subscribe((res) => (this.address = res.data));
 
-    this.searchCityResult$ = fromEvent(searchcity, "input").pipe(
-      pluck("target", "value"),
-      distinctUntilChanged(),
-      switchMap((searchTerm: any) => this.searchCity(searchTerm.toLowerCase()))
-    );
-
-    this.searchAddressResult$ = fromEvent(searchAddress, "input").pipe(
-      pluck("target", "value"),
-      distinctUntilChanged(),
-      switchMap((searchTerm: any) =>
-        this.searchAddress(searchTerm.toLowerCase())
-      )
+    this.subj.subscribe((address) =>
+      this.locationApiService
+        .getCoordinates(address)
+        .subscribe((res) => (this.coordinate = res))
     );
   }
 
-  searchCity(searchTerm: string): Observable<Array<CityInterface>> {
-    return from(this.cityList).pipe(
-      filter(
-        (cityName) =>
-          cityName.name.toLocaleLowerCase().indexOf(searchTerm) !== -1
-      ),
-      toArray()
-    );
+  onSearchCityItem(item: string) {
+    const addressObj = this.address.filter((x) => x.cityId?.name === item);
+    for (let i = 0; i < addressObj.length; i++) {
+      this.activeAddress.push(addressObj[i].address);
+    }
+    this.addressValues.city = item;
+    this.addressValues.address = "";
+    this.locationService.setCityValue(item);
+    this.fullAddress = item;
+    this.getCoordinate(this.fullAddress);
   }
 
-  searchAddress(searchTerm: string): Observable<Array<AddressInterface>> {
-    return from(this.addressList).pipe(
-      filter(
-        (addressName) =>
-          addressName.name.toLocaleLowerCase().indexOf(searchTerm) !== -1
-      ),
-      toArray()
-    );
+  onSearchAddressItem(item: string) {
+    this.addressValues.address = item;
+    this.setValuesAddress(this.addressValues);
+    this.fullAddress = this.fullAddress + item;
+    this.getCoordinate(this.fullAddress);
   }
 
-  onSearchCityItem(item: CityInterface) {
-    this.inputCity.nativeElement.value = item.name;
-    this.addressList = item.address;
-    this.inputAddress.nativeElement.value = "";
-    this.cityGiometry = item.geometry;
-    this.addressValues.city = item.name;
-    this.getValuesAddress(this.addressValues);
+  resetCity() {
+    this.addressValues.city = "";
+    this.activeAddress.length = 0;
+    this.resetAddress();
   }
 
-  onSearchAddressItem(item: AddressInterface) {
-    this.inputAddress.nativeElement.value = item.name;
-    this.cityGiometry = item.geometry;
-    this.addressValues.address = item.name;
-    this.getValuesAddress(this.addressValues);
+  resetAddress() {
+    this.addressValues.address = "";
   }
 
-  getValuesAddress(item: ValueAddressInterface) {
-    for (let i = 0; i < this.cityList.length; i++) {
-      if (this.cityList[i].name.toLowerCase() === item.city.toLowerCase()) {
-        for (let y = 0; y < this.addressList.length; y++) {
-          if (
-            this.addressList[y].name.toLowerCase() ===
-            item.address.toLowerCase()
-          ) {
-            this.addressValueChange.emit(item);
-            return;
-          }
-        }
-      }
+  setValuesAddress(item: ILocationValue) {
+    if (item.address != "" && item.city != "") {
+      item.valid = true;
+      this.orderService.setLocationValue(item);
+      this.addressValueChange.emit();
+    }
+    return;
+  }
+
+  changeCityValue(item: string) {
+    const value = this.checkForMatch(item, this.citiesList);
+    if (value != undefined) {
+      this.addressValues.city = item;
     }
   }
-  onDeleteValue(el: HTMLInputElement) {
-    el.value = "";
+
+  changeaddressValue(item: string) {
+    if (this.checkForMatch(item, this.activeAddress)) {
+      this.addressValues.address = item;
+    }
+  }
+
+  checkForMatch(item: string, list: string[]): boolean {
+    const match = list.filter((x) => x.toLowerCase() === item.toLowerCase());
+    return match.length != 0;
+  }
+
+  getCoordinate(item: string) {
+    this.subj.next(item);
   }
 }

@@ -1,139 +1,40 @@
 <div class="inputs__wrapp">
-  <div class="form_group">
-    <label class="form_group__label label_form"> Город </label>
-    <div class="form_group__input-wrapp">
-      <input
-        id="search-city"
-        class="form_group__input"
-        autocomplete="off"
-        name="city"
-        placeholder="Начните вводить пункт ..."
-        [(ngModel)]="addressValues.city"
-        value="addressValues.city"
-        (change)="getValuesAddress(addressValues)"
-        ngModel
-        required
-        #inputCity
-      />
-      <button (click)="onDeleteValue(inputCity)" class="clear-input__btn">
-        <svg class="close-icon">
-          <use xlink:href="assets/sprite/symbol-defs.svg#close-icon"></use>
-        </svg>
-      </button>
-      <div
-        class="form_group__search-box"
-        *ngIf="searchCityResult$ | async as searchCityResult; else listArray"
-        #listDropDown
-      >
-        <ng-container *ngIf="searchCityResult.length > 0; else notFound">
-          <div
-            class="search-box__item"
-            *ngFor="let result of searchCityResult"
-            (click)="onSearchCityItem(result)"
-          >
-            {{ result.name }}
-          </div>
-        </ng-container>
-        <ng-template #notFound>
-          <div
-            class="search-box__item"
-            *ngFor="let item of cityList"
-            (click)="onSearchCityItem(item)"
-          >
-            {{ item.name }}
-          </div>
-        </ng-template>
-      </div>
-      <ng-template #listArray>
-        <div class="form_group__search-box" #listDropDown>
-          <div
-            class="search-box__item"
-            *ngFor="let item of cityList"
-            (click)="onSearchCityItem(item)"
-          >
-            {{ item.name }}
-          </div>
-        </div>
-      </ng-template>
-    </div>
-  </div>
-  <div class="form_group">
-    <label class="form_group__label label_form" for=""> Пункт выдачи</label>
-    <div class="form_group__input-wrapp">
-      <input
-        id="sarch-address"
-        class="form_group__input"
-        name="address"
-        autocomplete="off"
-        placeholder="Начните вводить пункт ..."
-        [(ngModel)]="addressValues.address"
-        (change)="getValuesAddress(addressValues)"
-        value="address"
-        ngModel
-        required
-        #inputAddress
-      />
-      <button (click)="onDeleteValue(inputAddress)" class="clear-input__btn">
-        <svg class="close-icon">
-          <use xlink:href="assets/sprite/symbol-defs.svg#close-icon"></use>
-        </svg>
-      </button>
-      <div
-        class="form_group__search-box"
-        *ngIf="
-          searchAddressResult$ | async as searchAddressResult;
-          else listAddress
-        "
-        #AddressDropDown
-      >
-        <ng-container *ngIf="searchAddressResult.length > 0; else notFound">
-          <div
-            class="search-box__item"
-            *ngFor="let result of searchAddressResult"
-            (click)="onSearchAddressItem(result)"
-          >
-            {{ result.name }}
-          </div>
-        </ng-container>
-        <ng-template #notFound>
-          <div
-            class="search-box__item"
-            *ngFor="let item of addressList"
-            (click)="onSearchAddressItem(item)"
-          >
-            {{ item.name }}
-          </div>
-        </ng-template>
-      </div>
-      <ng-template #listAddress>
-        <div class="form_group__search-box" #AddressDropDown>
-          <div
-            class="search-box__item"
-            *ngFor="let item of addressList"
-            (click)="onSearchAddressItem(item)"
-          >
-            {{ item.name }}
-          </div>
-        </div>
-      </ng-template>
-    </div>
-  </div>
+  <app-input
+    [groupName]="orderConrtrols.cityName"
+    labelValue="Город"
+    name="city"
+    [list]="citiesList"
+    [value]="addressValues.city"
+    (valueChange)="changeCityValue($event)"
+    (onSearchItem)="onSearchCityItem($event)"
+    (deleteItem)="resetCity()"
+  ></app-input>
+  <app-input
+    [ngClass]="{ disabled: addressValues.city === '' }"
+    [groupName]="orderConrtrols.addressName"
+    labelValue="Пункт выдачи"
+    name="address"
+    [list]="activeAddress"
+    [value]="addressValues.address"
+    (valueChange)="changeaddressValue($event)"
+    (onSearchItem)="onSearchAddressItem($event)"
+    (deleteItem)="resetAddress()"
+  ></app-input>
 </div>
 
 <div class="map__wrapp">
   <div class="label_form map__label" for="">Выбрать на карте:</div>
   <div class="map-container">
     <ya-map
-      [center]="cityGiometry"
+      [center]="[coordinate.lat, coordinate.lng]"
       [zoom]="12"
       [state]="{
         controls: ['zoomControl']
       }"
     >
       <ya-placemark
-        *ngFor="let plase of addressList"
-        [geometry]="plase.geometry"
         [options]="optionsPlacemark"
+        [geometry]="[coordinate.lat, coordinate.lng]"
       ></ya-placemark>
     </ya-map>
   </div>

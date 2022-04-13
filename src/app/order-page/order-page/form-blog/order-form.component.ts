@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { activeStepEnum, PageSteps, pageTitles } from "./order-form.interface";
-import { LocationService } from "src/app/services/location.service";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 
 import { CarInterface } from "./form-steps/step-model/carsList.const";
-import { ValueAddressInterface } from "./order-form.interface";
 
 const STARTPRICE = "8 000 до 12 000 ₽";
 
@@ -17,28 +16,24 @@ export class OrderFormComponent implements OnInit {
   public activeStep: activeStepEnum = activeStepEnum.step1;
   public activeStepEnum = activeStepEnum;
 
-  public addressValues: ValueAddressInterface = {
-    city: "",
-    address: "",
-  };
   public checkedCar?: CarInterface;
   public priceRange: string = STARTPRICE;
 
-  public addressValid: boolean = false;
   public modelValid: boolean = false;
-
-  constructor(private locationService: LocationService) {}
+  public orderForm = new FormGroup({
+    cityName: new FormControl("", Validators.required),
+    addressName: new FormControl("", Validators.required),
+    modelName: new FormControl("", Validators.required),
+  });
+  constructor() {}
 
   ngOnInit(): void {
     this.pageStepsTitles.forEach((i) => (i.isValid = false));
-    this.pageStepsTitles[0].isValid = true;
-    this.addressValues.city = this.locationService.getCityValue();
+    this.pageStepsTitles[activeStepEnum.step1].isValid = true;
   }
 
-  addressValueChange(item: ValueAddressInterface) {
-    this.addressValues = item;
-    this.pageStepsTitles[1].isValid = true;
-    this.addressValid = true;
+  addressValueChange() {
+    this.pageStepsTitles[activeStepEnum.step2].isValid = true;
   }
 
   toStep(item: PageSteps): void {
@@ -55,6 +50,6 @@ export class OrderFormComponent implements OnInit {
     this.checkedCar = car;
     this.priceRange = car.priceRange;
     this.modelValid = true;
-    this.pageStepsTitles[2].isValid = true;
+    this.pageStepsTitles[activeStepEnum.step3].isValid = true;
   }
 }

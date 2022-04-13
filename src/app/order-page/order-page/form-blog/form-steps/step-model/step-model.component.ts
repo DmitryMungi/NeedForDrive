@@ -1,5 +1,4 @@
 import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
-import { ControlContainer, NgForm } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
   cars,
@@ -15,7 +14,6 @@ import {
   selector: "app-step-model",
   templateUrl: "./step-model.component.html",
   styleUrls: ["./step-model.component.less"],
-  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
 })
 export class StepModelComponent implements OnInit {
   @Input() carModel?: string;

@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
+import { HttpClientModule } from "@angular/common/http";
 import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AngularYandexMapsModule, YaConfig } from "angular8-yandex-maps";
 import { OrderPageComponent } from "./order-page/order-page.component";
 import { OrderPageRoutingModule } from "./order-page.routing.module";
@@ -13,9 +14,11 @@ import { StepAdditComponent } from "./order-page/form-blog/form-steps/step-addit
 import { StepConfirmComponent } from "./order-page/form-blog/form-steps/step-confirm/step-confirm.component";
 import { StepFinalComponent } from "./order-page/form-blog/form-steps/step-final/step-final.component";
 import { OrderInfoComponent } from "./order-page/form-blog/order-info/order-info.component";
+import { InputModule } from "../input/input.module";
+import { environment } from "../../environments/environment";
 
 const mapConfig: YaConfig = {
-  apikey: "fa1fe0ab-37b7-4d26-a68c-7372986f7de9",
+  apikey: environment.apiKeyMap,
   lang: "ru_RU",
 };
 
@@ -36,7 +39,11 @@ const mapConfig: YaConfig = {
     StartPageModule,
     ButtonModule,
     FormsModule,
-    AngularYandexMapsModule,
+    ReactiveFormsModule,
+    AngularYandexMapsModule.forRoot(mapConfig),
+    InputModule,
+    HttpClientModule,
   ],
+  exports: [FormsModule, ReactiveFormsModule],
 })
 export class OrderPageModule {}

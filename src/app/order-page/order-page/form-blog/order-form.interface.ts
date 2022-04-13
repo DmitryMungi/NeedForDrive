@@ -3,6 +3,11 @@ export const TEXTBTN2 = "Дополнительно";
 export const TEXTBTN3 = "Итого";
 export const TEXTBTN4 = "Заказать";
 
+export const ORDER_CONTROLS = {
+  cityName: "cityName",
+  addressName: "adressName",
+};
+
 export enum activeStepEnum {
   step1,
   step2,
@@ -14,12 +19,6 @@ export interface PageSteps {
   title: string;
   step: activeStepEnum;
   isValid: boolean;
-}
-
-export interface ValueAddressInterface {
-  city: string;
-  address: string;
-  valid?: boolean;
 }
 
 export const pageTitles: PageSteps[] = [

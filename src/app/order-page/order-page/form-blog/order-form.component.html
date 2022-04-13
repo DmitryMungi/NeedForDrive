@@ -1,4 +1,4 @@
-<app-header [cityValue]="addressValues.city"></app-header>
+<app-header></app-header>
 
 <nav class="steps_nav">
   <div class="container">
@@ -18,13 +18,11 @@
     </div>
   </div>
 </nav>
-
 <div class="container order_page__container">
   <div class="order-steps_wrapp">
-    <form class="order-form" #orderForm="ngForm">
+    <form class="order-form" [formGroup]="orderForm">
       <app-step-location
-        [addressValues]="addressValues"
-        (addressValueChange)="addressValueChange($event)"
+        (addressValueChange)="addressValueChange()"
         *ngIf="activeStep === activeStepEnum.step1"
       ></app-step-location>
 
@@ -41,8 +39,6 @@
 
   <app-order-info
     [activeStep]="activeStep"
-    [addressValid]="addressValid"
-    [addressValues]="addressValues"
     [checkedCar]="checkedCar"
     [modelValid]="modelValid"
     [priceRance]="priceRange"

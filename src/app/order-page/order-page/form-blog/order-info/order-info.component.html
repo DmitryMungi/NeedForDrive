@@ -4,7 +4,10 @@
     <span class="order-item__label">Пункт выдачи</span>
     <span class="dote-border"></span>
     <span
-      *ngIf="addressValid; else nonaddress"
+      *ngIf="
+        addressValues.city != '' && addressValues.address != '';
+        else nonaddress
+      "
       class="order-item__item column-item"
     >
       <span>{{ addressValues.city }},</span>
@@ -14,7 +17,10 @@
       <span class="order-item__item">Не выбран</span>
     </ng-template>
   </div>
-  <div *ngIf="addressValid" class="order-item">
+  <div
+    *ngIf="addressValues.city != '' && addressValues.address != ''"
+    class="order-item"
+  >
     <span class="order-item__label">Модель</span>
     <span class="dote-border"></span>
     <span *ngIf="modelValid; else nonmodel" class="order-item__item">
