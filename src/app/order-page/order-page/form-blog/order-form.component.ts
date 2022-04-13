@@ -29,11 +29,11 @@ export class OrderFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.pageStepsTitles.forEach((i) => (i.isValid = false));
-    this.pageStepsTitles[0].isValid = true;
+    this.pageStepsTitles[activeStepEnum.step1].isValid = true;
   }
 
   addressValueChange() {
-    this.pageStepsTitles[activeStepEnum.step2];
+    this.pageStepsTitles[activeStepEnum.step2].isValid = true;
   }
 
   toStep(item: PageSteps): void {
@@ -50,6 +50,6 @@ export class OrderFormComponent implements OnInit {
     this.checkedCar = car;
     this.priceRange = car.priceRange;
     this.modelValid = true;
-    this.pageStepsTitles[2].isValid = true;
+    this.pageStepsTitles[activeStepEnum.step3].isValid = true;
   }
 }

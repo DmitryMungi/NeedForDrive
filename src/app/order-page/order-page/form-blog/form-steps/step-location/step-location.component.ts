@@ -36,7 +36,7 @@ export class StepLocationComponent implements OnInit {
 
   public addressList: IAddress[] = [];
 
-  public subj: Subject<any> = new Subject();
+  public subj: Subject<string> = new Subject();
   public addressValues: ILocationValue = this.orderService.getLocationValue();
 
   constructor(
@@ -115,7 +115,7 @@ export class StepLocationComponent implements OnInit {
 
   checkForMatch(item: string, list: string[]): boolean {
     const match = list.filter((x) => x.toLowerCase() === item.toLowerCase());
-    return match.length != 0 ? true : false;
+    return match.length != 0;
   }
 
   getCoordinate(item: string) {

@@ -2,19 +2,23 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, map } from "rxjs";
 import { environment } from "src/environments/environment";
-import { ICityRes, IPointRes, IGeoRes } from "../interfaces/order.interface";
-import { Igeo } from "src/app/order-page/order-page/form-blog/form-steps/step-location/location.interface";
+import { IGeoRes, IRes } from "../interfaces/order.interface";
+import {
+  Igeo,
+  ICity,
+  IAddress,
+} from "src/app/order-page/order-page/form-blog/form-steps/step-location/location.interface";
 
 @Injectable({ providedIn: "root" })
 export class LocatoinApiService {
   constructor(private http: HttpClient) {}
 
-  getCity(): Observable<ICityRes> {
-    return this.http.get<ICityRes>(`${environment.apiUrl}/db/city`);
+  getCity(): Observable<IRes<ICity>> {
+    return this.http.get<IRes<ICity>>(`${environment.apiUrl}/db/city`);
   }
 
-  getPoint(): Observable<IPointRes> {
-    return this.http.get<IPointRes>(`${environment.apiUrl}/db/point`);
+  getPoint(): Observable<IRes<IAddress>> {
+    return this.http.get<IRes<IAddress>>(`${environment.apiUrl}/db/point`);
   }
 
   getCoordinates(address: string): Observable<Igeo> {

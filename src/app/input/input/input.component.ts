@@ -68,7 +68,7 @@ export class InputComponent implements OnInit, AfterViewInit {
 
   onClickSearchItem(item: string) {
     this.onSearchItem.emit(item);
-    this.formGroup.value.name = item;
+    this.formGroup.patchValue({ name: item });
   }
 
   search(searchTerm: string): Observable<Array<string>> {

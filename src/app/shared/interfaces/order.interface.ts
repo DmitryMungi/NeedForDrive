@@ -9,43 +9,9 @@ export interface ILocationValue {
   valid: boolean;
 }
 
-export interface ICityRes {
+export interface IRes<T> {
   count: number;
-  data: ICity[];
-  fields: {
-    name: {
-      name: string;
-      type: string;
-      required: boolean;
-    };
-  };
-}
-
-export interface IPointRes {
-  count: number;
-  data: IAddress[];
-  fields: {
-    address: {
-      name: string;
-      required: boolean;
-      type: string;
-    };
-    cityId: {
-      name: string;
-      populate: {
-        filter: string;
-        select: [];
-        ref: string;
-        required: boolean;
-        type: string;
-      };
-    };
-    name: {
-      name: string;
-      required: boolean;
-      type: string;
-    };
-  };
+  data: T[];
 }
 
 export interface IGeoRes {
