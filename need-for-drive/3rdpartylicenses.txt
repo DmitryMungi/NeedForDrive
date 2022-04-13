@@ -13,6 +13,9 @@ MIT
 @angular/router
 MIT
 
+@ngneat/until-destroy
+MIT
+
 angular8-yandex-maps
 MIT
 
