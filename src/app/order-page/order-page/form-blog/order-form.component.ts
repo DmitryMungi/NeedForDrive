@@ -1,12 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { activeStepEnum, PageSteps, pageTitles } from "./order-form.interface";
-import { LocationService } from "src/app/shared/services/location.service";
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder,
-} from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 
 import { CarInterface } from "./form-steps/step-model/carsList.const";
 
@@ -31,10 +25,7 @@ export class OrderFormComponent implements OnInit {
     addressName: new FormControl("", Validators.required),
     modelName: new FormControl("", Validators.required),
   });
-  constructor(
-    private locationService: LocationService,
-    private fb: FormBuilder
-  ) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.pageStepsTitles.forEach((i) => (i.isValid = false));
@@ -42,7 +33,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   addressValueChange() {
-    this.pageStepsTitles[1].isValid = true;
+    this.pageStepsTitles[activeStepEnum.step2];
   }
 
   toStep(item: PageSteps): void {

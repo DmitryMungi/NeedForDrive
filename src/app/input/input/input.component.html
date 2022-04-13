@@ -14,7 +14,7 @@
     />
     <button
       *ngIf="input.value != ''"
-      (click)="onDeleteValue(input)"
+      (click)="onDeleteValue()"
       class="clear-input__btn"
     >
       <svg class="close-icon">
@@ -57,7 +57,7 @@
           </div>
         </div>
         <ng-template #noValues>
-          <div class="search-box__item">Нет доступных аддрессов</div>
+          <div class="search-box__item">Нет доступных адресов</div>
         </ng-template>
       </div>
     </ng-template>

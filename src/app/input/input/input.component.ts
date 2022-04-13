@@ -68,13 +68,12 @@ export class InputComponent implements OnInit, AfterViewInit {
 
   onClickSearchItem(item: string) {
     this.onSearchItem.emit(item);
-    this.input.nativeElement.value = item;
     this.formGroup.value.name = item;
   }
 
   search(searchTerm: string): Observable<Array<string>> {
     return from(this.list).pipe(
-      filter((cityName) => this.checkForMatch(cityName, searchTerm)),
+      filter((item) => this.checkForMatch(item, searchTerm)),
       toArray()
     );
   }
@@ -87,9 +86,8 @@ export class InputComponent implements OnInit, AfterViewInit {
     this.valueChange.emit(item);
   }
 
-  onDeleteValue(el: HTMLInputElement) {
-    el.value = "";
-    this.formGroup.value.name = el.value;
+  onDeleteValue() {
+    this.formGroup.reset();
     this.deleteItem.emit();
   }
 }

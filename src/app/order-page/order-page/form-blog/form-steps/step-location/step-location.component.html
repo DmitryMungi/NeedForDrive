@@ -7,7 +7,7 @@
     [value]="addressValues.city"
     (valueChange)="changeCityValue($event)"
     (onSearchItem)="onSearchCityItem($event)"
-    (deleteItem)="resetAddressList()"
+    (deleteItem)="resetCity()"
   ></app-input>
   <app-input
     [ngClass]="{ disabled: addressValues.city === '' }"
@@ -18,6 +18,7 @@
     [value]="addressValues.address"
     (valueChange)="changeaddressValue($event)"
     (onSearchItem)="onSearchAddressItem($event)"
+    (deleteItem)="resetAddress()"
   ></app-input>
 </div>
 
