@@ -47,7 +47,6 @@ export class OrderFormComponent implements OnInit {
 
   selectedCar(car: CarModel) {
     this.checkedCar = car;
-    // this.priceRange = car.priceRange;// нужно переделать
     this.modelValid = true;
     this.pageStepsTitles[activeStepEnum.step3].isValid = true;
   }
