@@ -1,0 +1,65 @@
+<div class="input">
+  <label class="input__label label_form"> {{ labelValue }} </label>
+  <div class="input__input-wrapp">
+    <input
+      [formGroupName]="groupName"
+      class="input__input"
+      autocomplete="off"
+      [name]="name"
+      placeholder="Начните вводить пункт ..."
+      [value]="value"
+      (change)="changeValue(input.value)"
+      required
+      #input
+    />
+    <button
+      *ngIf="input.value != ''"
+      (click)="onDeleteValue()"
+      class="clear-input__btn"
+    >
+      <svg class="close-icon">
+        <use xlink:href="assets/sprite/symbol-defs.svg#close-icon"></use>
+      </svg>
+    </button>
+    <div
+      class="input__search-box"
+      *ngIf="searchResult$ | async as searchResult; else listArray"
+      #listDropDown
+    >
+      <ng-container *ngIf="searchResult.length > 0; else notFound">
+        <div
+          class="search-box__item"
+          *ngFor="let result of searchResult"
+          (click)="onClickSearchItem(result)"
+        >
+          {{ result }}
+        </div>
+      </ng-container>
+      <ng-template #notFound>
+        <div
+          class="search-box__item"
+          *ngFor="let item of list"
+          (click)="onClickSearchItem(item)"
+        >
+          {{ item }}
+        </div>
+      </ng-template>
+    </div>
+    <ng-template #listArray>
+      <div class="input__search-box" #listDropDown>
+        <div *ngIf="list.length != 0; else noValues">
+          <div
+            class="search-box__item"
+            *ngFor="let item of list"
+            (click)="onClickSearchItem(item)"
+          >
+            {{ item }}
+          </div>
+        </div>
+        <ng-template #noValues>
+          <div class="search-box__item">Нет доступных адресов</div>
+        </ng-template>
+      </div>
+    </ng-template>
+  </div>
+</div>

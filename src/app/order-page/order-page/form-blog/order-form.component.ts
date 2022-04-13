@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { NgForm } from "@angular/forms";
 import { activeStepEnum, PageSteps, pageTitles } from "./order-form.interface";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 
 import { CarInterface } from "./form-steps/step-model/carsList.const";
 
@@ -16,41 +16,28 @@ export class OrderFormComponent implements OnInit {
   public activeStep: activeStepEnum = activeStepEnum.step1;
   public activeStepEnum = activeStepEnum;
 
-  public cityValue: string = "";
-  public addressValue: string = "";
   public checkedCar?: CarInterface;
   public priceRange: string = STARTPRICE;
 
-  public addressValid: boolean = false;
   public modelValid: boolean = false;
-
+  public orderForm = new FormGroup({
+    cityName: new FormControl("", Validators.required),
+    addressName: new FormControl("", Validators.required),
+    modelName: new FormControl("", Validators.required),
+  });
   constructor() {}
 
   ngOnInit(): void {
     this.pageStepsTitles.forEach((i) => (i.isValid = false));
-    this.pageStepsTitles[0].isValid = true;
+    this.pageStepsTitles[activeStepEnum.step1].isValid = true;
   }
 
-  setCityValue(city: string, form: NgForm): void {
-    this.cityValue = city;
-
-    if (form.valid) {
-      this.pageStepsTitles[1].isValid = true;
-      this.addressValid = true;
-    }
+  addressValueChange() {
+    this.pageStepsTitles[activeStepEnum.step2].isValid = true;
   }
 
   toStep(item: PageSteps): void {
     this.activeStep = item.step;
-  }
-
-  setAddressValue(address: string, form: NgForm): void {
-    this.addressValue = address;
-
-    if (form.valid) {
-      this.pageStepsTitles[1].isValid = true;
-      this.addressValid = true;
-    }
   }
 
   toNextStep(): void {
@@ -63,6 +50,6 @@ export class OrderFormComponent implements OnInit {
     this.checkedCar = car;
     this.priceRange = car.priceRange;
     this.modelValid = true;
-    this.pageStepsTitles[2].isValid = true;
+    this.pageStepsTitles[activeStepEnum.step3].isValid = true;
   }
 }
