@@ -10,3 +10,128 @@
   padding-top: 32px;
 }
 
+//  input type data component
+input[type="datetime-local"] {
+  position: relative;
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  color: transparent;
+  background: transparent;
+}
+
+input[type="datetime-local"]::-webkit-inner-spin-button,
+input[type="datetime-local"]::-webkit-clear-button {
+  z-index: 1;
+}
+
+.input__input-wrapp {
+  position: relative;
+  width: 100%;
+}
+
+.clear-input__btn {
+  position: absolute;
+  background-color: @color-white;
+  border: none;
+  outline: none;
+  right: 6px;
+  top: 2px;
+  cursor: pointer;
+  .close-icon {
+    stroke: black;
+    width: 12px;
+    height: 12px;
+  }
+}
+
+.input-data_wrapp {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  max-width: 250px;
+
+
+  .input-data_label {
+    margin-right: 8px;
+    min-width: 18px;
+    text-align: end;
+  }
+
+  .data-input {
+    width: 100%;
+    padding: 2px 2px 2px 8px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid @color-grey;
+  }
+}
+//  input type data component
+
+// rate blog
+.rate-wrapp {
+  display: flex;
+  flex-direction: column;
+}
+
+// rate blog
+
+// check box component
+
+.checkbox {
+  display: inline-block;
+  text-align: left;
+
+  &__label {
+    padding-left: 20px;
+    position: relative;
+    cursor: pointer;
+
+    .input-check {
+      display: none;
+    }
+
+    .input-check + span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 12px;
+      height: 12px;
+      border: 1px solid @color-grey;
+      text-align: center;
+    }
+
+    .input-check + span::before{
+      content: " ";
+      position: absolute;
+      color: @color-black;
+      width: 10px;
+      height: 5px;
+      border-bottom: 3px solid @color-black;
+      border-left: 3px solid @color-black;
+      top: -3px;
+      left: 2px;
+      right: 0;
+      bottom: 0;
+      opacity: 0;
+      transform: rotate(-45deg);
+      transition: opacity .3s ease-in-out;
+    }
+  }
+}
+
+
+#chek:checked + span::before {
+  opacity: 1;
+}
+
+#chek:checked + span {
+ border: 1px solid @color-green;
+}

@@ -33,25 +33,80 @@
 </div>
 <div class="section">
   <h5>Дата аренды</h5>
-  <div>
-    <label>С</label>
-    <input type="datetime-local" placeholder="Введите дату и время" />
+
+  <!-- input type data component -->
+  <div class="input-data_wrapp">
+    <label class="input-data_label roboto-light-14">С</label>
+    <div class="input__input-wrapp">
+      <input
+        class="data-input roboto-light-14"
+        type="datetime-local"
+        placeholder="Введите дату и время"
+        id="data-input"
+        [value]="curentDate"
+        [min]="curentDate"
+        formGroupName="from"
+        (change)="valueChange(inputfrom)"
+        #inputfrom
+      />
+      <button
+        *ngIf="inputfrom.value != ''"
+        (click)="onDeleteValue(inputfrom)"
+        class="clear-input__btn"
+      >
+        <svg class="close-icon">
+          <use xlink:href="assets/sprite/symbol-defs.svg#close-icon"></use>
+        </svg>
+      </button>
+    </div>
   </div>
-  <div>
-    <label>По</label>
-    <input type="datetime" placeholder="Введите дату и время" />
+
+  <div class="input-data_wrapp">
+    <label class="input-data_label roboto-light-14">По</label>
+    <div class="input__input-wrapp">
+      <input
+        class="data-input roboto-light-14"
+        type="datetime-local"
+        placeholder="Введите дату и время"
+        formGroupName="until"
+        (change)="valueChange(imputuntil)"
+        [min]="curentDate"
+        #imputuntil
+      />
+      <button
+        *ngIf="imputuntil.value != ''"
+        (click)="onDeleteValue(imputuntil)"
+        class="clear-input__btn"
+      >
+        <svg class="close-icon">
+          <use xlink:href="assets/sprite/symbol-defs.svg#close-icon"></use>
+        </svg>
+      </button>
+    </div>
   </div>
+
+  <!-- input type data -->
 </div>
+<!-- rate blog -->
 <div class="section">
   <h5>Тариф</h5>
-  <div>
+  <div class="rate-wrapp">
     <app-radio-button
-      *ngFor="let c of car.colors"
+      *ngFor="let c of tarif"
       name="sortColor"
-      [label]="c"
+      [label]="c.name"
     ></app-radio-button>
   </div>
 </div>
+<!-- rate blog -->
 <div class="section">
   <h5>Доп услуги</h5>
+  <!-- check box component -->
+  <div class="checkbox">
+    <label class="checkbox__label" for="chek">
+      <input type="checkbox" name="chek" id="chek" class="input-check" />
+      Динозавры
+      <span></span>
+    </label>
+  </div>
 </div>
