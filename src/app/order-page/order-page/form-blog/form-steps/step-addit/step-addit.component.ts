@@ -24,6 +24,11 @@ export interface Itarif {
   name: string;
 }
 
+export interface Iservice {
+  id: string;
+  name: string;
+}
+
 @Component({
   selector: "app-step-addit",
   templateUrl: "./step-addit.component.html",
@@ -62,6 +67,21 @@ export class StepAdditComponent implements OnInit {
     },
     {
       name: "На сутки, 1999 ₽/сутки",
+    },
+  ];
+
+  public services: Iservice[] = [
+    {
+      id: "fulltank",
+      name: "Полный бак, 500р",
+    },
+    {
+      id: "babyChair",
+      name: "Детское кресло, 200р",
+    },
+    {
+      id: "rightWheel",
+      name: "Правый руль, 1600р",
     },
   ];
 

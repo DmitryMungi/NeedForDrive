@@ -76,7 +76,7 @@ input[type="datetime-local"]::-webkit-clear-button {
 //  input type data component
 
 // rate blog
-.rate-wrapp {
+.rate-wrapp, .services-wrapp {
   display: flex;
   flex-direction: column;
 }
@@ -85,53 +85,8 @@ input[type="datetime-local"]::-webkit-clear-button {
 
 // check box component
 
-.checkbox {
-  display: inline-block;
-  text-align: left;
-
-  &__label {
-    padding-left: 20px;
-    position: relative;
-    cursor: pointer;
-
-    .input-check {
-      display: none;
-    }
-
-    .input-check + span {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 12px;
-      height: 12px;
-      border: 1px solid @color-grey;
-      text-align: center;
-    }
-
-    .input-check + span::before{
-      content: " ";
-      position: absolute;
-      color: @color-black;
-      width: 10px;
-      height: 5px;
-      border-bottom: 3px solid @color-black;
-      border-left: 3px solid @color-black;
-      top: -3px;
-      left: 2px;
-      right: 0;
-      bottom: 0;
-      opacity: 0;
-      transform: rotate(-45deg);
-      transition: opacity .3s ease-in-out;
-    }
-  }
-}
 
 
-#chek:checked + span::before {
-  opacity: 1;
-}
 
-#chek:checked + span {
- border: 1px solid @color-green;
-}
+
+

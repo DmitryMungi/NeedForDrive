@@ -42,7 +42,6 @@
         class="data-input roboto-light-14"
         type="datetime-local"
         placeholder="Введите дату и время"
-        id="data-input"
         [value]="curentDate"
         [min]="curentDate"
         formGroupName="from"
@@ -73,6 +72,8 @@
         [min]="curentDate"
         #imputuntil
       />
+      <!--  onfocus="(this.type='datetime-local')"
+            onblur="(this.type='text')"  как вариант для отображения placeholder  -->
       <button
         *ngIf="imputuntil.value != ''"
         (click)="onDeleteValue(imputuntil)"
@@ -101,12 +102,12 @@
 <!-- rate blog -->
 <div class="section">
   <h5>Доп услуги</h5>
-  <!-- check box component -->
-  <div class="checkbox">
-    <label class="checkbox__label" for="chek">
-      <input type="checkbox" name="chek" id="chek" class="input-check" />
-      Динозавры
-      <span></span>
-    </label>
+
+  <div class="services-wrapp">
+    <app-checkbox
+      *ngFor="let service of services"
+      [name]="service.id"
+      [label]="service.name"
+    ></app-checkbox>
   </div>
 </div>
