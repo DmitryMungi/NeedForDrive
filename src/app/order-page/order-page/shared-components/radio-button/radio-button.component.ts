@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from "@angular/core";
 })
 export class RadioButtonComponent implements OnInit {
   @Input() label: string = "";
-  @Input() name: string = "colorSort"; // вынести в константы по дефолту
+  @Input() name: string = "";
 
   constructor() {}
 

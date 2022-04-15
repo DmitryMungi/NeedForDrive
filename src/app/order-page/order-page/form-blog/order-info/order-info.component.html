@@ -24,7 +24,10 @@
     <span class="order-item__label">Модель</span>
     <span class="dote-border"></span>
     <span *ngIf="modelValid; else nonmodel" class="order-item__item">
-      <span>{{ car.name }}</span>
+      <span
+        >{{ car.name }}
+        <span *ngIf="car.number">{{ ", " + car.number }}</span></span
+      >
     </span>
     <ng-template #nonmodel>
       <span class="order-item__item">Не выбран</span>

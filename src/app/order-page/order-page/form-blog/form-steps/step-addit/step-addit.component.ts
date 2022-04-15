@@ -6,28 +6,13 @@ import {
   FormGroupDirective,
   Validators,
 } from "@angular/forms";
-import { CURENT_DATE } from "./addit.const";
+import { CURENT_DATE, SERVICES } from "./addit.const";
+import { OrderService } from "src/app/shared/services/order.service";
+import { AdditApiService } from "./addit.api.service";
+import { CarModel } from "../step-model/module.interface";
+import { ITariff, Iservice } from "./addit.interface";
 
 import * as moment from "moment";
-
-export interface Icar {
-  priceMax: number;
-  priceMin: number;
-  name: string;
-  thumbnail: {};
-  description: string;
-  categoryId: {};
-  colors: string[];
-}
-
-export interface Itarif {
-  name: string;
-}
-
-export interface Iservice {
-  id: string;
-  name: string;
-}
 
 @Component({
   selector: "app-step-addit",
@@ -44,46 +29,22 @@ export class StepAdditComponent implements OnInit {
     from: new FormControl(this.curentDate, Validators.required),
     until: new FormControl("", Validators.required),
   });
-  constructor(private orderForm: FormGroupDirective) {}
+  constructor(
+    private orderForm: FormGroupDirective,
+    private orderService: OrderService,
+    private additApiService: AdditApiService
+  ) {}
+
+  public checkedCar: CarModel = this.orderService.getCar();
+  public rates!: ITariff[];
+
+  public services: Iservice[] = SERVICES;
 
   ngOnInit(): void {
     this.orderForm.form.addControl("from", this.formGroup);
     this.orderForm.form.addControl("until", this.formGroup);
+    this.additApiService.getRate().subscribe((res) => (this.rates = res));
   }
-
-  public car: Icar = {
-    priceMax: 35000,
-    priceMin: 10000,
-    name: "skoda",
-    thumbnail: {},
-    description: "description",
-    categoryId: {},
-    colors: ["Любой", "Красный", "Голубой"],
-  };
-
-  public tarif: Itarif[] = [
-    {
-      name: "Поминутно, 7₽/мин",
-    },
-    {
-      name: "На сутки, 1999 ₽/сутки",
-    },
-  ];
-
-  public services: Iservice[] = [
-    {
-      id: "fulltank",
-      name: "Полный бак, 500р",
-    },
-    {
-      id: "babyChair",
-      name: "Детское кресло, 200р",
-    },
-    {
-      id: "rightWheel",
-      name: "Правый руль, 1600р",
-    },
-  ];
 
   valueChange(item: any) {
     console.log(item);
