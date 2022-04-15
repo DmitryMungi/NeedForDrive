@@ -44,6 +44,7 @@ export class InputComponent implements OnInit, AfterViewInit {
   @Output() onSearchItem = new EventEmitter();
 
   @ViewChild("input") input!: ElementRef;
+  @ViewChild("listDropDown") listDropDown!: ElementRef;
 
   public searchResult$!: Observable<Array<string>>;
   public formGroup = new FormGroup({

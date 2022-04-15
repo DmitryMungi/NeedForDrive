@@ -11,7 +11,7 @@ import {
 } from "./module.interface";
 
 @Injectable({ providedIn: "root" })
-export class ModuleApiService {
+export class CarApiService {
   constructor(private http: HttpClient) {}
 
   getCars(): Observable<CarModel[]> {

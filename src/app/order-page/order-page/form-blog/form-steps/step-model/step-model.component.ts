@@ -6,7 +6,7 @@ import {
   CarModel,
   CategoryModel,
 } from "src/app/order-page/order-page/form-blog/form-steps/step-model/module.interface";
-import { ModuleApiService } from "./module.api.service";
+import { CarApiService } from "./car.api.service";
 import { LoadingService } from "src/app/shared/services/loading.service";
 @UntilDestroy({ checkProperties: true })
 @Component({
@@ -28,18 +28,16 @@ export class StepModelComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private moduleApiservice: ModuleApiService,
+    private carApiservice: CarApiService,
     private loadingServise: LoadingService
   ) {}
 
   ngOnInit(): void {
     this.subj.subscribe((value) =>
-      this.moduleApiservice
-        .getCategory()
-        .subscribe((res) => (this.category = res))
+      this.carApiservice.getCategory().subscribe((res) => (this.category = res))
     );
 
-    this.moduleApiservice
+    this.carApiservice
       .getCars()
       .subscribe(
         (res) => (
@@ -62,35 +60,35 @@ export class StepModelComponent implements OnInit {
   }
 
   onFilter(item: CategoryModel) {
-    switch (item.name) {
-      case "Спорт":
+    switch (item) {
+      case item:
         this.filterCar = this.carModal.filter(
-          (x) => x.categoryId?.name === "Спорт"
+          (x) => x.categoryId?.id === item.id
         );
         break;
-      case "Супер-эконом":
+      case item:
         this.filterCar = this.carModal.filter(
-          (x) => x.categoryId?.name === "Супер-эконом"
+          (x) => x.categoryId?.id === item.id
         );
         break;
-      case "Люкс":
+      case item:
         this.filterCar = this.carModal.filter(
-          (x) => x.categoryId?.name === "Люкс"
+          (x) => x.categoryId?.id === item.id
         );
         break;
-      case "Name":
+      case item:
         this.filterCar = this.carModal.filter(
-          (x) => x.categoryId?.name === "Name"
+          (x) => x.categoryId?.id === item.id
         );
         break;
-      case "Эконом+":
+      case item:
         this.filterCar = this.carModal.filter(
-          (x) => x.categoryId?.name === "Эконом+"
+          (x) => x.categoryId?.id === item.id
         );
         break;
-      case "Бизнес":
+      case item:
         this.filterCar = this.carModal.filter(
-          (x) => x.categoryId?.name === "Бизнес"
+          (x) => x.categoryId?.id === item.id
         );
         break;
       default:
