@@ -1,1 +1,113 @@
-<p>страница в разработке!</p>
+<div class="block-color section">
+  <h5>Цвет</h5>
+  <div class="input-radio">
+    <input
+      type="radio"
+      class="input-radio__input"
+      name="color-sort"
+      value="Любой"
+      checked="false"
+    />
+    <span class="input-radio__label">Любой </span>
+  </div>
+  <div class="input-radio">
+    <input
+      type="radio"
+      class="input-radio__input"
+      name="color-sort"
+      value="Красный"
+      checked="false"
+    />
+    <span class="input-radio__label">Красный </span>
+  </div>
+  <div class="input-radio">
+    <input
+      type="radio"
+      class="input-radio__input"
+      name="color-sort"
+      value="Голубой"
+      checked="true"
+    />
+    <span class="input-radio__label">Голубой </span>
+  </div>
+</div>
+<div class="section">
+  <h5>Дата аренды</h5>
+
+  <!-- input type data component -->
+  <div class="input-data_wrapp">
+    <label class="input-data_label roboto-light-14">С</label>
+    <div class="input__input-wrapp">
+      <input
+        class="data-input roboto-light-14"
+        type="datetime-local"
+        placeholder="Введите дату и время"
+        [value]="curentDate"
+        [min]="curentDate"
+        formGroupName="from"
+        (change)="valueChange(inputfrom)"
+        #inputfrom
+      />
+      <button
+        *ngIf="inputfrom.value != ''"
+        (click)="onDeleteValue(inputfrom)"
+        class="clear-input__btn"
+      >
+        <svg class="close-icon">
+          <use xlink:href="assets/sprite/symbol-defs.svg#close-icon"></use>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="input-data_wrapp">
+    <label class="input-data_label roboto-light-14">По</label>
+    <div class="input__input-wrapp">
+      <input
+        class="data-input roboto-light-14"
+        type="datetime-local"
+        placeholder="Введите дату и время"
+        formGroupName="until"
+        (change)="valueChange(imputuntil)"
+        [min]="curentDate"
+        #imputuntil
+      />
+      <!--  onfocus="(this.type='datetime-local')"
+            onblur="(this.type='text')"  как вариант для отображения placeholder  -->
+      <button
+        *ngIf="imputuntil.value != ''"
+        (click)="onDeleteValue(imputuntil)"
+        class="clear-input__btn"
+      >
+        <svg class="close-icon">
+          <use xlink:href="assets/sprite/symbol-defs.svg#close-icon"></use>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- input type data -->
+</div>
+<!-- rate blog -->
+<div class="section">
+  <h5>Тариф</h5>
+  <div class="rate-wrapp">
+    <app-radio-button
+      *ngFor="let c of tarif"
+      name="sortColor"
+      [label]="c.name"
+    ></app-radio-button>
+  </div>
+</div>
+<!-- rate blog -->
+<div class="section">
+  <h5>Доп услуги</h5>
+
+  <div class="services-wrapp">
+    <app-checkbox
+      *ngFor="let service of services"
+      [name]="service.id"
+      [label]="service.name"
+    ></app-checkbox>
+  </div>
+</div>
