@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
-import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { UntilDestroy } from "@ngneat/until-destroy";
 import { ICity, IAddress, Igeo, Iplacemark } from "./location.interface";
-import { LocatoinApiService } from "src/app/shared/services/location.api.service";
+import { LocatoinApiService } from "src/app/order-page/order-page/form-blog/form-steps/step-location/location.api.service";
 import { LocationService } from "src/app/shared/services/location.service";
 import { OrderService } from "src/app/shared/services/order.service";
 import { ILocationValue } from "src/app/shared/interfaces/order.interface";
@@ -63,6 +63,7 @@ export class StepLocationComponent implements OnInit {
   }
 
   onSearchCityItem(item: string) {
+    this.activeAddress.length = 0;
     const addressObj = this.address.filter((x) => x.cityId?.name === item);
     for (let i = 0; i < addressObj.length; i++) {
       this.activeAddress.push(addressObj[i].address);

@@ -16,6 +16,7 @@ import { StepFinalComponent } from "./order-page/form-blog/form-steps/step-final
 import { OrderInfoComponent } from "./order-page/form-blog/order-info/order-info.component";
 import { InputModule } from "../input/input.module";
 import { environment } from "../../environments/environment";
+import { LoaderModule } from "../shared/loader/loader.module";
 
 const mapConfig: YaConfig = {
   apikey: environment.apiKeyMap,
@@ -43,6 +44,7 @@ const mapConfig: YaConfig = {
     AngularYandexMapsModule.forRoot(mapConfig),
     InputModule,
     HttpClientModule,
+    LoaderModule,
   ],
   exports: [FormsModule, ReactiveFormsModule],
 })

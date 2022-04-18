@@ -2,7 +2,10 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, map } from "rxjs";
 import { environment } from "src/environments/environment";
-import { IGeoRes, IRes } from "../interfaces/order.interface";
+import {
+  IGeoRes,
+  IRes,
+} from "../../../../../shared/interfaces/order.interface";
 import {
   Igeo,
   ICity,

@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { OrderService } from "src/app/shared/services/order.service";
-import { CarInterface } from "../form-steps/step-model/carsList.const";
+import { CarModel } from "../form-steps/step-model/module.interface";
 import {
   activeStepEnum,
   TEXTBTN1,
@@ -18,7 +18,7 @@ import { ILocationValue } from "src/app/shared/interfaces/order.interface";
 })
 export class OrderInfoComponent {
   @Input() modelValid: boolean = false;
-  @Input() checkedCar?: CarInterface;
+  @Input() checkedCar?: CarModel;
   @Input() priceRance?: string;
   @Input() activeStep: activeStepEnum = activeStepEnum.step1;
 
