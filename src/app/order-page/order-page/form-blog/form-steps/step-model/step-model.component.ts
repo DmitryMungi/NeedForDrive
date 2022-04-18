@@ -72,41 +72,8 @@ export class StepModelComponent implements OnInit {
   }
 
   onFilter(item: CategoryModel) {
-    switch (item) {
-      case item:
-        this.filterCar = this.carList.filter(
-          (x) => x.categoryId?.id === item.id
-        );
-        break;
-      case item:
-        this.filterCar = this.carList.filter(
-          (x) => x.categoryId?.id === item.id
-        );
-        break;
-      case item:
-        this.filterCar = this.carList.filter(
-          (x) => x.categoryId?.id === item.id
-        );
-        break;
-      case item:
-        this.filterCar = this.carList.filter(
-          (x) => x.categoryId?.id === item.id
-        );
-        break;
-      case item:
-        this.filterCar = this.carList.filter(
-          (x) => x.categoryId?.id === item.id
-        );
-        break;
-      case item:
-        this.filterCar = this.carList.filter(
-          (x) => x.categoryId?.id === item.id
-        );
-        break;
-      default:
-        this.filterCar = this.carList;
-        break;
-    }
+    this.filterCar = this.carList.filter((x) => x.categoryId?.id === item.id);
+
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { Onfilter: item.name },

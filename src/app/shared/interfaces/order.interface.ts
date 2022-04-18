@@ -34,6 +34,7 @@ export interface Iaddit {
   fullTank: boolean;
   isNeedChildChair: boolean;
   isRightWheel: boolean;
+  isValid: boolean;
 }
 
 export interface IDateDuration {

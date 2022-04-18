@@ -17,7 +17,6 @@ import { OrderInfoComponent } from "./order-page/form-blog/order-info/order-info
 import { InputModule } from "../input/input.module";
 import { environment } from "../../environments/environment";
 import { LoaderModule } from "../shared/loader/loader.module";
-// import { RadioButtonComponent } from "../input/radio-button/radio-button.component";
 
 const mapConfig: YaConfig = {
   apikey: environment.apiKeyMap,
@@ -34,7 +33,6 @@ const mapConfig: YaConfig = {
     StepConfirmComponent,
     StepFinalComponent,
     OrderInfoComponent,
-    // RadioButtonComponent,
   ],
   imports: [
     CommonModule,

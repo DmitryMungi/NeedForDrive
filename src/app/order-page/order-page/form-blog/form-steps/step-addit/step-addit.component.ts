@@ -6,7 +6,7 @@ import {
   FormGroupDirective,
   Validators,
 } from "@angular/forms";
-import { CURENT_DATE, SERVICES } from "./addit.const";
+import { CURENT_DATE, SERVICES, ServicesEnum } from "./addit.const";
 import { OrderService } from "src/app/shared/services/order.service";
 import { AdditApiService } from "./addit.api.service";
 import { CarModel } from "../step-model/module.interface";
@@ -27,6 +27,7 @@ import * as moment from "moment";
 export class StepAdditComponent implements OnInit {
   public minValueFrom: string = moment(CURENT_DATE).format("yyyy-MM-DDThh:mm");
   public minValueUntil: string = this.minValueFrom;
+
   public valueFrom: number = 0;
   public valueUntil: number = 0;
   public additValues: Iaddit = ADDITDVALUES;
@@ -45,12 +46,10 @@ export class StepAdditComponent implements OnInit {
 
   public checkedCar: CarModel = this.orderService.getCar();
   public rates!: ITariff[];
-
   public services: Iservice[] = SERVICES;
 
   ngOnInit(): void {
     this.orderForm.form.addControl("stepAddit", this.formGroup);
-    // this.orderForm.form.addControl("until", this.formGroup);
     this.additApiService.getRate().subscribe((res) => (this.rates = res));
   }
 
@@ -58,49 +57,77 @@ export class StepAdditComponent implements OnInit {
     this.additValues.color = item;
     this.orderService.setAdditValues(this.additValues);
     this.formGroup.patchValue({ color: item });
-    console.log(this.formGroup);
+    this.formIsValid();
   }
 
   changeDateFrom(item: string) {
     this.valueUntil = 0;
     this.minValueUntil = item;
     this.valueFrom = +new Date(item);
-    if (this.valueFrom != 0 && this.valueUntil != 0) {
+    if (
+      this.valueFrom != 0 &&
+      this.valueUntil != 0 &&
+      this.valueFrom < this.valueUntil
+    ) {
       this.additValues.dateFrom = this.valueFrom;
       this.additValues.dateUntil = this.valueUntil;
       this.orderService.setAdditValues(this.additValues);
     }
     this.formGroup.patchValue({ from: item });
+    this.formIsValid();
   }
 
   changeDateUntil(item: string) {
     this.valueUntil = +new Date(item);
-    if (this.valueFrom != 0 && this.valueUntil != 0) {
+    if (
+      this.valueFrom != 0 &&
+      this.valueUntil != 0 &&
+      this.valueFrom < this.valueUntil
+    ) {
       this.additValues.dateFrom = this.valueFrom;
       this.additValues.dateUntil = this.valueUntil;
       this.orderService.setAdditValues(this.additValues);
     }
     this.formGroup.patchValue({ until: item });
+    this.formIsValid();
   }
 
   changeRate(item: string) {
     this.additValues.rate = item;
     this.orderService.setAdditValues(this.additValues);
     this.formGroup.patchValue({ rate: item });
-    console.log(this.formGroup);
+    this.formIsValid();
   }
 
   toggleCheckBox(event: boolean, service: Iservice) {
-    if (service.name === "fullTank") {
-      this.additValues.fullTank = event;
-    } else if (service.name === "isNeedChildChair") {
-      this.additValues.isNeedChildChair = event;
-    } else {
-      this.additValues.isRightWheel = event;
+    switch (service.id) {
+      case ServicesEnum.FullTank:
+        this.additValues.fullTank = event;
+        break;
+      case ServicesEnum.BabyChair:
+        this.additValues.isNeedChildChair = event;
+        break;
+      case ServicesEnum.RightHand:
+        this.additValues.isRightWheel = event;
+        break;
     }
   }
 
-  onDeleteValue(item: any) {
-    item.value = "";
+  formIsValid() {
+    if (this.formGroup.status === "VALID") {
+      this.additValues.isValid = true;
+    } else {
+      this.additValues.isValid = false;
+    }
+
+    this.orderService.setAdditValues(this.additValues);
+  }
+
+  onDeleteValueFrom() {
+    this.formGroup.value.from = "";
+  }
+
+  onDeleteValueUntil() {
+    this.formGroup.value.untill = "";
   }
 }

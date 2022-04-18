@@ -3,16 +3,17 @@
   <div class="input__input-wrapp">
     <input
       class="data-input roboto-light-14"
-      type="datetime-local"
+      type="text"
       [placeholder]="placeholderValue"
       [value]="value"
       [min]="minValue"
+      onfocus="(this.type='datetime-local')"
       (change)="valueChange($event)"
       #inputDate
     />
     <button
       *ngIf="inputDate.value != ''"
-      (click)="onDeleteValue(inputDate.value)"
+      (click)="onDeleteValue()"
       class="clear-input__btn"
     >
       <svg class="close-icon">
@@ -21,6 +22,3 @@
     </button>
   </div>
 </div>
-
-<!--  onfocus="(this.type='datetime-local')"
-            onblur="(this.type='text')"  как вариант для отображения placeholder  -->

@@ -1,18 +1,23 @@
 import { Iaddit } from "src/app/shared/interfaces/order.interface";
 import { Iservice } from "./addit.interface";
 export const CURENT_DATE = new Date();
+export enum ServicesEnum {
+  FullTank = "fullTank",
+  BabyChair = "babyChair",
+  RightHand = "rightHand",
+}
 
 export const SERVICES = [
   {
-    name: "fullTank",
+    id: "fullTank",
     description: "Полный бак, 500р",
   },
   {
-    name: "isNeedChildChair",
+    id: "babyChair",
     description: "Детское кресло, 200р",
   },
   {
-    name: "isRightWheel",
+    id: "rightHand",
     description: "Правый руль, 1600р",
   },
 ];
@@ -25,4 +30,5 @@ export const ADDITDVALUES: Iaddit = {
   fullTank: false,
   isNeedChildChair: false,
   isRightWheel: false,
+  isValid: false,
 };

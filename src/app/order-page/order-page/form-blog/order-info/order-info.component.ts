@@ -59,6 +59,8 @@ export class OrderInfoComponent {
         return this.addressValues.valid;
       case activeStepEnum.step2:
         return this.modelValid;
+      case activeStepEnum.step3:
+        return this.additValue.isValid;
       default:
         return false;
     }

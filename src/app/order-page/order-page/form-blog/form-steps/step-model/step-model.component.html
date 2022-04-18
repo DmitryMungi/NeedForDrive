@@ -1,15 +1,11 @@
 <app-loader *ngIf="isLoading | async"> </app-loader>
 <div class="model_sort__wrapp">
-  <div class="input-radio" *ngFor="let c of category">
-    <input
-      type="radio"
-      class="input-radio__input"
-      name="model-sort"
-      [value]="c.name"
-      (change)="onFilter(c)"
-    />
-    <span class="input-radio__label">{{ c.name }} </span>
-  </div>
+  <app-radio-button
+    *ngFor="let c of category"
+    [label]="c.name"
+    name="model-sort"
+    (change)="onFilter(c)"
+  ></app-radio-button>
 </div>
 
 <div class="car_list">

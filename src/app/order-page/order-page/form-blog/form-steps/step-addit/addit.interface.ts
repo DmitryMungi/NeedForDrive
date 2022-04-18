@@ -15,6 +15,6 @@ export interface ITariff {
 }
 
 export interface Iservice {
-  name: string;
+  id: string;
   description: string;
 }
