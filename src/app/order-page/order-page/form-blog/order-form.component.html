@@ -27,7 +27,7 @@
       ></app-step-location>
 
       <app-step-model
-        [carModel]="checkedCar?.model"
+        [carModel]="checkedCar?.name"
         (selectCar)="selectedCar($event)"
         *ngIf="activeStep === activeStepEnum.step2"
       ></app-step-model>

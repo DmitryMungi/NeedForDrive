@@ -1,11 +1,11 @@
-import {
-  ICity,
-  IAddress,
-} from "src/app/order-page/order-page/form-blog/form-steps/step-location/location.interface";
-
 export interface ILocationValue {
   city: string;
   address: string;
+  valid: boolean;
+}
+
+export interface IModuleValue {
+  name: string;
   valid: boolean;
 }
 
