@@ -5,13 +5,33 @@
     *ngFor="let color of checkedCar.colors"
     [label]="color"
     name="color"
+    (changeEvent)="changeColor($event)"
   ></app-radio-button>
 </div>
 <div class="section">
   <h5>Дата аренды</h5>
 
   <!-- input type data component -->
-  <div class="input-data_wrapp">
+
+  <app-input-date
+    label="С"
+    placeholderValue="Введите дату и время"
+    [minValue]="minValueFrom"
+    (changeValue)="changeDateFrom($event)"
+  ></app-input-date>
+  <!-- [value]="valueFrom" -->
+
+  <app-input-date
+    label="По"
+    placeholderValue="Введите дату и время"
+    [minValue]="minValueUntil"
+    (changeValue)="changeDateUntil($event)"
+  ></app-input-date>
+
+  <!-- [value]="valueUntil" -->
+
+  <!-- /////////////////////////////////////////////////////////////////////////////// -->
+  <!-- <div class="input-data_wrapp">
     <label class="input-data_label roboto-light-14">С</label>
     <div class="input__input-wrapp">
       <input
@@ -34,9 +54,12 @@
         </svg>
       </button>
     </div>
-  </div>
+  </div> -->
 
-  <div class="input-data_wrapp">
+  <!--  onfocus="(this.type='datetime-local')"
+            onblur="(this.type='text')"  как вариант для отображения placeholder  -->
+
+  <!-- <div class="input-data_wrapp">
     <label class="input-data_label roboto-light-14">По</label>
     <div class="input__input-wrapp">
       <input
@@ -48,8 +71,7 @@
         [min]="curentDate"
         #imputuntil
       />
-      <!--  onfocus="(this.type='datetime-local')"
-            onblur="(this.type='text')"  как вариант для отображения placeholder  -->
+
       <button
         *ngIf="imputuntil.value != ''"
         (click)="onDeleteValue(imputuntil)"
@@ -60,7 +82,7 @@
         </svg>
       </button>
     </div>
-  </div>
+  </div> -->
 
   <!-- input type data -->
 </div>
@@ -69,6 +91,7 @@
   <h5>Тариф</h5>
   <div class="rate-wrapp">
     <app-radio-button
+      (changeEvent)="changeRate($event)"
       *ngFor="let rate of rates"
       name="sortRate"
       [label]="
@@ -86,6 +109,7 @@
       *ngFor="let service of services"
       [name]="service.name"
       [label]="service.description"
+      (toggleCheckBox)="toggleCheckBox($event, this.service)"
     ></app-checkbox>
   </div>
 </div>

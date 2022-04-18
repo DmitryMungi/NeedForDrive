@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { OrderService } from "src/app/shared/services/order.service";
 import { CarModel } from "../form-steps/step-model/module.interface";
+import { IDateDuration } from "src/app/shared/interfaces/order.interface";
 import {
   activeStepEnum,
   TEXTBTN1,
@@ -9,7 +10,10 @@ import {
   TEXTBTN4,
 } from "../order-form.interface";
 
-import { ILocationValue } from "src/app/shared/interfaces/order.interface";
+import {
+  ILocationValue,
+  Iaddit,
+} from "src/app/shared/interfaces/order.interface";
 
 @Component({
   selector: "app-order-info",
@@ -18,7 +22,6 @@ import { ILocationValue } from "src/app/shared/interfaces/order.interface";
 })
 export class OrderInfoComponent {
   @Input() modelValid: boolean = false;
-  @Input() checkedCar?: CarModel;
   @Input() priceRance?: string;
   @Input() activeStep: activeStepEnum = activeStepEnum.step1;
 
@@ -30,6 +33,20 @@ export class OrderInfoComponent {
 
   public get car() {
     return this.orderService.getCar();
+  }
+
+  public get additValue() {
+    return this.orderService.getAdditValue();
+  }
+
+  public get dateDuration() {
+    if (this.additValue.dateFrom != 0 && this.additValue.dateUntil != 0) {
+      const dFrom = +new Date(this.additValue.dateFrom);
+      const dUntil = +new Date(this.additValue.dateUntil);
+
+      return this.dateRange(dFrom, dUntil);
+    }
+    return false;
   }
 
   public get textBtn() {
@@ -53,6 +70,24 @@ export class OrderInfoComponent {
 
   toNextStep(): void {
     this.nextStep.emit();
+  }
+
+  dateRange(from: number, untill: number): IDateDuration {
+    let delta = Math.abs(untill - from) / 1000;
+    let result: any = {};
+    let structure: any = {
+      month: 2592000,
+      week: 604800,
+      day: 86400,
+      hour: 3600,
+      minute: 60,
+    };
+
+    Object.keys(structure).forEach(function (key) {
+      result[key] = Math.floor(delta / structure[key]);
+      delta -= result[key] * structure[key];
+    });
+    return result;
   }
 }
 

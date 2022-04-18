@@ -1,3 +1,4 @@
+import { Iservice } from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.interface";
 export interface ILocationValue {
   city: string;
   address: string;
@@ -23,4 +24,22 @@ export interface IGeoObject {
       pos: string;
     };
   };
+}
+
+export interface Iaddit {
+  color: string;
+  dateFrom: number;
+  dateUntil: number;
+  rate: string;
+  fullTank: boolean;
+  isNeedChildChair: boolean;
+  isRightWheel: boolean;
+}
+
+export interface IDateDuration {
+  month: number;
+  week: number;
+  day: number;
+  hour: number;
+  minute: number;
 }

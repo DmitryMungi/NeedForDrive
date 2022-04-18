@@ -33,6 +33,50 @@
       <span class="order-item__item">Не выбран</span>
     </ng-template>
   </div>
+  <div class="addit-color_value order-item" *ngIf="additValue.color != ''">
+    <span class="order-item__label">Цвет</span>
+    <span class="dote-border"></span>
+    <span class="order-item__item">
+      {{ additValue.color }}
+    </span>
+  </div>
+  <div class="order-item" *ngIf="dateDuration">
+    <span class="order-item__label">Длительность аренды</span>
+    <span class="dote-border"></span>
+    <span class="order-item__item">
+      <span *ngIf="dateDuration.month != 0">{{
+        dateDuration.month + "м"
+      }}</span>
+      <span *ngIf="dateDuration.week != 0"> {{ dateDuration.week + "н" }}</span>
+      <span *ngIf="dateDuration.day != 0"> {{ dateDuration.day + "д" }}</span>
+      <span *ngIf="dateDuration.hour != 0"> {{ dateDuration.hour + "ч" }}</span>
+      <span *ngIf="dateDuration.minute != 0">
+        {{ dateDuration.minute + "м" }}</span
+      >
+    </span>
+  </div>
+  <div class="order-item" *ngIf="additValue.rate != ''">
+    <span class="order-item__label">Тариф</span>
+    <span class="dote-border"></span>
+    <span class="order-item__item">
+      {{ additValue.rate }}
+    </span>
+  </div>
+  <div class="order-item" *ngIf="additValue.fullTank">
+    <span class="order-item__label">Полный бак</span>
+    <span class="dote-border"></span>
+    <span class="order-item__item">Да</span>
+  </div>
+  <div class="order-item" *ngIf="additValue.isNeedChildChair">
+    <span class="order-item__label">Детское кресло</span>
+    <span class="dote-border"></span>
+    <span class="order-item__item">Да</span>
+  </div>
+  <div class="order-item" *ngIf="additValue.isRightWheel">
+    <span class="order-item__label">Правый руль</span>
+    <span class="dote-border"></span>
+    <span class="order-item__item">Да</span>
+  </div>
   <div class="order-price">
     <span class="order-price_label">Цена:</span>
     <span class="order-price_range">от {{ priceRance }}</span>

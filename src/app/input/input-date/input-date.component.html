@@ -1,0 +1,26 @@
+<div class="input-data_wrapp">
+  <label class="input-data_label roboto-light-14">{{ label }}</label>
+  <div class="input__input-wrapp">
+    <input
+      class="data-input roboto-light-14"
+      type="datetime-local"
+      [placeholder]="placeholderValue"
+      [value]="value"
+      [min]="minValue"
+      (change)="valueChange($event)"
+      #inputDate
+    />
+    <button
+      *ngIf="inputDate.value != ''"
+      (click)="onDeleteValue(inputDate.value)"
+      class="clear-input__btn"
+    >
+      <svg class="close-icon">
+        <use xlink:href="assets/sprite/symbol-defs.svg#close-icon"></use>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<!--  onfocus="(this.type='datetime-local')"
+            onblur="(this.type='text')"  как вариант для отображения placeholder  -->
