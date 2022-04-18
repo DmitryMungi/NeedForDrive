@@ -8,6 +8,7 @@ import {
 } from "src/app/order-page/order-page/form-blog/form-steps/step-model/module.interface";
 import { CarApiService } from "./car.api.service";
 import { LoadingService } from "src/app/shared/services/loading.service";
+import { OrderService } from "src/app/shared/services/order.service";
 @UntilDestroy({ checkProperties: true })
 @Component({
   selector: "app-step-model",
@@ -29,23 +30,33 @@ export class StepModelComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private carApiservice: CarApiService,
-    private loadingServise: LoadingService
+    private loadingServise: LoadingService,
+    private orderService: OrderService
   ) {}
+
+  public carList: CarModel[] = this.orderService.getCarList();
 
   ngOnInit(): void {
     this.subj.subscribe((value) =>
       this.carApiservice.getCategory().subscribe((res) => (this.category = res))
     );
 
-    this.carApiservice
-      .getCars()
-      .subscribe(
-        (res) => (
-          (this.carModal = res),
-          (this.filterCar = this.carModal),
-          this.subj.next(true)
-        )
-      );
+    if (this.carList.length <= 0) {
+      this.carApiservice
+        .getCars()
+        .subscribe(
+          (res) => (
+            (this.carModal = res),
+            this.orderService.setCarList(this.carModal),
+            (this.carList = this.carModal.slice()),
+            (this.filterCar = this.carModal),
+            this.subj.next(true)
+          )
+        );
+    } else {
+      this.filterCar = this.carList;
+      this.subj.next(true);
+    }
   }
 
   public get isLoading(): Observable<boolean> {
@@ -53,23 +64,16 @@ export class StepModelComponent implements OnInit {
   }
 
   onCardClick(car: CarModel): void {
-    this.carModal.forEach((i) => (i.isActive = false));
+    this.carList.forEach((i) => (i.isActive = false));
     car.isActive = true;
     this.selectCar.emit(car);
     this.checkedModel = car.name;
+    this.orderService.setCar(car);
   }
 
   onFilter(item: CategoryModel) {
-    switch (item) {
-      case item:
-        this.filterCar = this.carModal.filter(
-          (x) => x.categoryId?.id === item.id
-        );
-        break;
-      default:
-        this.filterCar = this.carModal;
-        break;
-    }
+    this.filterCar = this.carList.filter((x) => x.categoryId?.id === item.id);
+
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { Onfilter: item.name },

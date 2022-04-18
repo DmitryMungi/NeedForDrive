@@ -28,6 +28,10 @@ export class OrderInfoComponent {
 
   public addressValues: ILocationValue = this.orderService.getLocationValue();
 
+  public get car() {
+    return this.orderService.getCar();
+  }
+
   public get textBtn() {
     return getTextBtn(this.activeStep);
   }
