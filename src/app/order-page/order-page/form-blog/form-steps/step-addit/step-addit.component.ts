@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import {
   ControlContainer,
   FormGroup,
@@ -25,6 +25,8 @@ import * as moment from "moment";
   ],
 })
 export class StepAdditComponent implements OnInit {
+  @Output() completedForm = new EventEmitter();
+
   public minValueFrom: string = moment(CURENT_DATE).format("yyyy-MM-DDThh:mm");
   public minValueUntil: string = this.minValueFrom;
 
@@ -116,6 +118,7 @@ export class StepAdditComponent implements OnInit {
   formIsValid() {
     if (this.formGroup.status === "VALID") {
       this.additValues.isValid = true;
+      this.completedForm.emit();
     } else {
       this.additValues.isValid = false;
     }

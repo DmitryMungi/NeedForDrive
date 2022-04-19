@@ -40,9 +40,13 @@ export class OrderFormComponent implements OnInit {
   }
 
   toNextStep(): void {
-    if (this.activeStep != this.activeStepEnum.step3) {
+    if (this.activeStep != this.activeStepEnum.step4) {
       this.activeStep++;
     }
+  }
+
+  additCompleted() {
+    this.pageStepsTitles[activeStepEnum.step4].isValid = true;
   }
 
   selectedCar(car: CarModel) {

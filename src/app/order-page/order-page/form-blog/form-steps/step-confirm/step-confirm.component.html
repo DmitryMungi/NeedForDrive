@@ -1,1 +1,25 @@
-<p>step-confirm works!</p>
+<div class="confirm">
+  <div class="confirm-info">
+    <div class="confirm-info__car-name">{{ orderCar.name }}</div>
+    <div class="confirm-info__car-number" *ngIf="orderCar.number">
+      {{ orderCar.number }}
+    </div>
+    <div class="confirm-info__car-tank">
+      <span class="car-tank confirm-item__label">Топливо</span>
+      <span class="confirm-item__desk">
+        <span *ngIf="additValues.fullTank; else tankInfo">100%</span>
+        <ng-template #tankInfo> {{ orderCar.tank + "%" }}</ng-template>
+      </span>
+    </div>
+    <div class="confirm-info__order-from">
+      <span class="confirm-item__label">Доступна с</span>
+      <span class="confirm-item__desk">{{
+        additValues.dateFrom | date: "dd.MM.YYYY HH:mm"
+      }}</span>
+    </div>
+  </div>
+
+  <div class="confirm__car-img_wrapp">
+    <img class="car-img" [src]="orderCar.thumbnailUrl" alt="" />
+  </div>
+</div>

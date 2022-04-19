@@ -33,7 +33,11 @@
       ></app-step-model>
       <app-step-addit
         *ngIf="activeStep === activeStepEnum.step3"
+        (completedForm)="additCompleted()"
       ></app-step-addit>
+      <app-step-confirm
+        *ngIf="activeStep === activeStepEnum.step4"
+      ></app-step-confirm>
     </form>
   </div>
 

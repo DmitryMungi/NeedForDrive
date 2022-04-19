@@ -61,6 +61,8 @@ export class OrderInfoComponent {
         return this.modelValid;
       case activeStepEnum.step3:
         return this.additValue.isValid;
+      case activeStepEnum.step4:
+        return true;
       default:
         return false;
     }
