@@ -1,4 +1,3 @@
-import { Iservice } from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.interface";
 export interface ILocationValue {
   city: string;
   address: string;
@@ -38,9 +37,15 @@ export interface Iaddit {
 }
 
 export interface IDateDuration {
+  year: number;
   month: number;
   week: number;
   day: number;
   hour: number;
   minute: number;
+}
+
+export interface Iprice {
+  min: number;
+  max: number;
 }

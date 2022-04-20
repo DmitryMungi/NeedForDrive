@@ -79,7 +79,12 @@
   </div>
   <div class="order-price">
     <span class="order-price_label">Цена:</span>
-    <span class="order-price_range">от {{ priceRance }}</span>
+    <span class="order-price_range" *ngIf="totalPrice != 0; else range">
+      {{ totalPrice }} ₽</span
+    >
+    <ng-template #range
+      >от {{ priceRange.min }} до {{ priceRange.max }} ₽</ng-template
+    >
   </div>
   <app-button
     (click)="toNextStep()"

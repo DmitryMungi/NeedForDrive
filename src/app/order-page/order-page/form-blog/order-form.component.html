@@ -44,8 +44,24 @@
   <app-order-info
     [activeStep]="activeStep"
     [modelValid]="modelValid"
-    [priceRance]="priceRange"
     (nextStep)="toNextStep()"
+    (confirmOrder)="confirmOrder()"
   >
   </app-order-info>
+</div>
+
+<div *ngIf="isOrderConfirm" class="confirm confirm-wrapp">
+  <div class="confirm__modal">
+    <div class="confirm__head">Подтвердить заказ</div>
+    <app-button
+      class="confirm__btn"
+      color="accept"
+      text="Подтвердить"
+    ></app-button>
+    <app-button
+      theme="fail-theme"
+      (click)="onGoBack()"
+      text="Вернуться"
+    ></app-button>
+  </div>
 </div>

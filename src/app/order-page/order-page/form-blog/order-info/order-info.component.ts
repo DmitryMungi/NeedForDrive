@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { OrderService } from "src/app/shared/services/order.service";
-import { CarModel } from "../form-steps/step-model/module.interface";
 import { IDateDuration } from "src/app/shared/interfaces/order.interface";
 import {
   activeStepEnum,
@@ -10,10 +9,7 @@ import {
   TEXTBTN4,
 } from "../order-form.interface";
 
-import {
-  ILocationValue,
-  Iaddit,
-} from "src/app/shared/interfaces/order.interface";
+import { ILocationValue } from "src/app/shared/interfaces/order.interface";
 
 @Component({
   selector: "app-order-info",
@@ -22,10 +18,9 @@ import {
 })
 export class OrderInfoComponent {
   @Input() modelValid: boolean = false;
-  @Input() priceRance?: string;
   @Input() activeStep: activeStepEnum = activeStepEnum.step1;
-
   @Output() nextStep = new EventEmitter();
+  @Output() confirmOrder = new EventEmitter();
 
   constructor(private orderService: OrderService) {}
 
@@ -43,7 +38,6 @@ export class OrderInfoComponent {
     if (this.additValue.dateFrom != 0 && this.additValue.dateUntil != 0) {
       const dFrom = +new Date(this.additValue.dateFrom);
       const dUntil = +new Date(this.additValue.dateUntil);
-
       return this.dateRange(dFrom, dUntil);
     }
     return false;
@@ -51,6 +45,14 @@ export class OrderInfoComponent {
 
   public get textBtn() {
     return getTextBtn(this.activeStep);
+  }
+
+  public get priceRange() {
+    return this.orderService.getPriceRange();
+  }
+
+  public get totalPrice() {
+    return this.orderService.getTotalPrice();
   }
 
   isValidBtn(item: activeStepEnum): boolean {
@@ -73,13 +75,18 @@ export class OrderInfoComponent {
   }
 
   toNextStep(): void {
-    this.nextStep.emit();
+    if (this.activeStep != activeStepEnum.step4) {
+      this.nextStep.emit();
+    } else {
+      this.confirmOrder.emit();
+    }
   }
 
-  dateRange(from: number, untill: number): IDateDuration {
-    let delta = Math.abs(untill - from) / 1000;
+  dateRange(from: number, until: number): IDateDuration {
+    let delta = Math.abs(until - from) / 1000;
     let result: any = {};
     let structure: any = {
+      year: 31536000,
       month: 2592000,
       week: 604800,
       day: 86400,
