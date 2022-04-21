@@ -8,8 +8,8 @@ import {
   TEXTBTN3,
   TEXTBTN4,
 } from "../order-form.interface";
-
-import { ILocationValue } from "src/app/shared/interfaces/order.interface";
+import { ILocationValue } from "../form-steps/step-location/location.interface";
+import { LocationService } from "../form-steps/step-location/location.service";
 
 @Component({
   selector: "app-order-info",
@@ -22,9 +22,13 @@ export class OrderInfoComponent {
   @Output() nextStep = new EventEmitter();
   @Output() confirmOrder = new EventEmitter();
 
-  constructor(private orderService: OrderService) {}
+  constructor(
+    private orderService: OrderService,
+    private locationService: LocationService
+  ) {}
 
-  public addressValues: ILocationValue = this.orderService.getLocationValue();
+  public addressValues: ILocationValue =
+    this.locationService.getLocationValue();
 
   public get car() {
     return this.orderService.getCar();

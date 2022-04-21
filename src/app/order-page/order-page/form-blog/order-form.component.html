@@ -36,6 +36,8 @@
         (completedForm)="additCompleted()"
       ></app-step-addit>
       <app-step-confirm
+        [isOrderConfirm]="isOrderConfirm"
+        (orderIsBack)="onGoBack()"
         *ngIf="activeStep === activeStepEnum.step4"
       ></app-step-confirm>
     </form>
@@ -48,20 +50,4 @@
     (confirmOrder)="confirmOrder()"
   >
   </app-order-info>
-</div>
-
-<div *ngIf="isOrderConfirm" class="confirm confirm-wrapp">
-  <div class="confirm__modal">
-    <div class="confirm__head">Подтвердить заказ</div>
-    <app-button
-      class="confirm__btn"
-      color="accept"
-      text="Подтвердить"
-    ></app-button>
-    <app-button
-      theme="fail-theme"
-      (click)="onGoBack()"
-      text="Вернуться"
-    ></app-button>
-  </div>
 </div>

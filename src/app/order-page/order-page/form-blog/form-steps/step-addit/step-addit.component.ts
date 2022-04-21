@@ -49,7 +49,6 @@ export class StepAdditComponent implements OnInit {
   public checkedCar: CarModel = this.orderService.getCar();
   public rates!: ITariff[];
   public services: Iservice[] = SERVICES;
-  public rateId: string = "";
 
   ngOnInit(): void {
     this.orderForm.form.addControl("stepAddit", this.formGroup);
@@ -97,9 +96,9 @@ export class StepAdditComponent implements OnInit {
 
   changeRate(rateName: string, rateId: string) {
     this.additValues.rate = rateName;
+    this.additValues.rateId = rateId;
     this.orderService.setAdditValues(this.additValues);
     this.formGroup.patchValue({ rate: rateName });
-    this.rateId = rateId;
     this.formIsValid();
   }
 
@@ -120,7 +119,7 @@ export class StepAdditComponent implements OnInit {
   formIsValid() {
     if (this.formGroup.status === "VALID") {
       this.additValues.isValid = true;
-      this.orderService.setTotalPrice(this.rateId);
+      this.orderService.setTotalPrice();
       this.completedForm.emit();
     } else {
       this.additValues.isValid = false;

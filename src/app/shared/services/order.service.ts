@@ -1,9 +1,18 @@
 import { Injectable } from "@angular/core";
-import { ILocationValue, Iaddit } from "../interfaces/order.interface";
+import {
+  Iaddit,
+  INameId,
+  IOrderData,
+  IPointsValues,
+} from "../interfaces/order.interface";
 import { CarModel } from "src/app/order-page/order-page/form-blog/form-steps/step-model/module.interface";
 import { ADDITDVALUES } from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.const";
 import { Iprice } from "../interfaces/order.interface";
 import { RateEnum } from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.const";
+import {
+  IAddress,
+  ICity,
+} from "src/app/order-page/order-page/form-blog/form-steps/step-location/location.interface";
 
 export const STARTPRICE: Iprice = {
   min: 8000,
@@ -14,10 +23,9 @@ export const TOTALPRICE: number = 0;
 
 @Injectable({ providedIn: "root" })
 export class OrderService {
-  public locationValues: ILocationValue = {
-    city: "",
-    address: "",
-    valid: false,
+  public locationValues: IPointsValues = {
+    cityId: <ICity>{},
+    pointId: <IAddress>{},
   };
 
   public moduleCar: CarModel = {
@@ -36,25 +44,19 @@ export class OrderService {
     colors: [],
     tank: 0,
   };
-
   public carList: CarModel[] = [];
-
   public priceRange: Iprice = STARTPRICE;
-
   public additValues: Iaddit = ADDITDVALUES;
-
   public priceTotal: number = TOTALPRICE;
+  public orderStaus = <INameId>{};
 
   getPriceRange(): Iprice {
     return this.priceRange;
   }
 
-  getLocationValue(): ILocationValue {
-    return this.locationValues;
-  }
-
-  setLocationValue(values: ILocationValue) {
-    this.locationValues = values;
+  setLocationValues(cityId: ICity, pointId: IAddress) {
+    this.locationValues.cityId = cityId;
+    this.locationValues.pointId = pointId;
   }
 
   getCarList(): CarModel[] {
@@ -83,12 +85,38 @@ export class OrderService {
     this.additValues = value;
   }
 
-  setTotalPrice(id: string) {
-    this.totalPrice(this.additValues.dateFrom, this.additValues.dateUntil, id);
+  setTotalPrice() {
+    this.totalPrice(
+      this.additValues.dateFrom,
+      this.additValues.dateUntil,
+      this.additValues.rateId
+    );
   }
 
   getTotalPrice(): number {
     return this.priceTotal;
+  }
+
+  getOrderData(): IOrderData {
+    const Order = {
+      orderStatusId: <INameId>{},
+      cityId: this.locationValues.cityId,
+      pointId: this.locationValues.pointId,
+      carId: {
+        name: this.moduleCar.name,
+        id: this.moduleCar.id,
+      },
+      color: this.additValues.color,
+      dateFrom: this.additValues.dateFrom,
+      dateTo: this.additValues.dateUntil,
+      rateId: this.additValues.rateId,
+      price: this.priceTotal,
+      isFullTank: this.additValues.fullTank,
+      isNeedChildChair: this.additValues.isNeedChildChair,
+      isRightWheel: this.additValues.isRightWheel,
+    };
+
+    return Order;
   }
 
   private totalPrice(from: number, until: number, rate: string) {

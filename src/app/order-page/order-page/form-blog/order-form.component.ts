@@ -22,6 +22,7 @@ export class OrderFormComponent implements OnInit {
     addressName: new FormControl("", Validators.required),
     modelName: new FormControl("", Validators.required),
   });
+
   constructor() {}
 
   ngOnInit(): void {

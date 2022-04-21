@@ -5,7 +5,7 @@
     <span class="dote-border"></span>
     <span
       *ngIf="
-        addressValues.city != '' && addressValues.address != '';
+        addressValues.city != undefined && addressValues.address != '';
         else nonaddress
       "
       class="order-item__item column-item"

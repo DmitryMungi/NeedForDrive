@@ -23,3 +23,20 @@
     <img class="car-img" [src]="orderCar.thumbnailUrl" alt="" />
   </div>
 </div>
+
+<div *ngIf="isOrderConfirm" class="confirm-modal__wrapp">
+  <div class="confirm__modal">
+    <div class="confirm__head">Подтвердить заказ</div>
+    <app-button
+      (click)="postOrder()"
+      class="confirm__btn"
+      color="accept"
+      text="Подтвердить"
+    ></app-button>
+    <app-button
+      theme="fail-theme"
+      (click)="onGoBack()"
+      text="Вернуться"
+    ></app-button>
+  </div>
+</div>

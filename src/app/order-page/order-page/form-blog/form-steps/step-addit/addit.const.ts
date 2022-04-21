@@ -36,6 +36,7 @@ export const ADDITDVALUES: Iaddit = {
   dateFrom: 0,
   dateUntil: 0,
   rate: "",
+  rateId: "",
   fullTank: false,
   isNeedChildChair: false,
   isRightWheel: false,
