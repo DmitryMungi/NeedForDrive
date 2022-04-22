@@ -1,4 +1,4 @@
-import { Iservice } from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.interface";
+import { IService } from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.interface";
 export interface ILocationValue {
   city: string;
   address: string;
@@ -26,7 +26,7 @@ export interface IGeoObject {
   };
 }
 
-export interface Iaddit {
+export interface IAddit {
   color: string;
   dateFrom: number;
   dateUntil: number;

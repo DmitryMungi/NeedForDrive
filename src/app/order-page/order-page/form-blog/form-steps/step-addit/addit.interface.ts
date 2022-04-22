@@ -14,7 +14,7 @@ export interface ITariff {
   rateTypeId: IRateType;
 }
 
-export interface Iservice {
+export interface IService {
   id: string;
   description: string;
 }

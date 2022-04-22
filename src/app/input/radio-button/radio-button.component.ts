@@ -9,7 +9,7 @@ export class RadioButtonComponent {
   @Input() label: string = "";
   @Input() name: string = "";
 
-  @Output() changeEvent = new EventEmitter();
+  @Output() changeEvent = new EventEmitter<string>();
 
   constructor() {}
 

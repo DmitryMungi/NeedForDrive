@@ -9,10 +9,11 @@ import {
   TEXTBTN3,
   TEXTBTN4,
 } from "../order-form.interface";
+import { MONTH, WEEK, DAY, HOUR, MINUTE } from "./order.const";
 
 import {
   ILocationValue,
-  Iaddit,
+  IAddit,
 } from "src/app/shared/interfaces/order.interface";
 
 @Component({
@@ -39,7 +40,7 @@ export class OrderInfoComponent {
     return this.orderService.getAdditValue();
   }
 
-  public get dateDuration() {
+  public get dateDuration(): IDateDuration | false {
     if (this.additValue.dateFrom != 0 && this.additValue.dateUntil != 0) {
       const dFrom = +new Date(this.additValue.dateFrom);
       const dUntil = +new Date(this.additValue.dateUntil);
@@ -76,18 +77,22 @@ export class OrderInfoComponent {
 
   dateRange(from: number, untill: number): IDateDuration {
     let delta = Math.abs(untill - from) / 1000;
-    let result: any = {};
-    let structure: any = {
-      month: 2592000,
-      week: 604800,
-      day: 86400,
-      hour: 3600,
-      minute: 60,
+    let result = <IDateDuration>{};
+    let structure = <IDateDuration>{
+      month: MONTH,
+      week: WEEK,
+      day: DAY,
+      hour: HOUR,
+      minute: MINUTE,
     };
 
-    Object.keys(structure).forEach(function (key) {
-      result[key] = Math.floor(delta / structure[key]);
-      delta -= result[key] * structure[key];
+    Object.keys(structure).forEach((key) => {
+      result[key as keyof IDateDuration] = Math.floor(
+        delta / structure[key as keyof IDateDuration]
+      );
+      delta -=
+        result[key as keyof IDateDuration] *
+        structure[key as keyof IDateDuration];
     });
     return result;
   }

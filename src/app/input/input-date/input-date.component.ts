@@ -11,8 +11,8 @@ export class InputDateComponent {
   @Input() minValue: string = "";
   @Input() placeholderValue: string = "";
 
-  @Output() changeValue = new EventEmitter();
-  @Output() deleteValue = new EventEmitter();
+  @Output() changeValue = new EventEmitter<string>();
+  @Output() deleteValue = new EventEmitter<void>();
 
   constructor() {}
 
