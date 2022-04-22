@@ -27,7 +27,7 @@ import * as moment from "moment";
 export class StepAdditComponent implements OnInit {
   public minValueFrom: string = moment(CURENT_DATE).format("yyyy-MM-DDThh:mm");
   public minValueUntil: string = this.minValueFrom;
-
+  public maxValueFrom?: string;
   public valueFrom: number = 0;
   public valueUntil: number = 0;
   public additValues: IAddit = ADDITDVALUES;
@@ -78,17 +78,14 @@ export class StepAdditComponent implements OnInit {
 
   changeDateUntil(item: string) {
     this.valueUntil = +new Date(item);
+    this.maxValueFrom = item;
     this.dateCheckAndSet();
     this.formGroup.patchValue({ until: item });
     this.formIsValid();
   }
 
   dateCheckAndSet() {
-    if (
-      this.valueFrom != 0 &&
-      this.valueUntil != 0 &&
-      this.valueFrom < this.valueUntil
-    ) {
+    if (this.valueFrom != 0 && this.valueUntil != 0) {
       this.additValues.dateFrom = this.valueFrom;
       this.additValues.dateUntil = this.valueUntil;
       this.orderService.setAdditValues(this.additValues);

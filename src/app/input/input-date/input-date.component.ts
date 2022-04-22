@@ -9,6 +9,7 @@ export class InputDateComponent {
   @Input() label: string = "";
   @Input() value: string = "";
   @Input() minValue: string = "";
+  @Input() maxValue?: string;
   @Input() placeholderValue: string = "";
 
   @Output() changeValue = new EventEmitter<string>();

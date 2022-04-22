@@ -13,6 +13,7 @@
     label="С"
     placeholderValue="Введите дату и время"
     [minValue]="minValueFrom"
+    [maxValue]="maxValueFrom"
     (changeValue)="changeDateFrom($event)"
     (deleteValue)="onDeleteValueFrom()"
   ></app-input-date>
