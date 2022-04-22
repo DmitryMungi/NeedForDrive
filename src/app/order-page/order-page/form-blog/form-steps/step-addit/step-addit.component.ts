@@ -10,9 +10,9 @@ import { CURENT_DATE, SERVICES, ServicesEnum } from "./addit.const";
 import { OrderService } from "src/app/shared/services/order.service";
 import { AdditApiService } from "./addit.api.service";
 import { CarModel } from "../step-model/module.interface";
-import { ITariff, Iservice } from "./addit.interface";
+import { ITariff, IService } from "./addit.interface";
 import { ADDITDVALUES } from "./addit.const";
-import { Iaddit } from "src/app/shared/interfaces/order.interface";
+import { IAddit } from "src/app/shared/interfaces/order.interface";
 
 import * as moment from "moment";
 
@@ -29,15 +29,15 @@ export class StepAdditComponent implements OnInit {
 
   public minValueFrom: string = moment(CURENT_DATE).format("yyyy-MM-DDThh:mm");
   public minValueUntil: string = this.minValueFrom;
-
+  public maxValueFrom?: string;
   public valueFrom: number = 0;
   public valueUntil: number = 0;
-  public additValues: Iaddit = ADDITDVALUES;
+  public additValues: IAddit = ADDITDVALUES;
 
   public formGroup = new FormGroup({
     color: new FormControl("", Validators.required),
-    from: new FormControl("", Validators.required),
-    until: new FormControl("", Validators.required),
+    from: new FormControl("", [Validators.required, Validators.minLength(10)]),
+    until: new FormControl("", [Validators.required, Validators.minLength(10)]),
     rate: new FormControl("", Validators.required),
   });
   constructor(
@@ -46,9 +46,16 @@ export class StepAdditComponent implements OnInit {
     private additApiService: AdditApiService
   ) {}
 
+  formDateValidator(control: FormControl): { [s: string]: boolean } | null {
+    if (control.value === "") {
+      return { from: true };
+    }
+    return null;
+  }
+
   public checkedCar: CarModel = this.orderService.getCar();
   public rates!: ITariff[];
-  public services: Iservice[] = SERVICES;
+  public services: IService[] = SERVICES;
 
   ngOnInit(): void {
     this.orderForm.form.addControl("stepAddit", this.formGroup);
@@ -66,32 +73,25 @@ export class StepAdditComponent implements OnInit {
     this.valueUntil = 0;
     this.minValueUntil = item;
     this.valueFrom = +new Date(item);
-    if (
-      this.valueFrom != 0 &&
-      this.valueUntil != 0 &&
-      this.valueFrom < this.valueUntil
-    ) {
-      this.additValues.dateFrom = this.valueFrom;
-      this.additValues.dateUntil = this.valueUntil;
-      this.orderService.setAdditValues(this.additValues);
-    }
+    this.dateCheckAndSet();
     this.formGroup.patchValue({ from: item });
     this.formIsValid();
   }
 
   changeDateUntil(item: string) {
     this.valueUntil = +new Date(item);
-    if (
-      this.valueFrom != 0 &&
-      this.valueUntil != 0 &&
-      this.valueFrom < this.valueUntil
-    ) {
+    this.maxValueFrom = item;
+    this.dateCheckAndSet();
+    this.formGroup.patchValue({ until: item });
+    this.formIsValid();
+  }
+
+  dateCheckAndSet() {
+    if (this.valueFrom != 0 && this.valueUntil != 0) {
       this.additValues.dateFrom = this.valueFrom;
       this.additValues.dateUntil = this.valueUntil;
       this.orderService.setAdditValues(this.additValues);
     }
-    this.formGroup.patchValue({ until: item });
-    this.formIsValid();
   }
 
   changeRate(rateName: string, rateId: string) {
@@ -102,7 +102,7 @@ export class StepAdditComponent implements OnInit {
     this.formIsValid();
   }
 
-  toggleCheckBox(event: boolean, service: Iservice) {
+  toggleCheckBox(event: boolean, service: IService) {
     switch (service.id) {
       case ServicesEnum.FullTank:
         this.additValues.fullTank = event;
@@ -120,19 +120,21 @@ export class StepAdditComponent implements OnInit {
     if (this.formGroup.status === "VALID") {
       this.additValues.isValid = true;
       this.orderService.setTotalPrice();
-      this.completedForm.emit();
     } else {
       this.additValues.isValid = false;
     }
+    // this.additValues.isValid = this.formGroup.status === "VALID";  были исправления в прошлой версии v-4_f-6
 
     this.orderService.setAdditValues(this.additValues);
   }
 
   onDeleteValueFrom() {
-    this.formGroup.value.from = "";
+    this.formGroup.patchValue({ from: "" });
+    this.formIsValid();
   }
 
   onDeleteValueUntil() {
-    this.formGroup.value.untill = "";
+    this.formGroup.patchValue({ until: "" });
+    this.formIsValid();
   }
 }

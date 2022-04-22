@@ -1,4 +1,5 @@
-import { Iaddit } from "src/app/shared/interfaces/order.interface";
+import { IAddit } from "src/app/shared/interfaces/order.interface";
+import { IService } from "./addit.interface";
 export const CURENT_DATE = new Date();
 export enum ServicesEnum {
   FullTank = "fullTank",
@@ -31,7 +32,7 @@ export const SERVICES = [
   },
 ];
 
-export const ADDITDVALUES: Iaddit = {
+export const ADDITDVALUES: IAddit = {
   color: "",
   dateFrom: 0,
   dateUntil: 0,

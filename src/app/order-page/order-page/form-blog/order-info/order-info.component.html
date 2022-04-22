@@ -44,15 +44,7 @@
     <span class="order-item__label">Длительность аренды</span>
     <span class="dote-border"></span>
     <span class="order-item__item">
-      <span *ngIf="dateDuration.month != 0">{{
-        dateDuration.month + "м"
-      }}</span>
-      <span *ngIf="dateDuration.week != 0"> {{ dateDuration.week + "н" }}</span>
-      <span *ngIf="dateDuration.day != 0"> {{ dateDuration.day + "д" }}</span>
-      <span *ngIf="dateDuration.hour != 0"> {{ dateDuration.hour + "ч" }}</span>
-      <span *ngIf="dateDuration.minute != 0">
-        {{ dateDuration.minute + "м" }}</span
-      >
+      {{ dateDuration | duration }}
     </span>
   </div>
   <div class="order-item" *ngIf="additValue.rate != ''">

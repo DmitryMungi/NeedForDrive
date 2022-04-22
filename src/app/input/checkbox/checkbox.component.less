@@ -1,7 +1,6 @@
 @import '../../../common-styles/text.less';
 @import '../../../common-styles/variables.less';
 
-
 .checkbox {
   display: inline-block;
   margin-bottom: 6px;
@@ -19,7 +18,7 @@
       display: none;
     }
 
-    .input-check + span {
+    .input-check + .costum-checkbox {
       position: absolute;
       top: 0;
       left: 0;
@@ -29,7 +28,7 @@
       text-align: center;
     }
 
-    .input-check + span::before{
+    .input-check + .costum-checkbox::before{
       content: " ";
       position: absolute;
       color: @color-black;
@@ -49,12 +48,12 @@
   }
 
   .checkbox__label.checked {
-
     color: @color-black;
-    input + span::before {
+
+    .input-check + .costum-checkbox::before {
       opacity: 1;
     }
-    input + span {
+    .input-check + .costum-checkbox {
      border: 1px solid @color-green;
     }
   }

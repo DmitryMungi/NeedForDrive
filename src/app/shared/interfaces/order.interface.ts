@@ -7,6 +7,13 @@ import { CarModel } from "src/app/order-page/order-page/form-blog/form-steps/ste
 export interface IPointsValues {
   cityId: ICity;
   pointId: IAddress;
+  // =======
+  // import { IService } from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.interface";
+  // export interface ILocationValue {
+  //   city: string;
+  //   address: string;
+  //   valid: boolean;
+  // >>>>>>> v-4_f-5
 }
 
 export interface IRes<T> {
@@ -30,7 +37,7 @@ export interface IGeoObject {
   };
 }
 
-export interface Iaddit {
+export interface IAddit {
   color: string;
   dateFrom: number;
   dateUntil: number;

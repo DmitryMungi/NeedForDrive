@@ -13,6 +13,7 @@
     label="С"
     placeholderValue="Введите дату и время"
     [minValue]="minValueFrom"
+    [maxValue]="maxValueFrom"
     (changeValue)="changeDateFrom($event)"
     (deleteValue)="onDeleteValueFrom()"
   ></app-input-date>
@@ -32,20 +33,22 @@
       *ngFor="let rate of rates"
       name="sortRate"
       [label]="
-        rate.rateTypeId.name + ', ' + rate.price + '₽/' + rate.rateTypeId.unit
+        rate.rateTypeId.name
+          | gluing: ', ' + rate.price
+          | gluing: '₽/' + rate.rateTypeId.unit
       "
     ></app-radio-button>
   </div>
-</div>
-<div class="section">
-  <h5>Доп услуги</h5>
+  <div class="section">
+    <h5>Доп услуги</h5>
 
-  <div class="services-wrapp">
-    <app-checkbox
-      *ngFor="let service of services; let i = index"
-      [name]="service.id"
-      [label]="service.description"
-      (toggleCheckBox)="toggleCheckBox($event, this.service)"
-    ></app-checkbox>
+    <div class="services-wrapp">
+      <app-checkbox
+        *ngFor="let service of services; let i = index"
+        [name]="service.id"
+        [label]="service.description"
+        (toggleCheckBox)="toggleCheckBox($event, this.service)"
+      ></app-checkbox>
+    </div>
   </div>
 </div>
