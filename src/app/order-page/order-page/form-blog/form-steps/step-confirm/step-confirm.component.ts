@@ -1,10 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Iaddit } from "src/app/shared/interfaces/order.interface";
+import { IAddit } from "src/app/shared/interfaces/order.interface";
 import { OrderService } from "src/app/shared/services/order.service";
 import { INameId } from "src/app/shared/interfaces/order.interface";
 import { CarModel } from "../step-model/module.interface";
 import { ConfirmApiService } from "./confirm.api.service";
-import { IOrderData } from "src/app/shared/interfaces/order.interface";
+import {
+  IOrderData,
+  IOrderRes,
+} from "src/app/shared/interfaces/order.interface";
 
 @Component({
   selector: "app-step-confirm",
@@ -20,9 +23,10 @@ export class StepConfirmComponent implements OnInit {
   @Output() orderIsBack = new EventEmitter();
 
   public orderCar!: CarModel;
-  public additValues!: Iaddit;
+  public additValues!: IAddit;
   public orderStatus!: INameId[];
   public orderData: IOrderData = this.orderService.getOrderData();
+  public orderRes!: IOrderRes;
 
   ngOnInit(): void {
     this.orderCar = this.orderService.getCar();
@@ -37,7 +41,7 @@ export class StepConfirmComponent implements OnInit {
     this.orderData.orderStatusId = orderSt;
     this.confirmApi
       .postOrder(this.orderData)
-      .subscribe((res) => console.log(res));
+      .subscribe((res) => (this.orderRes = res));
   }
 
   onGoBack() {

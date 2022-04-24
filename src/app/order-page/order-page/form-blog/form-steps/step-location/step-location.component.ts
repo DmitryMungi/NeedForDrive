@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { UntilDestroy } from "@ngneat/until-destroy";
 import { ICity, IAddress, Igeo, Iplacemark } from "./location.interface";
 import { LocatoinApiService } from "src/app/order-page/order-page/form-blog/form-steps/step-location/location.api.service";
-import { LocationService } from "src/app/order-page/order-page/form-blog/form-steps/step-location/location.service";
+import { LocationService } from "./location.service";
 import { OrderService } from "src/app/shared/services/order.service";
 import { ILocationValue } from "./location.interface";
 import {

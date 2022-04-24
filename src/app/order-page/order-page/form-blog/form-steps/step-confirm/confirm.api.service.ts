@@ -1,18 +1,17 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
-import { INameId, IOrderData } from "src/app/shared/interfaces/order.interface";
-import { OrderService } from "src/app/shared/services/order.service";
+import {
+  INameId,
+  IOrderData,
+  IOrderRes,
+} from "src/app/shared/interfaces/order.interface";
 import { environment } from "src/environments/environment";
 import { IResponse } from "../step-model/module.interface";
 
-export interface IOrderRequestWithId {
-  id: string;
-}
-
 @Injectable({ providedIn: "root" })
 export class ConfirmApiService {
-  constructor(private http: HttpClient, private orderService: OrderService) {}
+  constructor(private http: HttpClient) {}
 
   public url = `${environment.apiUrl}/db/orderStatus`;
 
@@ -22,12 +21,9 @@ export class ConfirmApiService {
       .pipe(map((response) => response.data));
   }
 
-  postOrder(obj: any): Observable<IOrderRequestWithId> {
+  postOrder(obj: IOrderData): Observable<IOrderRes> {
     return this.http
-      .post<{ data: IOrderRequestWithId }>(
-        `${environment.apiUrl}/db/order`,
-        obj
-      )
+      .post<{ data: IOrderRes }>(`${environment.apiUrl}/db/order`, obj)
       .pipe(map((response) => response.data));
   }
 }

@@ -40,10 +40,8 @@ export class DurationPipe implements PipeTransform {
             result = result + date[key as keyof IDateDuration] + WEEK;
             break;
         }
-        // result = result + date[key as keyof IDateDuration];
       }
     }
-
     return result;
   }
 }

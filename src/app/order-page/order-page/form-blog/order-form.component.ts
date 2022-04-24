@@ -44,14 +44,14 @@ export class OrderFormComponent implements OnInit {
     }
   }
 
-  additCompleted() {
-    this.pageStepsTitles[activeStepEnum.step4].isValid = true;
-  }
-
   selectedCar(car: CarModel) {
     this.checkedCar = car;
     this.modelValid = true;
     this.pageStepsTitles[activeStepEnum.step3].isValid = true;
+  }
+
+  additCompleted() {
+    this.pageStepsTitles[activeStepEnum.step4].isValid = true;
   }
 
   confirmOrder() {

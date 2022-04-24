@@ -1,0 +1,40 @@
+@import "../../../../../../common-styles/text.less";
+@import "../../../../../../common-styles/variables.less";
+
+:host {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px dotted @color-grey;
+  position: relative;
+  min-height: 32px;
+}
+
+.label {
+  padding-right: 8px;
+  left: 0;
+  color: black;
+}
+
+.item {
+  padding-left: 8px;
+  right: 0;
+  color: @color-grey;
+}
+
+.item.column-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.label,
+.item {
+  position: absolute;
+  bottom: -4px;
+  background: @color-white;
+  font-family: "Roboto-Light";
+  font-weight: 300;
+  font-size: 14px;
+}

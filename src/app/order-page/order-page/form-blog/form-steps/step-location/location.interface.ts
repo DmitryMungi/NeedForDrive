@@ -30,3 +30,19 @@ export interface ILocationValue {
   address: string;
   valid: boolean;
 }
+
+export interface IGeoRes {
+  response: {
+    GeoObjectCollection: {
+      featureMember: IGeoObject[];
+    };
+  };
+}
+
+export interface IGeoObject {
+  GeoObject: {
+    Point: {
+      pos: string;
+    };
+  };
+}

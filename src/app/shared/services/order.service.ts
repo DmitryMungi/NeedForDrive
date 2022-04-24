@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-
 import {
   IAddit,
   INameId,
@@ -7,18 +6,16 @@ import {
   IPointsValues,
 } from "../interfaces/order.interface";
 
-// import { ILocationValue, IAddit } from "../interfaces/order.interface";
-
 import { CarModel } from "src/app/order-page/order-page/form-blog/form-steps/step-model/module.interface";
 import { ADDITDVALUES } from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.const";
-import { Iprice } from "../interfaces/order.interface";
+import { IPrice } from "../interfaces/order.interface";
 import { RateEnum } from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.const";
 import {
   IAddress,
   ICity,
 } from "src/app/order-page/order-page/form-blog/form-steps/step-location/location.interface";
 
-export const STARTPRICE: Iprice = {
+export const STARTPRICE: IPrice = {
   min: 8000,
   max: 12000,
 };
@@ -49,16 +46,12 @@ export class OrderService {
     tank: 0,
   };
   public carList: CarModel[] = [];
-  public priceRange: Iprice = STARTPRICE;
+  public priceRange: IPrice = STARTPRICE;
   public additValues: IAddit = ADDITDVALUES;
   public priceTotal: number = TOTALPRICE;
   public orderStaus = <INameId>{};
-  // =======
 
-  //   public additValues: IAddit = ADDITDVALUES;
-  // >>>>>>> v-4_f-5
-
-  getPriceRange(): Iprice {
+  getPriceRange(): IPrice {
     return this.priceRange;
   }
 

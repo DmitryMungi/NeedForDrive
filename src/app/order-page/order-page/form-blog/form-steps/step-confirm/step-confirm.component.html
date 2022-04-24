@@ -11,6 +11,18 @@
         <ng-template #tankInfo> {{ orderCar.tank + "%" }}</ng-template>
       </span>
     </div>
+    <div class="confirm-info__car-tank" *ngIf="additValues.isNeedChildChair">
+      <span class="car-tank confirm-item__label">Детское кресло</span>
+      <span class="confirm-item__desk">
+        <span>Да</span>
+      </span>
+    </div>
+    <div class="confirm-info__car-tank" *ngIf="additValues.isRightWheel">
+      <span class="car-tank confirm-item__label">Правый руль</span>
+      <span class="confirm-item__desk">
+        <span>Да</span>
+      </span>
+    </div>
     <div class="confirm-info__order-from">
       <span class="confirm-item__label">Доступна с</span>
       <span class="confirm-item__desk">{{

@@ -10,13 +10,7 @@ import {
 } from "../order-form.interface";
 import { ILocationValue } from "../form-steps/step-location/location.interface";
 import { LocationService } from "../form-steps/step-location/location.service";
-
-import { MONTH, WEEK, DAY, HOUR, MINUTE } from "./order.const";
-
-// import {
-//   ILocationValue,
-//   IAddit,
-// } from "src/app/shared/interfaces/order.interface";
+import { MONTH, WEEK, DAY, HOUR, MINUTE, YEAR } from "./order.const";
 
 @Component({
   selector: "app-order-info",
@@ -96,7 +90,7 @@ export class OrderInfoComponent {
     let delta = Math.abs(untill - from) / 1000;
     let result = <IDateDuration>{};
     let structure = <IDateDuration>{
-      year: 31536000,
+      year: YEAR,
       month: MONTH,
       week: WEEK,
       day: DAY,
