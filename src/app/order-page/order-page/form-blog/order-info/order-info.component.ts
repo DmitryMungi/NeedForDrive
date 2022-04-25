@@ -1,6 +1,9 @@
 import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
 import { OrderService } from "src/app/shared/services/order.service";
-import { IDateDuration } from "src/app/shared/interfaces/order.interface";
+import {
+  IDateDuration,
+  IOrderData,
+} from "src/app/shared/interfaces/order.interface";
 import {
   activeStepEnum,
   TEXTBTN1,
@@ -26,6 +29,7 @@ import { OrderPageComponent } from "../../order-page.component";
 export class OrderInfoComponent {
   @Input() modelValid: boolean = false;
   @Input() activeStep: activeStepEnum = activeStepEnum.step1;
+  @Input() complitedData!: IOrderData;
   @Output() nextStep = new EventEmitter();
   @Output() confirmOrder = new EventEmitter();
 
@@ -47,11 +51,29 @@ export class OrderInfoComponent {
     this.locationService.getLocationValue();
 
   public get car() {
-    return this.orderService.getCar();
+    if (this.activatedRouter.component === OrderPageComponent) {
+      return this.orderService.getCar();
+    } else {
+      return this.complitedData?.carId;
+    }
   }
 
   public get additValue() {
-    return this.orderService.getAdditValue();
+    if (this.activatedRouter.component === OrderPageComponent) {
+      return this.orderService.getAdditValue();
+    } else {
+      return {
+        color: this.complitedData.color,
+        dateFrom: this.complitedData.dateFrom,
+        dateUntil: this.complitedData.dateTo,
+        rate: this.complitedData.rateId.rateTypeId.name,
+        rateId: this.complitedData.rateId.id,
+        fullTank: this.complitedData.isFullTank,
+        isNeedChildChair: this.complitedData.isNeedChildChair,
+        isRightWheel: this.complitedData.isRightWheel,
+        isValid: true,
+      };
+    }
   }
 
   public get dateDuration(): IDateDuration | false {

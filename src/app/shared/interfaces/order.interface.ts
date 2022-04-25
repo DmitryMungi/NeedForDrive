@@ -1,3 +1,4 @@
+import { ITariff } from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.interface";
 import {
   IAddress,
   ICity,
@@ -48,7 +49,7 @@ export interface IOrderData {
   color: string;
   dateFrom: number;
   dateTo: number;
-  rateId: string;
+  rateId: ITariff;
   price: number;
   isFullTank: boolean;
   isNeedChildChair: boolean;

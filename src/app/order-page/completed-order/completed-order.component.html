@@ -40,7 +40,10 @@
         <img class="car-img" [src]="completedRes?.carId?.thumbnail?.path" />
       </div>
     </div>
-    <app-order-info (confirmOrder)="confirmOrder()"></app-order-info>
+    <app-order-info
+      (confirmOrder)="confirmOrder()"
+      [complitedData]="completedRes"
+    ></app-order-info>
   </div>
 </div>
 

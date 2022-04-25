@@ -17,6 +17,7 @@ import {
   IAddress,
   ICity,
 } from "src/app/order-page/order-page/form-blog/form-steps/step-location/location.interface";
+import { ITariff } from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.interface";
 
 export const STARTPRICE: IPrice = {
   min: 8000,
@@ -113,7 +114,7 @@ export class OrderService {
       color: this.additValues.color,
       dateFrom: this.additValues.dateFrom,
       dateTo: this.additValues.dateUntil,
-      rateId: this.additValues.rateId,
+      rateId: <ITariff>{ id: this.additValues.rateId },
       price: this.priceTotal,
       isFullTank: this.additValues.fullTank,
       isNeedChildChair: this.additValues.isNeedChildChair,

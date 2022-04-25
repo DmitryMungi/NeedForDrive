@@ -26,7 +26,7 @@ export class CompletedOrderComponent implements OnInit {
   ngOnInit(): void {
     this.completedApi
       .getOrderComplet(this.id)
-      .subscribe((res) => (this.completedRes = res));
+      .subscribe((res) => ((this.completedRes = res), console.log(res)));
   }
 
   confirmOrder() {
