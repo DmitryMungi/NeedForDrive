@@ -125,6 +125,7 @@ export class OrderService {
 
   private totalPrice(from: number, until: number, rate: string) {
     let price = Math.abs(until - from) / 1000;
+
     switch (rate) {
       case RateEnum.day:
         price = Math.ceil(price / 86400) * 2500;
@@ -154,6 +155,15 @@ export class OrderService {
         price = Math.ceil(price / 31536000) * 200000;
         this.priceTotal = price;
         break;
+    }
+    if (this.additValues.fullTank) {
+      this.priceTotal = this.priceTotal + 500;
+    }
+    if (this.additValues.isNeedChildChair) {
+      this.priceTotal = this.priceTotal + 200;
+    }
+    if (this.additValues.isRightWheel) {
+      this.priceTotal = this.priceTotal + 1600;
     }
   }
 }

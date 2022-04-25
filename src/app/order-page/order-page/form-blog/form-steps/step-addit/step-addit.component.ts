@@ -114,6 +114,7 @@ export class StepAdditComponent implements OnInit {
         this.additValues.isRightWheel = event;
         break;
     }
+    this.orderService.setTotalPrice();
   }
 
   formIsValid() {
