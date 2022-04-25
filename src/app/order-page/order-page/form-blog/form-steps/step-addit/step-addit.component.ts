@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import {
   ControlContainer,
   FormGroup,
@@ -25,6 +25,8 @@ import * as moment from "moment";
   ],
 })
 export class StepAdditComponent implements OnInit {
+  @Output() completedForm = new EventEmitter();
+
   public minValueFrom: string = moment(CURENT_DATE).format("yyyy-MM-DDThh:mm");
   public minValueUntil: string = this.minValueFrom;
   public maxValueFrom?: string;
@@ -92,10 +94,11 @@ export class StepAdditComponent implements OnInit {
     }
   }
 
-  changeRate(item: string) {
-    this.additValues.rate = item;
+  changeRate(rateName: string, rateId: string) {
+    this.additValues.rate = rateName;
+    this.additValues.rateId = rateId;
     this.orderService.setAdditValues(this.additValues);
-    this.formGroup.patchValue({ rate: item });
+    this.formGroup.patchValue({ rate: rateName });
     this.formIsValid();
   }
 
@@ -115,6 +118,11 @@ export class StepAdditComponent implements OnInit {
 
   formIsValid() {
     this.additValues.isValid = this.formGroup.status === "VALID";
+    if (this.additValues.isValid) {
+      this.completedForm.emit();
+      this.orderService.setTotalPrice();
+    }
+
     this.orderService.setAdditValues(this.additValues);
   }
 

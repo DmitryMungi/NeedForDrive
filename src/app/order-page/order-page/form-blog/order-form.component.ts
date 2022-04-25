@@ -3,8 +3,6 @@ import { activeStepEnum, PageSteps, pageTitles } from "./order-form.interface";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { CarModel } from "./form-steps/step-model/module.interface";
 
-const STARTPRICE = "8 000 до 12 000 ₽";
-
 @Component({
   selector: "app-order-form",
   templateUrl: "./order-form.component.html",
@@ -14,9 +12,9 @@ export class OrderFormComponent implements OnInit {
   public pageStepsTitles: PageSteps[] = pageTitles;
   public activeStep: activeStepEnum = activeStepEnum.step1;
   public activeStepEnum = activeStepEnum;
+  public isOrderConfirm: boolean = false;
 
   public checkedCar?: CarModel;
-  public priceRange: string = STARTPRICE;
 
   public modelValid: boolean = false;
   public orderForm = new FormGroup({
@@ -24,6 +22,7 @@ export class OrderFormComponent implements OnInit {
     addressName: new FormControl("", Validators.required),
     modelName: new FormControl("", Validators.required),
   });
+
   constructor() {}
 
   ngOnInit(): void {
@@ -40,7 +39,7 @@ export class OrderFormComponent implements OnInit {
   }
 
   toNextStep(): void {
-    if (this.activeStep != this.activeStepEnum.step3) {
+    if (this.activeStep != this.activeStepEnum.step4) {
       this.activeStep++;
     }
   }
@@ -49,5 +48,17 @@ export class OrderFormComponent implements OnInit {
     this.checkedCar = car;
     this.modelValid = true;
     this.pageStepsTitles[activeStepEnum.step3].isValid = true;
+  }
+
+  additCompleted() {
+    this.pageStepsTitles[activeStepEnum.step4].isValid = true;
+  }
+
+  confirmOrder() {
+    this.isOrderConfirm = true;
+  }
+
+  onGoBack() {
+    this.isOrderConfirm = false;
   }
 }

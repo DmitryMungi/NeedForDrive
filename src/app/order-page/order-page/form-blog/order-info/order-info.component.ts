@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { OrderService } from "src/app/shared/services/order.service";
-import { CarModel } from "../form-steps/step-model/module.interface";
 import { IDateDuration } from "src/app/shared/interfaces/order.interface";
 import {
   activeStepEnum,
@@ -9,12 +8,9 @@ import {
   TEXTBTN3,
   TEXTBTN4,
 } from "../order-form.interface";
-import { MONTH, WEEK, DAY, HOUR, MINUTE } from "./order.const";
-
-import {
-  ILocationValue,
-  IAddit,
-} from "src/app/shared/interfaces/order.interface";
+import { ILocationValue } from "../form-steps/step-location/location.interface";
+import { LocationService } from "../form-steps/step-location/location.service";
+import { MONTH, WEEK, DAY, HOUR, MINUTE, YEAR } from "./order.const";
 
 @Component({
   selector: "app-order-info",
@@ -23,14 +19,17 @@ import {
 })
 export class OrderInfoComponent {
   @Input() modelValid: boolean = false;
-  @Input() priceRance?: string;
   @Input() activeStep: activeStepEnum = activeStepEnum.step1;
-
   @Output() nextStep = new EventEmitter();
+  @Output() confirmOrder = new EventEmitter();
 
-  constructor(private orderService: OrderService) {}
+  constructor(
+    private orderService: OrderService,
+    private locationService: LocationService
+  ) {}
 
-  public addressValues: ILocationValue = this.orderService.getLocationValue();
+  public addressValues: ILocationValue =
+    this.locationService.getLocationValue();
 
   public get car() {
     return this.orderService.getCar();
@@ -44,7 +43,6 @@ export class OrderInfoComponent {
     if (this.additValue.dateFrom != 0 && this.additValue.dateUntil != 0) {
       const dFrom = +new Date(this.additValue.dateFrom);
       const dUntil = +new Date(this.additValue.dateUntil);
-
       return this.dateRange(dFrom, dUntil);
     }
     return false;
@@ -52,6 +50,14 @@ export class OrderInfoComponent {
 
   public get textBtn() {
     return getTextBtn(this.activeStep);
+  }
+
+  public get priceRange() {
+    return this.orderService.getPriceRange();
+  }
+
+  public get totalPrice() {
+    return this.orderService.getTotalPrice();
   }
 
   isValidBtn(item: activeStepEnum): boolean {
@@ -62,6 +68,8 @@ export class OrderInfoComponent {
         return this.modelValid;
       case activeStepEnum.step3:
         return this.additValue.isValid;
+      case activeStepEnum.step4:
+        return true;
       default:
         return false;
     }
@@ -72,13 +80,17 @@ export class OrderInfoComponent {
   }
 
   toNextStep(): void {
-    this.nextStep.emit();
+    if (this.activeStep != activeStepEnum.step4) {
+      this.nextStep.emit();
+    } else {
+      this.confirmOrder.emit();
+    }
   }
-
   dateRange(from: number, untill: number): IDateDuration {
     let delta = Math.abs(untill - from) / 1000;
     let result = <IDateDuration>{};
     let structure = <IDateDuration>{
+      year: YEAR,
       month: MONTH,
       week: WEEK,
       day: DAY,

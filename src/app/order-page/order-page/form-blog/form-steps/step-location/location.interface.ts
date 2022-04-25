@@ -9,8 +9,8 @@ export interface IAddress {
 }
 
 export interface ICity {
-  updatedAt: Date;
-  createdAt: Date;
+  updatedAt: number;
+  createdAt: number;
   name: string;
   id: string;
 }
@@ -23,4 +23,26 @@ export interface Igeo {
 export interface Iplacemark {
   preset: string;
   iconColor: string;
+}
+
+export interface ILocationValue {
+  city: string;
+  address: string;
+  valid: boolean;
+}
+
+export interface IGeoRes {
+  response: {
+    GeoObjectCollection: {
+      featureMember: IGeoObject[];
+    };
+  };
+}
+
+export interface IGeoObject {
+  GeoObject: {
+    Point: {
+      pos: string;
+    };
+  };
 }

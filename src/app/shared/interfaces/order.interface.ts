@@ -1,8 +1,11 @@
-import { IService } from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.interface";
-export interface ILocationValue {
-  city: string;
-  address: string;
-  valid: boolean;
+import {
+  IAddress,
+  ICity,
+} from "src/app/order-page/order-page/form-blog/form-steps/step-location/location.interface";
+
+export interface IPointsValues {
+  cityId: ICity;
+  pointId: IAddress;
 }
 
 export interface IRes<T> {
@@ -10,27 +13,12 @@ export interface IRes<T> {
   data: T[];
 }
 
-export interface IGeoRes {
-  response: {
-    GeoObjectCollection: {
-      featureMember: IGeoObject[];
-    };
-  };
-}
-
-export interface IGeoObject {
-  GeoObject: {
-    Point: {
-      pos: string;
-    };
-  };
-}
-
 export interface IAddit {
   color: string;
   dateFrom: number;
   dateUntil: number;
   rate: string;
+  rateId: string;
   fullTank: boolean;
   isNeedChildChair: boolean;
   isRightWheel: boolean;
@@ -38,9 +26,39 @@ export interface IAddit {
 }
 
 export interface IDateDuration {
+  year: number;
   month: number;
   week: number;
   day: number;
   hour: number;
   minute: number;
+}
+
+export interface IPrice {
+  min: number;
+  max: number;
+}
+
+export interface IOrderData {
+  orderStatusId: INameId;
+  cityId: ICity;
+  pointId: IAddress;
+  carId: INameId;
+  color: string;
+  dateFrom: number;
+  dateTo: number;
+  rateId: string;
+  price: number;
+  isFullTank: boolean;
+  isNeedChildChair: boolean;
+  isRightWheel: boolean;
+}
+
+export interface IOrderRes extends IOrderData {
+  id: string;
+}
+
+export interface INameId {
+  name: string;
+  id: string;
 }

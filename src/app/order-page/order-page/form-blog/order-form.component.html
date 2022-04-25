@@ -33,15 +33,21 @@
       ></app-step-model>
       <app-step-addit
         *ngIf="activeStep === activeStepEnum.step3"
+        (completedForm)="additCompleted()"
       ></app-step-addit>
+      <app-step-confirm
+        [isOrderConfirm]="isOrderConfirm"
+        (orderIsBack)="onGoBack()"
+        *ngIf="activeStep === activeStepEnum.step4"
+      ></app-step-confirm>
     </form>
   </div>
 
   <app-order-info
     [activeStep]="activeStep"
     [modelValid]="modelValid"
-    [priceRance]="priceRange"
     (nextStep)="toNextStep()"
+    (confirmOrder)="confirmOrder()"
   >
   </app-order-info>
 </div>

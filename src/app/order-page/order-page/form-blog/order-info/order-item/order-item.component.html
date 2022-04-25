@@ -1,0 +1,6 @@
+<span class="label">{{ label }}</span>
+<span class="dote-border"></span>
+<span [ngClass]="{ 'column-item': column }" class="item">
+  <span>{{ item }}</span>
+  <span *ngIf="itemElse">{{ itemElse }}</span>
+</span>

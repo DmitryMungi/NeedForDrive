@@ -9,12 +9,14 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { LocatoinApiService } from "./order-page/order-page/form-blog/form-steps/step-location/location.api.service";
 import { TokenInterceptor } from "./interceptors/tocen.interceptor";
-import { LocationService } from "./shared/services/location.service";
+import { LocationService } from "./order-page/order-page/form-blog/form-steps/step-location/location.service";
 import { OrderService } from "./shared/services/order.service";
 import { CarApiService } from "./order-page/order-page/form-blog/form-steps/step-model/car.api.service";
 import { LoadingService } from "./shared/services/loading.service";
 import { LoadingInterceptor } from "./interceptors/loading.interceptor";
 import { LoaderComponent } from "./shared/loader/loader.component";
+import { AdditApiService } from "./order-page/order-page/form-blog/form-steps/step-addit/addit.api.service";
+import { ConfirmApiService } from "./order-page/order-page/form-blog/form-steps/step-confirm/confirm.api.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,6 +37,8 @@ import { LoaderComponent } from "./shared/loader/loader.component";
     CarApiService,
     LoadingService,
     LoaderComponent,
+    AdditApiService,
+    ConfirmApiService,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
   ],
