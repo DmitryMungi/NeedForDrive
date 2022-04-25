@@ -15,6 +15,7 @@ import { ADDITDVALUES } from "./addit.const";
 import { IAddit } from "src/app/shared/interfaces/order.interface";
 
 import * as moment from "moment";
+import { AddidService } from "./addit.service";
 
 @Component({
   selector: "app-step-addit",
@@ -30,8 +31,8 @@ export class StepAdditComponent implements OnInit {
   public minValueFrom: string = moment(CURENT_DATE).format("yyyy-MM-DDThh:mm");
   public minValueUntil: string = this.minValueFrom;
   public maxValueFrom?: string;
-  public valueFrom: number = 0;
-  public valueUntil: number = 0;
+  public dateFrom: number = 0;
+  public dateUntil: number = 0;
   public additValues: IAddit = ADDITDVALUES;
 
   public formGroup = new FormGroup({
@@ -43,8 +44,12 @@ export class StepAdditComponent implements OnInit {
   constructor(
     private orderForm: FormGroupDirective,
     private orderService: OrderService,
-    private additApiService: AdditApiService
+    private additApiService: AdditApiService,
+    private additServise: AddidService
   ) {}
+
+  public valueFrom: string = this.additServise.getValueFrom();
+  public valueUntil: string = this.additServise.getValueUntil();
 
   formDateValidator(control: FormControl): { [s: string]: boolean } | null {
     if (control.value === "") {
@@ -70,16 +75,19 @@ export class StepAdditComponent implements OnInit {
   }
 
   changeDateFrom(item: string) {
-    this.valueUntil = 0;
+    this.additServise.setValueFrom(item);
+    this.additServise.setValueUntil("");
+    this.dateUntil = 0;
     this.minValueUntil = item;
-    this.valueFrom = +new Date(item);
+    this.dateFrom = +new Date(item);
     this.dateCheckAndSet();
     this.formGroup.patchValue({ from: item });
     this.formIsValid();
   }
 
   changeDateUntil(item: string) {
-    this.valueUntil = +new Date(item);
+    this.additServise.setValueUntil(item);
+    this.dateUntil = +new Date(item);
     this.maxValueFrom = item;
     this.dateCheckAndSet();
     this.formGroup.patchValue({ until: item });
@@ -87,9 +95,9 @@ export class StepAdditComponent implements OnInit {
   }
 
   dateCheckAndSet() {
-    if (this.valueFrom != 0 && this.valueUntil != 0) {
-      this.additValues.dateFrom = this.valueFrom;
-      this.additValues.dateUntil = this.valueUntil;
+    if (this.dateFrom != 0 && this.dateUntil != 0) {
+      this.additValues.dateFrom = this.dateFrom;
+      this.additValues.dateUntil = this.dateUntil;
       this.orderService.setAdditValues(this.additValues);
     }
   }
@@ -103,6 +111,7 @@ export class StepAdditComponent implements OnInit {
   }
 
   toggleCheckBox(event: boolean, service: IService) {
+    service.isChecked = event;
     switch (service.id) {
       case ServicesEnum.FullTank:
         this.additValues.fullTank = event;

@@ -20,14 +20,17 @@ export const SERVICES = [
   {
     id: "fullTank",
     description: "Полный бак, 500р",
+    isChecked: false,
   },
   {
     id: "babyChair",
     description: "Детское кресло, 200р",
+    isChecked: false,
   },
   {
     id: "rightHand",
     description: "Правый руль, 1600р",
+    isChecked: false,
   },
 ];
 
