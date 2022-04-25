@@ -1,0 +1,63 @@
+@import '../../../common-styles/text.less';
+@import '../../../common-styles/variables.less';
+
+input[type="radio"] {
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  position: relative;
+  height: 22px;
+  width: 22px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+}
+
+input[type="radio"]::before {
+  content: "";
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid @color-grey;
+}
+
+input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 3px solid @color-green;
+  transform: translate(-50%, -50%);
+  visibility: visible;
+}
+
+input[type="radio"]:checked ~ span.input-radio__label {
+  color: @color-black;
+}
+
+.input-radio {
+  margin-right: 16px;
+  display: inline-block;
+
+  &__input {
+    margin-right: 6px;
+  }
+
+  &__label {
+    font-family: "Roboto-Light";
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 120%;
+    color: @color-grey;
+  }
+}

@@ -1,0 +1,23 @@
+<label class="input-date_label roboto-light-14">{{ label }}</label>
+<div class="input-date-container">
+  <input
+    class="input-date_input roboto-light-14"
+    type="text"
+    [placeholder]="placeholderValue"
+    [value]="value"
+    [min]="minValue"
+    [max]="maxValue"
+    onfocus="(this.type='datetime-local')"
+    (change)="valueChange($event)"
+    #inputDate
+  />
+  <button
+    *ngIf="inputDate.value != ''"
+    (click)="onDeleteValue()"
+    class="input-date__clear"
+  >
+    <svg class="close-icon">
+      <use xlink:href="assets/sprite/symbol-defs.svg#close-icon"></use>
+    </svg>
+  </button>
+</div>

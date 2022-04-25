@@ -1,0 +1,61 @@
+@import '../../../common-styles/text.less';
+@import '../../../common-styles/variables.less';
+
+.checkbox {
+  display: inline-block;
+  margin-bottom: 6px;
+  text-align: left;
+
+  &__label {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    position: relative;
+    color: @color-grey;
+    cursor: pointer;
+
+    .input-check {
+      display: none;
+    }
+
+    .input-check + .costum-checkbox {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 12px;
+      height: 12px;
+      border: 1px solid @color-grey;
+      text-align: center;
+    }
+
+    .input-check + .costum-checkbox::before{
+      content: " ";
+      position: absolute;
+      color: @color-black;
+      width: 10px;
+      height: 5px;
+      border-bottom: 3px solid @color-black;
+      border-left: 3px solid @color-black;
+      top: -3px;
+      left: 2px;
+      right: 0;
+      bottom: 0;
+      opacity: 0;
+      transform: rotate(-45deg);
+      transition: opacity .3s ease-in-out;
+    }
+
+  }
+
+  .checkbox__label.checked {
+    color: @color-black;
+
+    .input-check + .costum-checkbox::before {
+      opacity: 1;
+    }
+    .input-check + .costum-checkbox {
+     border: 1px solid @color-green;
+    }
+  }
+}
+

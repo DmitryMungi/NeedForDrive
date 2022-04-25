@@ -1,1 +1,54 @@
-<p>страница в разработке!</p>
+<div class="block-color section">
+  <h5>Цвет</h5>
+  <app-radio-button
+    *ngFor="let color of checkedCar.colors"
+    [label]="color"
+    name="color"
+    (changeEvent)="changeColor($event)"
+  ></app-radio-button>
+</div>
+<div class="section">
+  <h5>Дата аренды</h5>
+  <app-input-date
+    label="С"
+    placeholderValue="Введите дату и время"
+    [minValue]="minValueFrom"
+    [maxValue]="maxValueFrom"
+    (changeValue)="changeDateFrom($event)"
+    (deleteValue)="onDeleteValueFrom()"
+  ></app-input-date>
+  <app-input-date
+    label="По"
+    placeholderValue="Введите дату и время"
+    [minValue]="minValueUntil"
+    (changeValue)="changeDateUntil($event)"
+    (deleteValue)="onDeleteValueUntil()"
+  ></app-input-date>
+</div>
+<div class="section">
+  <h5>Тариф</h5>
+  <div class="rate-wrapp">
+    <app-radio-button
+      (changeEvent)="changeRate($event)"
+      *ngFor="let rate of rates"
+      name="sortRate"
+      [label]="
+        rate.rateTypeId.name
+          | gluing: ', ' + rate.price
+          | gluing: '₽/' + rate.rateTypeId.unit
+      "
+    ></app-radio-button>
+  </div>
+  <div class="section">
+    <h5>Доп услуги</h5>
+
+    <div class="services-wrapp">
+      <app-checkbox
+        *ngFor="let service of services; let i = index"
+        [name]="service.id"
+        [label]="service.description"
+        (toggleCheckBox)="toggleCheckBox($event, this.service)"
+      ></app-checkbox>
+    </div>
+  </div>
+</div>
