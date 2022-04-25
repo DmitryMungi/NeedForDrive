@@ -12,7 +12,6 @@ import { StepLocationComponent } from "./order-page/form-blog/form-steps/step-lo
 import { StepModelComponent } from "./order-page/form-blog/form-steps/step-model/step-model.component";
 import { StepAdditComponent } from "./order-page/form-blog/form-steps/step-addit/step-addit.component";
 import { StepConfirmComponent } from "./order-page/form-blog/form-steps/step-confirm/step-confirm.component";
-import { StepFinalComponent } from "./order-page/form-blog/form-steps/step-final/step-final.component";
 import { OrderInfoComponent } from "./order-page/form-blog/order-info/order-info.component";
 import { InputModule } from "../input/input.module";
 import { environment } from "../../environments/environment";
@@ -36,7 +35,6 @@ const mapConfig: YaConfig = {
     StepModelComponent,
     StepAdditComponent,
     StepConfirmComponent,
-    StepFinalComponent,
     OrderInfoComponent,
     DurationPipe,
     GluingPipe,
