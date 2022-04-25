@@ -1,7 +1,7 @@
 <div class="order-info">
   <h3 class="order-title">Ваш заказ:</h3>
   <app-order-item
-    *ngIf="addressValues.city != undefined && addressValues.address != ''"
+    *ngIf="addressValues.city && addressValues.address"
     label="Пункт выдачи"
     [item]="addressValues.city | gluing: ','"
     [itemElse]="addressValues.address"

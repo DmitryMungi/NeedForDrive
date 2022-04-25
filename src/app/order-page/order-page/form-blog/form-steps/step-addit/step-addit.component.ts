@@ -26,7 +26,7 @@ import { AddidService } from "./addit.service";
   ],
 })
 export class StepAdditComponent implements OnInit {
-  @Output() completedForm = new EventEmitter();
+  @Output() completedForm = new EventEmitter<void>();
 
   public minValueFrom: string = moment(CURENT_DATE).format("yyyy-MM-DDThh:mm");
   public minValueUntil: string = this.minValueFrom;
@@ -128,7 +128,7 @@ export class StepAdditComponent implements OnInit {
 
   formIsValid() {
     this.additValues.isValid = this.formGroup.status === "VALID";
-    if (this.additValues.isValid) {
+    if (this.formGroup.valid) {
       this.completedForm.emit();
       this.orderService.setTotalPrice();
     }

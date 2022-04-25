@@ -4,12 +4,10 @@ import { OrderService } from "src/app/shared/services/order.service";
 import { INameId } from "src/app/shared/interfaces/order.interface";
 import { CarModel } from "../step-model/module.interface";
 import { ConfirmApiService } from "./confirm.api.service";
-import {
-  IOrderData,
-  IOrderRes,
-} from "src/app/shared/interfaces/order.interface";
+import { IOrderData } from "src/app/shared/interfaces/order.interface";
 import { Router } from "@angular/router";
 import { UntilDestroy } from "@ngneat/until-destroy";
+export const RATE_ID = "5e26a191099b810b946c5d89";
 @UntilDestroy({ checkProperties: true })
 @Component({
   selector: "app-step-confirm",
@@ -17,14 +15,14 @@ import { UntilDestroy } from "@ngneat/until-destroy";
   styleUrls: ["./step-confirm.component.less"],
 })
 export class StepConfirmComponent implements OnInit {
+  @Input() isOrderConfirm?: boolean;
+  @Output() orderIsBack = new EventEmitter<void>();
+
   constructor(
     private orderService: OrderService,
     private confirmApi: ConfirmApiService,
     private router: Router
   ) {}
-
-  @Input() isOrderConfirm?: boolean;
-  @Output() orderIsBack = new EventEmitter();
 
   public orderCar!: CarModel;
   public additValues!: IAddit;
@@ -41,7 +39,7 @@ export class StepConfirmComponent implements OnInit {
   }
 
   postOrder() {
-    const [orderSt] = this.orderStatus.filter((x) => x.name === "Новые");
+    const [orderSt] = this.orderStatus.filter((x) => x.id === RATE_ID);
     this.orderData.orderStatusId = orderSt;
     this.confirmApi
       .postOrder(this.orderData)

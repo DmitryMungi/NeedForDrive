@@ -11,7 +11,7 @@ export class AdditApiService {
 
   getRate(): Observable<ITariff[]> {
     return this.http
-      .get<IResponse<ITariff>>(`${environment.apiUrl}/db/rate`)
+      .get<IResponse<ITariff[]>>(`${environment.apiUrl}/db/rate`)
       .pipe(map((res) => res.data.filter((tariff) => tariff.rateTypeId)));
   }
 }

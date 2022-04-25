@@ -18,13 +18,27 @@ import {
   ICity,
 } from "src/app/order-page/order-page/form-blog/form-steps/step-location/location.interface";
 import { ITariff } from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.interface";
-
-export const STARTPRICE: IPrice = {
-  min: 8000,
-  max: 12000,
-};
-
-export const TOTALPRICE: number = 0;
+import {
+  OF_DAY,
+  OF_MINUTE,
+  OF_SECOND,
+  OF_WEEK,
+  OF_MONTH,
+  OF_THREEMONTH,
+  OF_YEAR,
+  COST_DAY,
+  COST_MINUTE,
+  COST_MONTH,
+  COST_TREEMONTH,
+  COST_WEEK,
+  COST_WEEKSALE,
+  COST_YEAR,
+  COST_CHAIR,
+  COST_RIGHTWHEEL,
+  COST_TANK,
+  STARTPRICE,
+  TOTALPRICE,
+} from "../const/order.const";
 
 @Injectable({ providedIn: "root" })
 export class OrderService {
@@ -103,7 +117,7 @@ export class OrderService {
   }
 
   getOrderData(): IOrderData {
-    const Order = {
+    const order = {
       orderStatusId: <INameId>{},
       cityId: this.locationValues.cityId,
       pointId: this.locationValues.pointId,
@@ -121,50 +135,50 @@ export class OrderService {
       isRightWheel: this.additValues.isRightWheel,
     };
 
-    return Order;
+    return order;
   }
 
   private totalPrice(from: number, until: number, rate: string) {
-    let price = Math.abs(until - from) / 1000;
+    let price = Math.abs(until - from) / OF_SECOND;
 
     switch (rate) {
       case RateEnum.day:
-        price = Math.ceil(price / 86400) * 2500;
+        price = Math.ceil(price / OF_DAY) * COST_DAY;
         this.priceTotal = price;
         break;
       case RateEnum.minute:
-        price = (price / 60) * 10;
+        price = (price / OF_MINUTE) * COST_MINUTE;
         this.priceTotal = price;
         break;
       case RateEnum.month:
-        price = Math.ceil(price / 2592000) * 1000;
+        price = Math.ceil(price / OF_MONTH) * COST_MONTH;
         this.priceTotal = price;
         break;
       case RateEnum.threeMounth:
-        price = Math.ceil(price / 7776000) * 51000;
+        price = Math.ceil(price / OF_THREEMONTH) * COST_TREEMONTH;
         this.priceTotal = price;
         break;
       case RateEnum.week:
-        price = Math.ceil(price / 604800) * 15000;
+        price = Math.ceil(price / OF_WEEK) * COST_WEEK;
         this.priceTotal = price;
         break;
       case RateEnum.weekSale:
-        price = Math.ceil(price / 604800) * 13500;
+        price = Math.ceil(price / OF_WEEK) * COST_WEEKSALE;
         this.priceTotal = price;
         break;
       case RateEnum.year:
-        price = Math.ceil(price / 31536000) * 200000;
+        price = Math.ceil(price / OF_YEAR) * COST_YEAR;
         this.priceTotal = price;
         break;
     }
     if (this.additValues.fullTank) {
-      this.priceTotal = this.priceTotal + 500;
+      this.priceTotal = this.priceTotal + COST_TANK;
     }
     if (this.additValues.isNeedChildChair) {
-      this.priceTotal = this.priceTotal + 200;
+      this.priceTotal = this.priceTotal + COST_CHAIR;
     }
     if (this.additValues.isRightWheel) {
-      this.priceTotal = this.priceTotal + 1600;
+      this.priceTotal = this.priceTotal + COST_RIGHTWHEEL;
     }
   }
 }

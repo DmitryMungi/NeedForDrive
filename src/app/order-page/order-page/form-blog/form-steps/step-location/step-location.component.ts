@@ -99,11 +99,11 @@ export class StepLocationComponent implements OnInit {
   setValuesAddress(item: ILocationValue) {
     if (item.address != "" && item.city != "") {
       const [city] = this.cities.filter((x) => x.name === item.city);
-      const [addres] = this.addressList.filter(
+      const [address] = this.addressList.filter(
         (x) => x.address === item.address
       );
       item.valid = true;
-      this.orderService.setLocationValues(city, addres);
+      this.orderService.setLocationValues(city, address);
       this.locationService.setLocationValue(item);
       this.addressValueChange.emit();
     }

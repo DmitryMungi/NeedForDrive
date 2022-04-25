@@ -17,13 +17,13 @@ export class ConfirmApiService {
 
   getOrderStatus(): Observable<INameId[]> {
     return this.http
-      .get<IResponse<INameId>>(`${environment.apiUrl}/db/orderStatus`)
+      .get<IResponse<INameId[]>>(`${environment.apiUrl}/db/orderStatus`)
       .pipe(map((response) => response.data));
   }
 
   postOrder(obj: IOrderData): Observable<IOrderRes> {
     return this.http
-      .post<{ data: IOrderRes }>(`${environment.apiUrl}/db/order`, obj)
+      .post<IResponse<IOrderRes>>(`${environment.apiUrl}/db/order`, obj)
       .pipe(map((response) => response.data));
   }
 }
