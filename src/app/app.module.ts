@@ -14,7 +14,7 @@ import { OrderService } from "./shared/services/order.service";
 import { CarApiService } from "./order-page/order-page/form-blog/form-steps/step-model/car.api.service";
 import { LoadingService } from "./shared/services/loading.service";
 import { LoadingInterceptor } from "./interceptors/loading.interceptor";
-import { LoaderComponent } from "./shared/loader/loader.component";
+import { LoaderComponent } from "./shared/components/loader/loader.component";
 import { AdditApiService } from "./order-page/order-page/form-blog/form-steps/step-addit/addit.api.service";
 import { ConfirmApiService } from "./order-page/order-page/form-blog/form-steps/step-confirm/confirm.api.service";
 

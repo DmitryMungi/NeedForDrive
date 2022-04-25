@@ -1,0 +1,92 @@
+@import '../../../common-styles/text.less';
+@import '../../../common-styles/variables.less';
+
+:host {
+  display: flex;
+  height: 100%;
+}
+
+.completed {
+  width: 100%;
+
+  &__orderId {
+    padding: 8px 0;
+    border-top: 1px solid @color-grey-light;
+    border-bottom: 1px solid @color-grey-light;
+    font-family: 'Roboto-Bold';
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  &__container {
+    display: flex;
+    height: calc(100% - 137px);
+
+    .completed-main {
+      padding-right: 16px;
+      display: flex;
+      justify-content: space-between;
+      width: 70%;
+      border-right: 1px solid @color-grey-light;
+
+      .completed__title {
+        white-space: nowrap;
+      }
+    }
+  }
+
+  &__details {
+    padding: 32px 0;
+
+    .detail-name , .detail-services{
+      margin-bottom: 8px;
+    }
+
+    .detail_label {
+      font-family: 'Roboto-Bold';
+      font-weight: 700;
+      font-size: 14px;
+      margin-right: 8px;
+    }
+  }
+
+  .car-img {
+    max-width: 380px;
+    max-height: 260px;
+    width: 100%;
+    object-fit: contain;
+  }
+}
+
+@media (max-width: 1020px) {
+
+  .completed-main {
+    flex-direction: column;
+  }
+}
+
+
+@media (max-width: 670px) {
+
+  .completed {
+    &__container {
+      .completed-main {
+        .completed__title {
+          white-space: normal;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 580px) {
+
+  .completed__container {
+    flex-direction: column;
+
+    .completed-main {
+      width: 100%;
+      border-right: none;
+      padding-right: none;
+    }
+  }
+}

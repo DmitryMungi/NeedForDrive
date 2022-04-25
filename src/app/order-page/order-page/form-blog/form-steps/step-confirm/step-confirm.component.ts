@@ -8,7 +8,9 @@ import {
   IOrderData,
   IOrderRes,
 } from "src/app/shared/interfaces/order.interface";
-
+import { Router } from "@angular/router";
+import { UntilDestroy } from "@ngneat/until-destroy";
+@UntilDestroy({ checkProperties: true })
 @Component({
   selector: "app-step-confirm",
   templateUrl: "./step-confirm.component.html",
@@ -17,8 +19,10 @@ import {
 export class StepConfirmComponent implements OnInit {
   constructor(
     private orderService: OrderService,
-    private confirmApi: ConfirmApiService
+    private confirmApi: ConfirmApiService,
+    private router: Router
   ) {}
+
   @Input() isOrderConfirm?: boolean;
   @Output() orderIsBack = new EventEmitter();
 
@@ -26,7 +30,7 @@ export class StepConfirmComponent implements OnInit {
   public additValues!: IAddit;
   public orderStatus!: INameId[];
   public orderData: IOrderData = this.orderService.getOrderData();
-  public orderRes!: IOrderRes;
+  public resId!: string;
 
   ngOnInit(): void {
     this.orderCar = this.orderService.getCar();
@@ -41,7 +45,12 @@ export class StepConfirmComponent implements OnInit {
     this.orderData.orderStatusId = orderSt;
     this.confirmApi
       .postOrder(this.orderData)
-      .subscribe((res) => (this.orderRes = res));
+      .subscribe(
+        (res) => (
+          (this.resId = res.id),
+          this.router.navigate([`order/completed/${this.resId}`])
+        )
+      );
   }
 
   onGoBack() {

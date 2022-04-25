@@ -2,6 +2,7 @@ import {
   IAddress,
   ICity,
 } from "src/app/order-page/order-page/form-blog/form-steps/step-location/location.interface";
+import { ICars } from "src/app/order-page/order-page/form-blog/form-steps/step-model/module.interface";
 
 export interface IPointsValues {
   cityId: ICity;
@@ -43,7 +44,7 @@ export interface IOrderData {
   orderStatusId: INameId;
   cityId: ICity;
   pointId: IAddress;
-  carId: INameId;
+  carId: ICars;
   color: string;
   dateFrom: number;
   dateTo: number;

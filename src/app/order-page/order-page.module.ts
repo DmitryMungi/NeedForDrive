@@ -16,10 +16,12 @@ import { StepFinalComponent } from "./order-page/form-blog/form-steps/step-final
 import { OrderInfoComponent } from "./order-page/form-blog/order-info/order-info.component";
 import { InputModule } from "../input/input.module";
 import { environment } from "../../environments/environment";
-import { LoaderModule } from "../shared/loader/loader.module";
+import { LoaderModule } from "../shared/components/loader/loader.module";
 import { DurationPipe } from "../pipes/duration.pipe";
 import { GluingPipe } from "../pipes/gluing.pipe";
 import { OrderItemComponent } from "./order-page/form-blog/order-info/order-item/order-item.component";
+import { CompletedOrderComponent } from "./completed-order/completed-order.component";
+import { ModalModule } from "../shared/components/modal/modal.module";
 
 const mapConfig: YaConfig = {
   apikey: environment.apiKeyMap,
@@ -39,6 +41,7 @@ const mapConfig: YaConfig = {
     DurationPipe,
     GluingPipe,
     OrderItemComponent,
+    CompletedOrderComponent,
   ],
   imports: [
     CommonModule,
@@ -51,6 +54,7 @@ const mapConfig: YaConfig = {
     InputModule,
     HttpClientModule,
     LoaderModule,
+    ModalModule,
   ],
   exports: [FormsModule, ReactiveFormsModule],
 })

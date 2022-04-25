@@ -6,7 +6,10 @@ import {
   IPointsValues,
 } from "../interfaces/order.interface";
 
-import { CarModel } from "src/app/order-page/order-page/form-blog/form-steps/step-model/module.interface";
+import {
+  CarModel,
+  ICars,
+} from "src/app/order-page/order-page/form-blog/form-steps/step-model/module.interface";
 import { ADDITDVALUES } from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.const";
 import { IPrice } from "../interfaces/order.interface";
 import { RateEnum } from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.const";
@@ -103,7 +106,7 @@ export class OrderService {
       orderStatusId: <INameId>{},
       cityId: this.locationValues.cityId,
       pointId: this.locationValues.pointId,
-      carId: {
+      carId: <ICars>{
         name: this.moduleCar.name,
         id: this.moduleCar.id,
       },

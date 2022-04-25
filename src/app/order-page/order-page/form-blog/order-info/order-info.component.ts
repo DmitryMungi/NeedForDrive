@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
 import { OrderService } from "src/app/shared/services/order.service";
 import { IDateDuration } from "src/app/shared/interfaces/order.interface";
 import {
@@ -7,10 +7,16 @@ import {
   TEXTBTN2,
   TEXTBTN3,
   TEXTBTN4,
+  GREEN,
+  FAIL,
+  TEXTCANCEL,
+  TEXTDEFAULT,
 } from "../order-form.interface";
 import { ILocationValue } from "../form-steps/step-location/location.interface";
 import { LocationService } from "../form-steps/step-location/location.service";
 import { MONTH, WEEK, DAY, HOUR, MINUTE, YEAR } from "./order.const";
+import { ActivatedRoute } from "@angular/router";
+import { OrderPageComponent } from "../../order-page.component";
 
 @Component({
   selector: "app-order-info",
@@ -25,8 +31,17 @@ export class OrderInfoComponent {
 
   constructor(
     private orderService: OrderService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private activatedRouter: ActivatedRoute
   ) {}
+
+  public get colorBtn() {
+    if (this.activatedRouter.component === OrderPageComponent) {
+      return GREEN;
+    } else {
+      return FAIL;
+    }
+  }
 
   public addressValues: ILocationValue =
     this.locationService.getLocationValue();
@@ -49,7 +64,11 @@ export class OrderInfoComponent {
   }
 
   public get textBtn() {
-    return getTextBtn(this.activeStep);
+    if (this.activatedRouter.component === OrderPageComponent) {
+      return getTextBtn(this.activeStep);
+    } else {
+      return TEXTCANCEL;
+    }
   }
 
   public get priceRange() {
@@ -61,17 +80,21 @@ export class OrderInfoComponent {
   }
 
   isValidBtn(item: activeStepEnum): boolean {
-    switch (item) {
-      case activeStepEnum.step1:
-        return this.addressValues.valid;
-      case activeStepEnum.step2:
-        return this.modelValid;
-      case activeStepEnum.step3:
-        return this.additValue.isValid;
-      case activeStepEnum.step4:
-        return true;
-      default:
-        return false;
+    if (this.activatedRouter.component === OrderPageComponent) {
+      switch (item) {
+        case activeStepEnum.step1:
+          return this.addressValues.valid;
+        case activeStepEnum.step2:
+          return this.modelValid;
+        case activeStepEnum.step3:
+          return this.additValue.isValid;
+        case activeStepEnum.step4:
+          return true;
+        default:
+          return false;
+      }
+    } else {
+      return true;
     }
   }
 
@@ -80,12 +103,17 @@ export class OrderInfoComponent {
   }
 
   toNextStep(): void {
-    if (this.activeStep != activeStepEnum.step4) {
-      this.nextStep.emit();
+    if (this.activatedRouter.component === OrderPageComponent) {
+      if (this.activeStep != activeStepEnum.step4) {
+        this.nextStep.emit();
+      } else {
+        this.confirmOrder.emit();
+      }
     } else {
       this.confirmOrder.emit();
     }
   }
+
   dateRange(from: number, untill: number): IDateDuration {
     let delta = Math.abs(untill - from) / 1000;
     let result = <IDateDuration>{};
@@ -121,6 +149,6 @@ function getTextBtn(item: activeStepEnum): string {
     case activeStepEnum.step4:
       return TEXTBTN4;
     default:
-      return "Далее";
+      return TEXTDEFAULT;
   }
 }
