@@ -1,0 +1,12 @@
+<div class="checkbox">
+  <label
+    class="checkbox__label roboto-light-14"
+    [for]="name"
+    (click)="toggle()"
+    [ngClass]="{ checked: isChecked }"
+  >
+    <input type="checkbox" [name]="name" class="input-check" />
+    {{ label }}
+    <span class="costum-checkbox"></span>
+  </label>
+</div>

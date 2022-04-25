@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { OrderService } from "src/app/shared/services/order.service";
 import { CarModel } from "../form-steps/step-model/module.interface";
+import { IDateDuration } from "src/app/shared/interfaces/order.interface";
 import {
   activeStepEnum,
   TEXTBTN1,
@@ -8,8 +9,12 @@ import {
   TEXTBTN3,
   TEXTBTN4,
 } from "../order-form.interface";
+import { MONTH, WEEK, DAY, HOUR, MINUTE } from "./order.const";
 
-import { ILocationValue } from "src/app/shared/interfaces/order.interface";
+import {
+  ILocationValue,
+  IAddit,
+} from "src/app/shared/interfaces/order.interface";
 
 @Component({
   selector: "app-order-info",
@@ -18,7 +23,6 @@ import { ILocationValue } from "src/app/shared/interfaces/order.interface";
 })
 export class OrderInfoComponent {
   @Input() modelValid: boolean = false;
-  @Input() checkedCar?: CarModel;
   @Input() priceRance?: string;
   @Input() activeStep: activeStepEnum = activeStepEnum.step1;
 
@@ -32,6 +36,20 @@ export class OrderInfoComponent {
     return this.orderService.getCar();
   }
 
+  public get additValue() {
+    return this.orderService.getAdditValue();
+  }
+
+  public get dateDuration(): IDateDuration | false {
+    if (this.additValue.dateFrom != 0 && this.additValue.dateUntil != 0) {
+      const dFrom = +new Date(this.additValue.dateFrom);
+      const dUntil = +new Date(this.additValue.dateUntil);
+
+      return this.dateRange(dFrom, dUntil);
+    }
+    return false;
+  }
+
   public get textBtn() {
     return getTextBtn(this.activeStep);
   }
@@ -42,6 +60,8 @@ export class OrderInfoComponent {
         return this.addressValues.valid;
       case activeStepEnum.step2:
         return this.modelValid;
+      case activeStepEnum.step3:
+        return this.additValue.isValid;
       default:
         return false;
     }
@@ -53,6 +73,28 @@ export class OrderInfoComponent {
 
   toNextStep(): void {
     this.nextStep.emit();
+  }
+
+  dateRange(from: number, untill: number): IDateDuration {
+    let delta = Math.abs(untill - from) / 1000;
+    let result = <IDateDuration>{};
+    let structure = <IDateDuration>{
+      month: MONTH,
+      week: WEEK,
+      day: DAY,
+      hour: HOUR,
+      minute: MINUTE,
+    };
+
+    Object.keys(structure).forEach((key) => {
+      result[key as keyof IDateDuration] = Math.floor(
+        delta / structure[key as keyof IDateDuration]
+      );
+      delta -=
+        result[key as keyof IDateDuration] *
+        structure[key as keyof IDateDuration];
+    });
+    return result;
   }
 }
 

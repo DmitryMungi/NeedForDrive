@@ -1,0 +1,10 @@
+<div class="input-radio">
+  <input
+    type="radio"
+    class="input-radio__input"
+    [name]="name"
+    [value]="label"
+    (change)="onChange($event)"
+  />
+  <span class="input-radio__label">{{ label }} </span>
+</div>

@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
-import { ILocationValue } from "../interfaces/order.interface";
+import { ILocationValue, IAddit } from "../interfaces/order.interface";
 import { CarModel } from "src/app/order-page/order-page/form-blog/form-steps/step-model/module.interface";
+import { ADDITDVALUES } from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.const";
 
 @Injectable({ providedIn: "root" })
 export class OrderService {
@@ -29,6 +30,8 @@ export class OrderService {
 
   public carList: CarModel[] = [];
 
+  public additValues: IAddit = ADDITDVALUES;
+
   getLocationValue(): ILocationValue {
     return this.locationValues;
   }
@@ -51,5 +54,13 @@ export class OrderService {
 
   setCar(car: CarModel) {
     this.moduleCar = car;
+  }
+
+  getAdditValue(): IAddit {
+    return this.additValues;
+  }
+
+  setAdditValues(value: IAddit) {
+    this.additValues = value;
   }
 }
