@@ -22,10 +22,9 @@
   <div class="order-steps_wrapp">
     <form class="order-form" [formGroup]="orderForm">
       <app-step-location
-        (addressValueChange)="addressValueChange()"
+        (addressValueChange)="addressValueChange($event)"
         *ngIf="activeStep === activeStepEnum.step1"
       ></app-step-location>
-
       <app-step-model
         [carModel]="checkedCar?.name"
         (selectCar)="selectedCar($event)"
@@ -33,7 +32,7 @@
       ></app-step-model>
       <app-step-addit
         *ngIf="activeStep === activeStepEnum.step3"
-        (completedForm)="additCompleted()"
+        (completedForm)="additCompleted($event)"
       ></app-step-addit>
       <app-step-confirm
         [isOrderConfirm]="isOrderConfirm"

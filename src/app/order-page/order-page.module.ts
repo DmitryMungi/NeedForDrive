@@ -21,6 +21,8 @@ import { GluingPipe } from "../pipes/gluing.pipe";
 import { OrderItemComponent } from "./order-page/form-blog/order-info/order-item/order-item.component";
 import { CompletedOrderComponent } from "./completed-order/completed-order.component";
 import { ModalModule } from "../shared/components/modal/modal.module";
+import { OrderDetaleComponent } from "./order-page/form-blog/form-steps/step-confirm/order-detale/order-detale.component";
+import { CarNumberComponent } from "./order-page/form-blog/form-steps/step-confirm/car-number/car-number.component";
 
 const mapConfig: YaConfig = {
   apikey: environment.apiKeyMap,
@@ -40,6 +42,8 @@ const mapConfig: YaConfig = {
     GluingPipe,
     OrderItemComponent,
     CompletedOrderComponent,
+    OrderDetaleComponent,
+    CarNumberComponent,
   ],
   imports: [
     CommonModule,

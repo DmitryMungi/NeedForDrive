@@ -24,3 +24,5 @@ export const STARTPRICE = {
 };
 
 export const TOTALPRICE = 0;
+export const RATE_ID = "5e26a191099b810b946c5d89";
+export const RATE_ID_CANCEL = "5e26a1f5099b810b946c5d8c";

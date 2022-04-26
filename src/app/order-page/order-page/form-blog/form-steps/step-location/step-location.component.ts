@@ -21,11 +21,10 @@ import { Subject } from "rxjs";
   styleUrls: ["./step-location.component.less"],
 })
 export class StepLocationComponent implements OnInit {
-  @Output() addressValueChange = new EventEmitter();
+  @Output() addressValueChange = new EventEmitter<boolean>();
 
   public cities: ICity[] = [];
   public addressList: IAddress[] = [];
-
   public activeAddress: string[] = [];
   public citiesList: string[] = [];
 
@@ -94,6 +93,8 @@ export class StepLocationComponent implements OnInit {
 
   resetAddress() {
     this.addressValues.address = "";
+    this.addressValues.valid = false;
+    this.setValuesAddress(this.addressValues);
   }
 
   setValuesAddress(item: ILocationValue) {
@@ -105,8 +106,8 @@ export class StepLocationComponent implements OnInit {
       item.valid = true;
       this.orderService.setLocationValues(city, address);
       this.locationService.setLocationValue(item);
-      this.addressValueChange.emit();
     }
+    this.addressValueChange.emit(item.valid);
     return;
   }
 

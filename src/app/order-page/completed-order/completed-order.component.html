@@ -11,30 +11,35 @@
         <div class="detail-name">
           {{ completedRes?.carId?.name }}
         </div>
-        <div class="border-text">
-          {{ completedRes?.carId?.number }}
-        </div>
-        <div class="detail-services">
-          <span class="detail_label">Топливо </span>
-          <span
-            class="detail_item"
-            *ngIf="completedRes?.isFullTank; else tankInfo"
-            >100%</span
-          >
-          <ng-template #tankInfo> {{ completedRes?.carId?.tank }} </ng-template>
-        </div>
-        <div class="detail-services" *ngIf="completedRes?.isNeedChildChair">
-          <span class="detail_label">Детское кресло </span>
-          <span>Да</span>
-        </div>
-        <div class="detail-services" *ngIf="completedRes?.isRightWheel">
-          <span class="detail_label">Правый руль </span>
-          <span>Да</span>
-        </div>
-        <div class="detail-services">
-          <span class="detail_label">Доступна с </span>
-          <span>{{ completedRes?.dateFrom | date: "dd.MM.YYYY HH:mm" }}</span>
-        </div>
+        <app-car-number
+          [carNumber]="completedRes.carId.number"
+        ></app-car-number>
+        <app-order-detale
+          *ngIf="completedRes?.isFullTank"
+          label="Топливо"
+          desc="100%"
+        >
+        </app-order-detale>
+        <app-order-detale
+          *ngIf="!completedRes?.isFullTank"
+          label="Топливо"
+          [desc]="completedRes.carId.tank"
+        >
+        </app-order-detale>
+        <app-order-detale
+          *ngIf="completedRes?.isNeedChildChair"
+          label="Детское кресло"
+          desc="Да"
+        ></app-order-detale>
+        <app-order-detale
+          *ngIf="completedRes?.isRightWheel"
+          label="Правый руль "
+          desc="Да"
+        ></app-order-detale>
+        <app-order-detale
+          label="Доступна с "
+          desc="{{ completedRes?.dateFrom | date: 'dd.MM.YYYY HH:mm' }}"
+        ></app-order-detale>
       </div>
       <div class="order-image">
         <img class="car-img" [src]="completedRes?.carId?.thumbnail?.path" />

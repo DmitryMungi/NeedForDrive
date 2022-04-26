@@ -5,9 +5,9 @@ import { INameId } from "src/app/shared/interfaces/order.interface";
 import { CarModel } from "../step-model/module.interface";
 import { ConfirmApiService } from "./confirm.api.service";
 import { IOrderData } from "src/app/shared/interfaces/order.interface";
-import { Router } from "@angular/router";
 import { UntilDestroy } from "@ngneat/until-destroy";
-export const RATE_ID = "5e26a191099b810b946c5d89";
+import { RATE_ID } from "src/app/shared/const/order.const";
+
 @UntilDestroy({ checkProperties: true })
 @Component({
   selector: "app-step-confirm",
@@ -20,12 +20,11 @@ export class StepConfirmComponent implements OnInit {
 
   constructor(
     private orderService: OrderService,
-    private confirmApi: ConfirmApiService,
-    private router: Router
+    private confirmApi: ConfirmApiService
   ) {}
 
   public orderCar!: CarModel;
-  public additValues!: IAddit;
+  public additValues = <IAddit>{};
   public orderStatus!: INameId[];
   public orderData: IOrderData = this.orderService.getOrderData();
   public resId!: string;
@@ -41,14 +40,7 @@ export class StepConfirmComponent implements OnInit {
   postOrder() {
     const [orderSt] = this.orderStatus.filter((x) => x.id === RATE_ID);
     this.orderData.orderStatusId = orderSt;
-    this.confirmApi
-      .postOrder(this.orderData)
-      .subscribe(
-        (res) => (
-          (this.resId = res.id),
-          this.router.navigate([`order/completed/${this.resId}`])
-        )
-      );
+    this.confirmApi.postOrder(this.orderData).subscribe();
   }
 
   onGoBack() {

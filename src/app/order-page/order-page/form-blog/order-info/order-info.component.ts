@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { OrderService } from "src/app/shared/services/order.service";
 import {
   IDateDuration,
@@ -40,22 +40,16 @@ export class OrderInfoComponent {
   ) {}
 
   public get colorBtn() {
-    if (this.activatedRouter.component === OrderPageComponent) {
-      return GREEN;
-    } else {
-      return FAIL;
-    }
+    return this.activatedRouter.component === OrderPageComponent ? GREEN : FAIL;
   }
 
   public addressValues: ILocationValue =
     this.locationService.getLocationValue();
 
   public get car() {
-    if (this.activatedRouter.component === OrderPageComponent) {
-      return this.orderService.getCar();
-    } else {
-      return this.complitedData?.carId;
-    }
+    return this.activatedRouter.component === OrderPageComponent
+      ? this.orderService.getCar()
+      : this.complitedData?.carId;
   }
 
   public get additValue() {
@@ -86,11 +80,9 @@ export class OrderInfoComponent {
   }
 
   public get textBtn() {
-    if (this.activatedRouter.component === OrderPageComponent) {
-      return getTextBtn(this.activeStep);
-    } else {
-      return TEXTCANCEL;
-    }
+    return this.activatedRouter.component === OrderPageComponent
+      ? getTextBtn(this.activeStep)
+      : TEXTCANCEL;
   }
 
   public get priceRange() {

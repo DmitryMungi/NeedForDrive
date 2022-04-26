@@ -67,7 +67,7 @@ export class OrderService {
   public priceRange: IPrice = STARTPRICE;
   public additValues: IAddit = ADDITDVALUES;
   public priceTotal: number = TOTALPRICE;
-  public orderStaus = <INameId>{};
+  public orderStaus: INameId[] = [];
 
   getPriceRange(): IPrice {
     return this.priceRange;
@@ -91,6 +91,9 @@ export class OrderService {
   }
 
   setCar(car: CarModel) {
+    this.additValues.color = "";
+    this.additValues.isValid = false;
+    this.setAdditValues(this.additValues);
     this.moduleCar = car;
     this.priceRange.min = this.moduleCar.priceMin;
     this.priceRange.max = this.moduleCar.priceMax;
@@ -144,33 +147,29 @@ export class OrderService {
     switch (rate) {
       case RateEnum.day:
         price = Math.ceil(price / OF_DAY) * COST_DAY;
-        this.priceTotal = price;
         break;
       case RateEnum.minute:
         price = (price / OF_MINUTE) * COST_MINUTE;
-        this.priceTotal = price;
         break;
       case RateEnum.month:
         price = Math.ceil(price / OF_MONTH) * COST_MONTH;
-        this.priceTotal = price;
         break;
       case RateEnum.threeMounth:
         price = Math.ceil(price / OF_THREEMONTH) * COST_TREEMONTH;
-        this.priceTotal = price;
         break;
       case RateEnum.week:
         price = Math.ceil(price / OF_WEEK) * COST_WEEK;
-        this.priceTotal = price;
         break;
       case RateEnum.weekSale:
         price = Math.ceil(price / OF_WEEK) * COST_WEEKSALE;
-        this.priceTotal = price;
         break;
       case RateEnum.year:
         price = Math.ceil(price / OF_YEAR) * COST_YEAR;
-        this.priceTotal = price;
         break;
     }
+
+    this.priceTotal = price;
+
     if (this.additValues.fullTank) {
       this.priceTotal = this.priceTotal + COST_TANK;
     }

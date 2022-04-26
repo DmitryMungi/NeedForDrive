@@ -11,7 +11,6 @@ import { OrderService } from "src/app/shared/services/order.service";
 import { AdditApiService } from "./addit.api.service";
 import { CarModel } from "../step-model/module.interface";
 import { ITariff, IService } from "./addit.interface";
-import { ADDITDVALUES } from "./addit.const";
 import { IAddit } from "src/app/shared/interfaces/order.interface";
 
 import * as moment from "moment";
@@ -26,20 +25,26 @@ import { AddidService } from "./addit.service";
   ],
 })
 export class StepAdditComponent implements OnInit {
-  @Output() completedForm = new EventEmitter<void>();
+  @Output() completedForm = new EventEmitter<boolean>();
 
   public minValueFrom: string = moment(CURENT_DATE).format("yyyy-MM-DDThh:mm");
   public minValueUntil: string = this.minValueFrom;
   public maxValueFrom?: string;
   public dateFrom: number = 0;
   public dateUntil: number = 0;
-  public additValues: IAddit = ADDITDVALUES;
+  public additValues: IAddit = this.orderService.getAdditValue();
 
   public formGroup = new FormGroup({
-    color: new FormControl("", Validators.required),
-    from: new FormControl("", [Validators.required, Validators.minLength(10)]),
-    until: new FormControl("", [Validators.required, Validators.minLength(10)]),
-    rate: new FormControl("", Validators.required),
+    color: new FormControl(this.additValues.color, Validators.required),
+    from: new FormControl(this.additValues.dateFrom, [
+      Validators.required,
+      Validators.minLength(10),
+    ]),
+    until: new FormControl(this.additValues.dateUntil, [
+      Validators.required,
+      Validators.minLength(10),
+    ]),
+    rate: new FormControl(this.additValues.rate, Validators.required),
   });
   constructor(
     private orderForm: FormGroupDirective,
@@ -65,6 +70,7 @@ export class StepAdditComponent implements OnInit {
   ngOnInit(): void {
     this.orderForm.form.addControl("stepAddit", this.formGroup);
     this.additApiService.getRate().subscribe((res) => (this.rates = res));
+    this.formIsValid();
   }
 
   changeColor(item: string) {
@@ -81,7 +87,7 @@ export class StepAdditComponent implements OnInit {
     this.minValueUntil = item;
     this.dateFrom = +new Date(item);
     this.dateCheckAndSet();
-    this.formGroup.patchValue({ from: item });
+    this.formGroup.patchValue({ from: this.dateFrom });
     this.formIsValid();
   }
 
@@ -90,7 +96,7 @@ export class StepAdditComponent implements OnInit {
     this.dateUntil = +new Date(item);
     this.maxValueFrom = item;
     this.dateCheckAndSet();
-    this.formGroup.patchValue({ until: item });
+    this.formGroup.patchValue({ until: this.dateUntil });
     this.formIsValid();
   }
 
@@ -127,12 +133,12 @@ export class StepAdditComponent implements OnInit {
   }
 
   formIsValid() {
-    this.additValues.isValid = this.formGroup.status === "VALID";
+    this.additValues.isValid = this.formGroup.valid;
     if (this.formGroup.valid) {
-      this.completedForm.emit();
+      // this.completedForm.emit();
       this.orderService.setTotalPrice();
     }
-
+    this.completedForm.emit(this.formGroup.valid);
     this.orderService.setAdditValues(this.additValues);
   }
 

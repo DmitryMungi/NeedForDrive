@@ -30,8 +30,10 @@ export class OrderFormComponent implements OnInit {
     this.pageStepsTitles[activeStepEnum.step1].isValid = true;
   }
 
-  addressValueChange() {
-    this.pageStepsTitles[activeStepEnum.step2].isValid = true;
+  addressValueChange(value: boolean) {
+    this.pageStepsTitles[activeStepEnum.step2].isValid = value;
+    this.pageStepsTitles[activeStepEnum.step3].isValid = false;
+    this.additCompleted(false);
   }
 
   toStep(item: PageSteps): void {
@@ -48,10 +50,11 @@ export class OrderFormComponent implements OnInit {
     this.checkedCar = car;
     this.modelValid = true;
     this.pageStepsTitles[activeStepEnum.step3].isValid = true;
+    this.additCompleted(false);
   }
 
-  additCompleted() {
-    this.pageStepsTitles[activeStepEnum.step4].isValid = true;
+  additCompleted(value: boolean) {
+    this.pageStepsTitles[activeStepEnum.step4].isValid = value;
   }
 
   confirmOrder() {
