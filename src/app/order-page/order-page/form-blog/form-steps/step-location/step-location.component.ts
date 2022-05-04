@@ -13,12 +13,22 @@ import {
 } from "./location.const";
 import { ORDER_CONTROLS } from "../../order-form.interface";
 import { Subject } from "rxjs";
+import {
+  ControlContainer,
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+  Validators,
+} from "@angular/forms";
 
 @UntilDestroy({ checkProperties: true })
 @Component({
   selector: "app-step-location",
   templateUrl: "./step-location.component.html",
   styleUrls: ["./step-location.component.less"],
+  viewProviders: [
+    { provide: ControlContainer, useExisting: FormGroupDirective },
+  ],
 })
 export class StepLocationComponent implements OnInit {
   @Output() addressValueChange = new EventEmitter<boolean>();
@@ -38,13 +48,20 @@ export class StepLocationComponent implements OnInit {
   public addressValues: ILocationValue =
     this.locationService.getLocationValue();
 
+  public formGroup = new FormGroup({
+    city: new FormControl(this.addressValues.city, Validators.required),
+    address: new FormControl(this.addressValues.address, Validators.required),
+  });
+
   constructor(
+    private orderForm: FormGroupDirective,
     private orderService: OrderService,
     private locationService: LocationService,
     private locationApiService: LocatoinApiService
   ) {}
 
   ngOnInit(): void {
+    this.orderForm.form.addControl("stepLocation", this.formGroup);
     this.locationApiService
       .getCity()
       .subscribe(
@@ -76,9 +93,11 @@ export class StepLocationComponent implements OnInit {
     this.locationService.setCityValue(item);
     this.fullAddress = item;
     this.getCoordinate(this.fullAddress);
+    this.formGroup.patchValue({ city: item });
   }
 
   onSearchAddressItem(item: string) {
+    this.formGroup.patchValue({ address: item });
     this.addressValues.address = item;
     this.setValuesAddress(this.addressValues);
     this.fullAddress = this.fullAddress + item;
@@ -89,11 +108,13 @@ export class StepLocationComponent implements OnInit {
     this.addressValues.city = "";
     this.activeAddress.length = 0;
     this.resetAddress();
+    this.formGroup.reset();
   }
 
   resetAddress() {
     this.addressValues.address = "";
     this.addressValues.valid = false;
+    this.formGroup.patchValue({ address: "" });
     this.setValuesAddress(this.addressValues);
   }
 
@@ -107,7 +128,7 @@ export class StepLocationComponent implements OnInit {
       this.orderService.setLocationValues(city, address);
       this.locationService.setLocationValue(item);
     }
-    this.addressValueChange.emit(item.valid);
+    this.addressValueChange.emit(this.formGroup.valid);
     return;
   }
 

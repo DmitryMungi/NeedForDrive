@@ -135,7 +135,6 @@ export class StepAdditComponent implements OnInit {
   formIsValid() {
     this.additValues.isValid = this.formGroup.valid;
     if (this.formGroup.valid) {
-      // this.completedForm.emit();
       this.orderService.setTotalPrice();
     }
     this.completedForm.emit(this.formGroup.valid);

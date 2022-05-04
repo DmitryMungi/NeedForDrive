@@ -10,7 +10,10 @@ import {
   CarModel,
   ICars,
 } from "src/app/order-page/order-page/form-blog/form-steps/step-model/module.interface";
-import { ADDITDVALUES } from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.const";
+import {
+  ADDITDVALUES,
+  CAR_MODEL,
+} from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.const";
 import { IPrice } from "../interfaces/order.interface";
 import { RateEnum } from "src/app/order-page/order-page/form-blog/form-steps/step-addit/addit.const";
 import {
@@ -47,22 +50,7 @@ export class OrderService {
     pointId: <IAddress>{},
   };
 
-  public moduleCar: CarModel = {
-    id: "",
-    name: "",
-    number: "",
-    priceMax: 0,
-    priceMin: 0,
-    thumbnailUrl: "",
-    isActive: false,
-    categoryId: {
-      description: "",
-      id: "",
-      name: "",
-    },
-    colors: [],
-    tank: 0,
-  };
+  public moduleCar: CarModel = CAR_MODEL;
   public carList: CarModel[] = [];
   public priceRange: IPrice = STARTPRICE;
   public additValues: IAddit = ADDITDVALUES;
@@ -139,6 +127,42 @@ export class OrderService {
     };
 
     return order;
+  }
+
+  resetAllValues() {
+    this.carList.forEach((i) => (i.isActive = false));
+    this.priceTotal = TOTALPRICE;
+    this.additValues = {
+      color: "",
+      dateFrom: 0,
+      dateUntil: 0,
+      rate: "",
+      rateId: "",
+      fullTank: false,
+      isNeedChildChair: false,
+      isRightWheel: false,
+      isValid: false,
+    };
+    this.priceRange = {
+      min: 8000,
+      max: 12000,
+    };
+    this.moduleCar = {
+      id: "",
+      name: "",
+      number: "",
+      priceMax: 0,
+      priceMin: 0,
+      thumbnailUrl: "",
+      isActive: false,
+      categoryId: {
+        description: "",
+        id: "",
+        name: "",
+      },
+      colors: [],
+      tank: 0,
+    };
   }
 
   private totalPrice(from: number, until: number, rate: string) {

@@ -1,4 +1,5 @@
 import { IAddit } from "src/app/shared/interfaces/order.interface";
+import { CarModel } from "../step-model/module.interface";
 export const CURENT_DATE = new Date();
 export enum ServicesEnum {
   FullTank = "fullTank",
@@ -44,4 +45,21 @@ export const ADDITDVALUES: IAddit = {
   isNeedChildChair: false,
   isRightWheel: false,
   isValid: false,
+};
+
+export const CAR_MODEL: CarModel = {
+  id: "",
+  name: "",
+  number: "",
+  priceMax: 0,
+  priceMin: 0,
+  thumbnailUrl: "",
+  isActive: false,
+  categoryId: {
+    description: "",
+    id: "",
+    name: "",
+  },
+  colors: [],
+  tank: 0,
 };

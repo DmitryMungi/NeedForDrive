@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
 import { OrderService } from "src/app/shared/services/order.service";
 import {
   IDateDuration,
@@ -43,8 +43,9 @@ export class OrderInfoComponent {
     return this.activatedRouter.component === OrderPageComponent ? GREEN : FAIL;
   }
 
-  public addressValues: ILocationValue =
-    this.locationService.getLocationValue();
+  public get addressValues(): ILocationValue {
+    return this.locationService.getLocationValue();
+  }
 
   public get car() {
     return this.activatedRouter.component === OrderPageComponent
