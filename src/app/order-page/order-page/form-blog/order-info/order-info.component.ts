@@ -20,6 +20,7 @@ import { LocationService } from "../form-steps/step-location/location.service";
 import { MONTH, WEEK, DAY, HOUR, MINUTE, YEAR } from "./order.const";
 import { ActivatedRoute } from "@angular/router";
 import { OrderPageComponent } from "../../order-page.component";
+import { FormGroup } from "@angular/forms";
 
 @Component({
   selector: "app-order-info",
@@ -27,7 +28,7 @@ import { OrderPageComponent } from "../../order-page.component";
   styleUrls: ["./order-info.component.less"],
 })
 export class OrderInfoComponent {
-  @Input() modelValid: boolean = false;
+  @Input() form!: FormGroup;
   @Input() activeStep: activeStepEnum = activeStepEnum.step1;
   @Input() complitedData!: IOrderData;
   @Output() nextStep = new EventEmitter();
@@ -98,9 +99,9 @@ export class OrderInfoComponent {
     if (this.activatedRouter.component === OrderPageComponent) {
       switch (item) {
         case activeStepEnum.step1:
-          return this.addressValues.valid;
+          return this.form.controls["stepLocation"].valid;
         case activeStepEnum.step2:
-          return this.modelValid;
+          return this.form.controls["stepModel"].valid;
         case activeStepEnum.step3:
           return this.additValue.isValid;
         case activeStepEnum.step4:

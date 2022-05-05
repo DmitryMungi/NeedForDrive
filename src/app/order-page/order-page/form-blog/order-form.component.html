@@ -41,10 +41,9 @@
       ></app-step-confirm>
     </form>
   </div>
-
   <app-order-info
+    [form]="orderForm"
     [activeStep]="activeStep"
-    [modelValid]="modelValid"
     (nextStep)="toNextStep()"
     (confirmOrder)="confirmOrder()"
   >

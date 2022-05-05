@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { activeStepEnum, PageSteps, pageTitles } from "./order-form.interface";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { CarModel } from "./form-steps/step-model/module.interface";
+import { ILocationValue } from "./form-steps/step-location/location.interface";
 
 @Component({
   selector: "app-order-form",
@@ -13,14 +14,14 @@ export class OrderFormComponent implements OnInit {
   public activeStep: activeStepEnum = activeStepEnum.step1;
   public activeStepEnum = activeStepEnum;
   public isOrderConfirm: boolean = false;
-
   public checkedCar?: CarModel;
 
-  public modelValid: boolean = false;
   public orderForm = new FormGroup({
-    cityName: new FormControl("", Validators.required),
-    addressName: new FormControl("", Validators.required),
-    modelName: new FormControl("", Validators.required),
+    stepLocation: new FormGroup({
+      city: new FormControl("", Validators.required),
+      address: new FormControl("", Validators.required),
+    }),
+    stepModel: new FormControl("", Validators.required),
   });
 
   constructor() {}
@@ -30,9 +31,12 @@ export class OrderFormComponent implements OnInit {
     this.pageStepsTitles[activeStepEnum.step1].isValid = true;
   }
 
-  addressValueChange(value: boolean) {
-    this.pageStepsTitles[activeStepEnum.step2].isValid = value;
-    this.pageStepsTitles[activeStepEnum.step3].isValid = false;
+  addressValueChange(value: ILocationValue) {
+    this.orderForm.controls["stepLocation"].patchValue({
+      city: value.city,
+      address: value.address,
+    });
+    this.isValidSteps();
     this.additCompleted(false);
   }
 
@@ -47,9 +51,9 @@ export class OrderFormComponent implements OnInit {
   }
 
   selectedCar(car: CarModel) {
+    this.orderForm.controls["stepModel"].patchValue({ stepModel: car });
     this.checkedCar = car;
-    this.modelValid = true;
-    this.pageStepsTitles[activeStepEnum.step3].isValid = true;
+    this.isValidSteps();
     this.additCompleted(false);
   }
 
@@ -63,5 +67,14 @@ export class OrderFormComponent implements OnInit {
 
   onGoBack() {
     this.isOrderConfirm = false;
+  }
+
+  private isValidSteps() {
+    this.pageStepsTitles[activeStepEnum.step2].isValid =
+      this.orderForm.controls["stepLocation"].valid;
+
+    this.pageStepsTitles[activeStepEnum.step3].isValid =
+      this.orderForm.controls["stepLocation"].valid &&
+      this.orderForm.controls["stepModel"].valid;
   }
 }
