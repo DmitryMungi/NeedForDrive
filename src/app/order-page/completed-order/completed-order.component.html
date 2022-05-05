@@ -1,0 +1,60 @@
+<app-side-bar></app-side-bar>
+<div class="completed">
+  <app-header></app-header>
+  <div class="completed__orderId">
+    <div class="container">Заказ номер {{ id }}</div>
+  </div>
+  <div class="completed__container container">
+    <div class="completed-main">
+      <div class="completed__details">
+        <h3 class="completed__title">Ваш заказ подтверждён</h3>
+        <div class="detail-name">
+          {{ completedRes?.carId?.name }}
+        </div>
+        <app-car-number
+          [carNumber]="completedRes.carId.number"
+        ></app-car-number>
+        <app-order-detale
+          *ngIf="completedRes?.isFullTank"
+          label="Топливо"
+          desc="100%"
+        >
+        </app-order-detale>
+        <app-order-detale
+          *ngIf="!completedRes?.isFullTank"
+          label="Топливо"
+          [desc]="completedRes.carId.tank"
+        >
+        </app-order-detale>
+        <app-order-detale
+          *ngIf="completedRes?.isNeedChildChair"
+          label="Детское кресло"
+          desc="Да"
+        ></app-order-detale>
+        <app-order-detale
+          *ngIf="completedRes?.isRightWheel"
+          label="Правый руль "
+          desc="Да"
+        ></app-order-detale>
+        <app-order-detale
+          label="Доступна с "
+          desc="{{ completedRes?.dateFrom | date: 'dd.MM.YYYY HH:mm' }}"
+        ></app-order-detale>
+      </div>
+      <div class="order-image">
+        <img class="car-img" [src]="completedRes?.carId?.thumbnail?.path" />
+      </div>
+    </div>
+    <app-order-info
+      (confirmOrder)="confirmOrder()"
+      [complitedData]="completedRes"
+    ></app-order-info>
+  </div>
+</div>
+
+<app-modal
+  *ngIf="isConfirm"
+  title="Отменить заказ"
+  (confirm)="onConfirm()"
+  (goBack)="onGoBack()"
+></app-modal>

@@ -4,29 +4,30 @@ import { OrderService } from "src/app/shared/services/order.service";
 import { INameId } from "src/app/shared/interfaces/order.interface";
 import { CarModel } from "../step-model/module.interface";
 import { ConfirmApiService } from "./confirm.api.service";
-import {
-  IOrderData,
-  IOrderRes,
-} from "src/app/shared/interfaces/order.interface";
+import { IOrderData } from "src/app/shared/interfaces/order.interface";
+import { UntilDestroy } from "@ngneat/until-destroy";
+import { RATE_ID } from "src/app/shared/const/order.const";
 
+@UntilDestroy({ checkProperties: true })
 @Component({
   selector: "app-step-confirm",
   templateUrl: "./step-confirm.component.html",
   styleUrls: ["./step-confirm.component.less"],
 })
 export class StepConfirmComponent implements OnInit {
+  @Input() isOrderConfirm?: boolean;
+  @Output() orderIsBack = new EventEmitter<void>();
+
   constructor(
     private orderService: OrderService,
     private confirmApi: ConfirmApiService
   ) {}
-  @Input() isOrderConfirm?: boolean;
-  @Output() orderIsBack = new EventEmitter();
 
   public orderCar!: CarModel;
-  public additValues!: IAddit;
+  public additValues = <IAddit>{};
   public orderStatus!: INameId[];
   public orderData: IOrderData = this.orderService.getOrderData();
-  public orderRes!: IOrderRes;
+  public resId!: string;
 
   ngOnInit(): void {
     this.orderCar = this.orderService.getCar();
@@ -37,11 +38,9 @@ export class StepConfirmComponent implements OnInit {
   }
 
   postOrder() {
-    const [orderSt] = this.orderStatus.filter((x) => x.name === "Новые");
+    const [orderSt] = this.orderStatus.filter((x) => x.id === RATE_ID);
     this.orderData.orderStatusId = orderSt;
-    this.confirmApi
-      .postOrder(this.orderData)
-      .subscribe((res) => (this.orderRes = res));
+    this.confirmApi.postOrder(this.orderData).subscribe();
   }
 
   onGoBack() {

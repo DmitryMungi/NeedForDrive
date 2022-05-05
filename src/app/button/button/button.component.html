@@ -1,6 +1,7 @@
 <button
   class="basic-btn"
   [class.accept]="color === 'accept'"
+  [class.fail-theme]="color === 'fail' || theme"
   [class.large-size]="size === 'large'"
   [class.medium-size]="size === 'medium'"
   [class.max-size]="size === 'max'"

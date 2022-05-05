@@ -1,54 +1,44 @@
 <div class="confirm">
   <div class="confirm-info">
     <div class="confirm-info__car-name">{{ orderCar.name }}</div>
-    <div class="confirm-info__car-number" *ngIf="orderCar.number">
-      {{ orderCar.number }}
-    </div>
-    <div class="confirm-info__car-tank">
-      <span class="car-tank confirm-item__label">Топливо</span>
-      <span class="confirm-item__desk">
-        <span *ngIf="additValues.fullTank; else tankInfo">100%</span>
-        <ng-template #tankInfo> {{ orderCar.tank + "%" }}</ng-template>
-      </span>
-    </div>
-    <div class="confirm-info__car-tank" *ngIf="additValues.isNeedChildChair">
-      <span class="car-tank confirm-item__label">Детское кресло</span>
-      <span class="confirm-item__desk">
-        <span>Да</span>
-      </span>
-    </div>
-    <div class="confirm-info__car-tank" *ngIf="additValues.isRightWheel">
-      <span class="car-tank confirm-item__label">Правый руль</span>
-      <span class="confirm-item__desk">
-        <span>Да</span>
-      </span>
-    </div>
-    <div class="confirm-info__order-from">
-      <span class="confirm-item__label">Доступна с</span>
-      <span class="confirm-item__desk">{{
-        additValues.dateFrom | date: "dd.MM.YYYY HH:mm"
-      }}</span>
-    </div>
+    <app-car-number
+      *ngIf="orderCar.number"
+      [carNumber]="orderCar.number"
+    ></app-car-number>
+    <app-order-detale
+      *ngIf="additValues.fullTank"
+      label="Топливо"
+      desc="100%"
+    ></app-order-detale>
+    <app-order-detale
+      *ngIf="!additValues.fullTank"
+      label="Топливо"
+      desc="{{ orderCar.tank + '%' }}"
+    ></app-order-detale>
+    <app-order-detale
+      *ngIf="additValues.isNeedChildChair"
+      label="Детское кресло"
+      desc="Да"
+    ></app-order-detale>
+    <app-order-detale
+      *ngIf="additValues.isRightWheel"
+      label="Правый руль"
+      desc="Да"
+    ></app-order-detale>
+    <app-order-detale
+      label="Доступна с"
+      desc="{{ additValues.dateFrom | date: 'dd.MM.YYYY HH:mm' }}"
+    ></app-order-detale>
   </div>
 
   <div class="confirm__car-img_wrapp">
-    <img class="car-img" [src]="orderCar.thumbnailUrl" alt="" />
+    <img class="car-img" [src]="orderCar.thumbnailUrl" />
   </div>
 </div>
 
-<div *ngIf="isOrderConfirm" class="confirm-modal__wrapp">
-  <div class="confirm__modal">
-    <div class="confirm__head">Подтвердить заказ</div>
-    <app-button
-      (click)="postOrder()"
-      class="confirm__btn"
-      color="accept"
-      text="Подтвердить"
-    ></app-button>
-    <app-button
-      theme="fail-theme"
-      (click)="onGoBack()"
-      text="Вернуться"
-    ></app-button>
-  </div>
-</div>
+<app-modal
+  *ngIf="isOrderConfirm"
+  title="Подтвердить заказ"
+  (confirm)="postOrder()"
+  (goBack)="onGoBack()"
+></app-modal>

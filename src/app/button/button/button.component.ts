@@ -1,6 +1,6 @@
 import { Component, OnChanges, Input, SimpleChanges } from "@angular/core";
 
-type buttonColors = "accept";
+type buttonColors = "accept" | "fail";
 
 @Component({
   selector: "app-button",

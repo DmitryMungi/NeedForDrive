@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map, Observable } from "rxjs";
+import { Router } from "@angular/router";
+import { map, Observable, tap } from "rxjs";
 import {
   INameId,
   IOrderData,
@@ -11,19 +12,22 @@ import { IResponse } from "../step-model/module.interface";
 
 @Injectable({ providedIn: "root" })
 export class ConfirmApiService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   public url = `${environment.apiUrl}/db/orderStatus`;
 
   getOrderStatus(): Observable<INameId[]> {
     return this.http
-      .get<IResponse<INameId>>(`${environment.apiUrl}/db/orderStatus`)
+      .get<IResponse<INameId[]>>(`${environment.apiUrl}/db/orderStatus`)
       .pipe(map((response) => response.data));
   }
 
   postOrder(obj: IOrderData): Observable<IOrderRes> {
     return this.http
-      .post<{ data: IOrderRes }>(`${environment.apiUrl}/db/order`, obj)
-      .pipe(map((response) => response.data));
+      .post<IResponse<IOrderRes>>(`${environment.apiUrl}/db/order`, obj)
+      .pipe(
+        map((response) => response.data),
+        tap((res) => this.router.navigate([`order/completed/${res.id}`]))
+      );
   }
 }

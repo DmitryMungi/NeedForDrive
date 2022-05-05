@@ -21,11 +21,10 @@ import { Subject } from "rxjs";
   styleUrls: ["./step-location.component.less"],
 })
 export class StepLocationComponent implements OnInit {
-  @Output() addressValueChange = new EventEmitter();
+  @Output() addressValueChange = new EventEmitter<ILocationValue>();
 
   public cities: ICity[] = [];
   public addressList: IAddress[] = [];
-
   public activeAddress: string[] = [];
   public citiesList: string[] = [];
 
@@ -94,19 +93,19 @@ export class StepLocationComponent implements OnInit {
 
   resetAddress() {
     this.addressValues.address = "";
+    this.setValuesAddress(this.addressValues);
   }
 
   setValuesAddress(item: ILocationValue) {
     if (item.address != "" && item.city != "") {
       const [city] = this.cities.filter((x) => x.name === item.city);
-      const [addres] = this.addressList.filter(
+      const [address] = this.addressList.filter(
         (x) => x.address === item.address
       );
-      item.valid = true;
-      this.orderService.setLocationValues(city, addres);
+      this.orderService.setLocationValues(city, address);
       this.locationService.setLocationValue(item);
-      this.addressValueChange.emit();
     }
+    this.addressValueChange.emit(this.addressValues);
     return;
   }
 

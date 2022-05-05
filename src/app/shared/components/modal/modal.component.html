@@ -1,0 +1,10 @@
+<div class="confirm__modal">
+  <div class="confirm__head">{{ title }}</div>
+  <app-button
+    (click)="onConfirm()"
+    class="confirm__btn"
+    color="accept"
+    text="Подтвердить"
+  ></app-button>
+  <app-button color="fail" (click)="onGoBack()" text="Вернуться"></app-button>
+</div>
