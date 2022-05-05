@@ -7,7 +7,7 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
 })
 export class InputDateComponent {
   @Input() label: string = "";
-  @Input() value: string = "";
+  @Input() value?: string;
   @Input() minValue: string = "";
   @Input() maxValue?: string;
   @Input() placeholderValue: string = "";

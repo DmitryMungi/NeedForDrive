@@ -2,9 +2,9 @@ import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { UntilDestroy } from "@ngneat/until-destroy";
 import { ICity, IAddress, Igeo, Iplacemark } from "./location.interface";
 import { LocatoinApiService } from "src/app/order-page/order-page/form-blog/form-steps/step-location/location.api.service";
-import { LocationService } from "src/app/shared/services/location.service";
+import { LocationService } from "./location.service";
 import { OrderService } from "src/app/shared/services/order.service";
-import { ILocationValue } from "src/app/shared/interfaces/order.interface";
+import { ILocationValue } from "./location.interface";
 import {
   DEFAULT_GEO,
   NO_MATCHES,
@@ -21,10 +21,10 @@ import { Subject } from "rxjs";
   styleUrls: ["./step-location.component.less"],
 })
 export class StepLocationComponent implements OnInit {
-  @Output() addressValueChange = new EventEmitter();
+  @Output() addressValueChange = new EventEmitter<ILocationValue>();
 
   public cities: ICity[] = [];
-  public address: IAddress[] = [];
+  public addressList: IAddress[] = [];
   public activeAddress: string[] = [];
   public citiesList: string[] = [];
 
@@ -34,10 +34,9 @@ export class StepLocationComponent implements OnInit {
   public orderConrtrols = ORDER_CONTROLS;
   public fullAddress: string = CITY_DEFAULT;
 
-  public addressList: IAddress[] = [];
-
   public subj: Subject<string> = new Subject();
-  public addressValues: ILocationValue = this.orderService.getLocationValue();
+  public addressValues: ILocationValue =
+    this.locationService.getLocationValue();
 
   constructor(
     private orderService: OrderService,
@@ -49,11 +48,15 @@ export class StepLocationComponent implements OnInit {
     this.locationApiService
       .getCity()
       .subscribe(
-        (res) => (this.citiesList = res.data.map((val: ICity) => val.name))
+        (res) =>
+          (this.citiesList = res.data.map(
+            (val: ICity) => val.name,
+            (this.cities = res.data)
+          ))
       );
     this.locationApiService
       .getPoint()
-      .subscribe((res) => (this.address = res.data));
+      .subscribe((res) => (this.addressList = res.data));
 
     this.subj.subscribe((address) =>
       this.locationApiService
@@ -64,7 +67,7 @@ export class StepLocationComponent implements OnInit {
 
   onSearchCityItem(item: string) {
     this.activeAddress.length = 0;
-    const addressObj = this.address.filter((x) => x.cityId?.name === item);
+    const addressObj = this.addressList.filter((x) => x.cityId?.name === item);
     for (let i = 0; i < addressObj.length; i++) {
       this.activeAddress.push(addressObj[i].address);
     }
@@ -90,14 +93,19 @@ export class StepLocationComponent implements OnInit {
 
   resetAddress() {
     this.addressValues.address = "";
+    this.setValuesAddress(this.addressValues);
   }
 
   setValuesAddress(item: ILocationValue) {
     if (item.address != "" && item.city != "") {
-      item.valid = true;
-      this.orderService.setLocationValue(item);
-      this.addressValueChange.emit();
+      const [city] = this.cities.filter((x) => x.name === item.city);
+      const [address] = this.addressList.filter(
+        (x) => x.address === item.address
+      );
+      this.orderService.setLocationValues(city, address);
+      this.locationService.setLocationValue(item);
     }
+    this.addressValueChange.emit(this.addressValues);
     return;
   }
 

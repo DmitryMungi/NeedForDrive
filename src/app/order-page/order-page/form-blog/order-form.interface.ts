@@ -2,6 +2,10 @@ export const TEXTBTN1 = "Выбрать модель";
 export const TEXTBTN2 = "Дополнительно";
 export const TEXTBTN3 = "Итого";
 export const TEXTBTN4 = "Заказать";
+export const TEXTCANCEL = "Отменить";
+export const TEXTDEFAULT = "Далее";
+export const GREEN = "accept";
+export const FAIL = "fail";
 
 export const ORDER_CONTROLS = {
   cityName: "cityName",

@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { LocationService } from "src/app/shared/services/location.service";
+import { LocationService } from "../../order-page/order-page/form-blog/form-steps/step-location/location.service";
 
 @Component({
   selector: "app-location",

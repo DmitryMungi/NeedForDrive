@@ -63,5 +63,5 @@ export class CategoryModel {
 }
 
 export interface IResponse<T> {
-  data: T[];
+  data: T;
 }

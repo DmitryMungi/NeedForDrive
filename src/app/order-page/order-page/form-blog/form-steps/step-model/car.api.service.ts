@@ -16,13 +16,13 @@ export class CarApiService {
 
   getCars(): Observable<CarModel[]> {
     return this.http
-      .get<IResponse<ICars>>(`${environment.apiUrl}/db/car`)
+      .get<IResponse<ICars[]>>(`${environment.apiUrl}/db/car`)
       .pipe(map((res) => res.data.map((car) => new CarModel(car))));
   }
 
   getCategory(): Observable<CategoryModel[]> {
     return this.http
-      .get<IResponse<ICategory>>(`${environment.apiUrl}/db/category`)
+      .get<IResponse<ICategory[]>>(`${environment.apiUrl}/db/category`)
       .pipe(
         map((res) => res.data.map((category) => new CategoryModel(category)))
       );

@@ -1,0 +1,33 @@
+@import '../../../../../../common-styles/variables.less';
+@import '../../../../../../common-styles/text.less';
+
+.confirm {
+  display: flex;
+  justify-content: space-between;
+  padding: 32px 0;
+}
+
+.confirm-info {
+  min-width: 206px;
+  color: @color-black;
+  line-height: 120%;
+
+  &__car-name{
+    margin-bottom: 8px;
+    font-weight: 400;
+    font-size: 18px;
+  }
+}
+
+.car-img {
+  max-width: 380px;
+  max-height: 260px;
+  width: 100%;
+  object-fit:contain;
+}
+
+@media (max-width: 1020px) {
+  .confirm {
+    flex-direction: column;
+  }
+}

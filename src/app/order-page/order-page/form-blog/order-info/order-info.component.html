@@ -1,82 +1,61 @@
 <div class="order-info">
   <h3 class="order-title">Ваш заказ:</h3>
-  <div class="order-item">
-    <span class="order-item__label">Пункт выдачи</span>
-    <span class="dote-border"></span>
-    <span
-      *ngIf="
-        addressValues.city != '' && addressValues.address != '';
-        else nonaddress
-      "
-      class="order-item__item column-item"
-    >
-      <span>{{ addressValues.city }},</span>
-      <span>{{ addressValues.address }}</span>
-    </span>
-    <ng-template #nonaddress>
-      <span class="order-item__item">Не выбран</span>
-    </ng-template>
-  </div>
-  <div
-    *ngIf="addressValues.city != '' && addressValues.address != ''"
-    class="order-item"
-  >
-    <span class="order-item__label">Модель</span>
-    <span class="dote-border"></span>
-    <span *ngIf="modelValid; else nonmodel" class="order-item__item">
-      <span
-        >{{ car.name }}
-        <span *ngIf="car.number">{{ ", " + car.number }}</span></span
-      >
-    </span>
-    <ng-template #nonmodel>
-      <span class="order-item__item">Не выбран</span>
-    </ng-template>
-  </div>
-  <div class="addit-color_value order-item" *ngIf="additValue.color != ''">
-    <span class="order-item__label">Цвет</span>
-    <span class="dote-border"></span>
-    <span class="order-item__item">
-      {{ additValue.color }}
-    </span>
-  </div>
-  <div class="order-item" *ngIf="dateDuration">
-    <span class="order-item__label">Длительность аренды</span>
-    <span class="dote-border"></span>
-    <span class="order-item__item">
-      {{ dateDuration | duration }}
-    </span>
-  </div>
-  <div class="order-item" *ngIf="additValue.rate != ''">
-    <span class="order-item__label">Тариф</span>
-    <span class="dote-border"></span>
-    <span class="order-item__item">
-      {{ additValue.rate }}
-    </span>
-  </div>
-  <div class="order-item" *ngIf="additValue.fullTank">
-    <span class="order-item__label">Полный бак</span>
-    <span class="dote-border"></span>
-    <span class="order-item__item">Да</span>
-  </div>
-  <div class="order-item" *ngIf="additValue.isNeedChildChair">
-    <span class="order-item__label">Детское кресло</span>
-    <span class="dote-border"></span>
-    <span class="order-item__item">Да</span>
-  </div>
-  <div class="order-item" *ngIf="additValue.isRightWheel">
-    <span class="order-item__label">Правый руль</span>
-    <span class="dote-border"></span>
-    <span class="order-item__item">Да</span>
-  </div>
+  <app-order-item
+    *ngIf="addressValues.city && addressValues.address"
+    label="Пункт выдачи"
+    [item]="addressValues.city | gluing: ','"
+    [itemElse]="addressValues.address"
+    [column]="true"
+  ></app-order-item>
+  <app-order-item
+    *ngIf="car.name != ''"
+    label="Модель"
+    [item]="car.name | gluing: ', '"
+    [itemElse]="car?.number"
+  ></app-order-item>
+  <app-order-item
+    *ngIf="additValue.color != ''"
+    label="Цвет"
+    [item]="additValue.color"
+  ></app-order-item>
+  <app-order-item
+    *ngIf="dateDuration"
+    label="Длительность аренды"
+    [item]="dateDuration | duration"
+  ></app-order-item>
+  <app-order-item
+    *ngIf="additValue.rate != ''"
+    label="Тариф"
+    [item]="additValue.rate"
+  ></app-order-item>
+  <app-order-item
+    *ngIf="additValue.fullTank"
+    label="Полный бак"
+    item="Да"
+  ></app-order-item>
+  <app-order-item
+    *ngIf="additValue.isNeedChildChair"
+    label="Детское кресло"
+    item="Да"
+  ></app-order-item>
+  <app-order-item
+    *ngIf="additValue.isRightWheel"
+    label="Правый руль"
+    item="Да"
+  ></app-order-item>
   <div class="order-price">
     <span class="order-price_label">Цена:</span>
-    <span class="order-price_range">от {{ priceRance }}</span>
+    <span class="order-price_range" *ngIf="totalPrice != 0; else range">
+      {{ totalPrice }} ₽</span
+    >
+    <ng-template #range
+      >от {{ priceRange.min }} до {{ priceRange.max }} ₽</ng-template
+    >
   </div>
   <app-button
     (click)="toNextStep()"
     [isDisabled]="!btnIsValid"
-    color="accept"
+    [color]="colorBtn"
     size="max"
     [text]="textBtn"
   ></app-button>

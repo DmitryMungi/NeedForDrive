@@ -2,8 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { activeStepEnum, PageSteps, pageTitles } from "./order-form.interface";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { CarModel } from "./form-steps/step-model/module.interface";
-
-const STARTPRICE = "8 000 до 12 000 ₽";
+import { ILocationValue } from "./form-steps/step-location/location.interface";
 
 @Component({
   selector: "app-order-form",
@@ -14,16 +13,17 @@ export class OrderFormComponent implements OnInit {
   public pageStepsTitles: PageSteps[] = pageTitles;
   public activeStep: activeStepEnum = activeStepEnum.step1;
   public activeStepEnum = activeStepEnum;
-
+  public isOrderConfirm: boolean = false;
   public checkedCar?: CarModel;
-  public priceRange: string = STARTPRICE;
 
-  public modelValid: boolean = false;
   public orderForm = new FormGroup({
-    cityName: new FormControl("", Validators.required),
-    addressName: new FormControl("", Validators.required),
-    modelName: new FormControl("", Validators.required),
+    stepLocation: new FormGroup({
+      city: new FormControl("", Validators.required),
+      address: new FormControl("", Validators.required),
+    }),
+    stepModel: new FormControl("", Validators.required),
   });
+
   constructor() {}
 
   ngOnInit(): void {
@@ -31,8 +31,13 @@ export class OrderFormComponent implements OnInit {
     this.pageStepsTitles[activeStepEnum.step1].isValid = true;
   }
 
-  addressValueChange() {
-    this.pageStepsTitles[activeStepEnum.step2].isValid = true;
+  addressValueChange(value: ILocationValue) {
+    this.orderForm.controls["stepLocation"].patchValue({
+      city: value.city,
+      address: value.address,
+    });
+    this.isValidSteps();
+    this.additCompleted(false);
   }
 
   toStep(item: PageSteps): void {
@@ -40,14 +45,36 @@ export class OrderFormComponent implements OnInit {
   }
 
   toNextStep(): void {
-    if (this.activeStep != this.activeStepEnum.step3) {
+    if (this.activeStep != this.activeStepEnum.step4) {
       this.activeStep++;
     }
   }
 
   selectedCar(car: CarModel) {
+    this.orderForm.controls["stepModel"].patchValue({ stepModel: car });
     this.checkedCar = car;
-    this.modelValid = true;
-    this.pageStepsTitles[activeStepEnum.step3].isValid = true;
+    this.isValidSteps();
+    this.additCompleted(false);
+  }
+
+  additCompleted(value: boolean) {
+    this.pageStepsTitles[activeStepEnum.step4].isValid = value;
+  }
+
+  confirmOrder() {
+    this.isOrderConfirm = true;
+  }
+
+  onGoBack() {
+    this.isOrderConfirm = false;
+  }
+
+  private isValidSteps() {
+    this.pageStepsTitles[activeStepEnum.step2].isValid =
+      this.orderForm.controls["stepLocation"].valid;
+
+    this.pageStepsTitles[activeStepEnum.step3].isValid =
+      this.orderForm.controls["stepLocation"].valid &&
+      this.orderForm.controls["stepModel"].valid;
   }
 }

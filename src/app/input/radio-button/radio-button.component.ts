@@ -8,6 +8,7 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
 export class RadioButtonComponent {
   @Input() label: string = "";
   @Input() name: string = "";
+  @Input() checked: boolean = false;
 
   @Output() changeEvent = new EventEmitter<string>();
 

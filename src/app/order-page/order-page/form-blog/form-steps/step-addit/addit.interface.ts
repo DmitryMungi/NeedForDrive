@@ -17,4 +17,5 @@ export interface ITariff {
 export interface IService {
   id: string;
   description: string;
+  isChecked: boolean;
 }

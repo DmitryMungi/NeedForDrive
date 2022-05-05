@@ -1,6 +1,5 @@
 <div class="inputs__wrapp">
   <app-input
-    [groupName]="orderConrtrols.cityName"
     labelValue="Город"
     name="city"
     [list]="citiesList"
@@ -11,7 +10,6 @@
   ></app-input>
   <app-input
     [ngClass]="{ disabled: addressValues.city === '' }"
-    [groupName]="orderConrtrols.addressName"
     labelValue="Пункт выдачи"
     name="address"
     [list]="activeAddress"

@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   Input,
   Output,
   EventEmitter,
@@ -8,13 +7,6 @@ import {
   ViewChild,
   ElementRef,
 } from "@angular/core";
-import {
-  ControlContainer,
-  FormGroup,
-  FormControl,
-  FormGroupDirective,
-  Validators,
-} from "@angular/forms";
 import { from, fromEvent, Observable } from "rxjs";
 import {
   toArray,
@@ -28,12 +20,8 @@ import {
   selector: "app-input",
   templateUrl: "./input.component.html",
   styleUrls: ["./input.component.less"],
-  viewProviders: [
-    { provide: ControlContainer, useExisting: FormGroupDirective },
-  ],
 })
-export class InputComponent implements OnInit, AfterViewInit {
-  @Input() groupName: string = "";
+export class InputComponent implements AfterViewInit {
   @Input() labelValue: string = "";
   @Input() name: string = "";
   @Input() value: string = "";
@@ -47,15 +35,8 @@ export class InputComponent implements OnInit, AfterViewInit {
   @ViewChild("listDropDown") listDropDown!: ElementRef;
 
   public searchResult$!: Observable<Array<string>>;
-  public formGroup = new FormGroup({
-    name: new FormControl(this.value, Validators.required),
-  });
 
-  constructor(private orderForm: FormGroupDirective) {}
-
-  ngOnInit(): void {
-    this.orderForm.form.addControl(this.groupName, this.formGroup);
-  }
+  constructor() {}
 
   ngAfterViewInit(): void {
     const search = this.input.nativeElement;
@@ -69,7 +50,6 @@ export class InputComponent implements OnInit, AfterViewInit {
 
   onClickSearchItem(item: string) {
     this.onSearchItem.emit(item);
-    this.formGroup.patchValue({ name: item });
   }
 
   search(searchTerm: string): Observable<Array<string>> {
@@ -88,7 +68,6 @@ export class InputComponent implements OnInit, AfterViewInit {
   }
 
   onDeleteValue() {
-    this.formGroup.reset();
     this.deleteItem.emit();
   }
 }

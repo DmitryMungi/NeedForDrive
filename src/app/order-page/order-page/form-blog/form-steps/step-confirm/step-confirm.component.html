@@ -1,1 +1,44 @@
-<p>step-confirm works!</p>
+<div class="confirm">
+  <div class="confirm-info">
+    <div class="confirm-info__car-name">{{ orderCar.name }}</div>
+    <app-car-number
+      *ngIf="orderCar.number"
+      [carNumber]="orderCar.number"
+    ></app-car-number>
+    <app-order-detale
+      *ngIf="additValues.fullTank"
+      label="Топливо"
+      desc="100%"
+    ></app-order-detale>
+    <app-order-detale
+      *ngIf="!additValues.fullTank"
+      label="Топливо"
+      desc="{{ orderCar.tank + '%' }}"
+    ></app-order-detale>
+    <app-order-detale
+      *ngIf="additValues.isNeedChildChair"
+      label="Детское кресло"
+      desc="Да"
+    ></app-order-detale>
+    <app-order-detale
+      *ngIf="additValues.isRightWheel"
+      label="Правый руль"
+      desc="Да"
+    ></app-order-detale>
+    <app-order-detale
+      label="Доступна с"
+      desc="{{ additValues.dateFrom | date: 'dd.MM.YYYY HH:mm' }}"
+    ></app-order-detale>
+  </div>
+
+  <div class="confirm__car-img_wrapp">
+    <img class="car-img" [src]="orderCar.thumbnailUrl" />
+  </div>
+</div>
+
+<app-modal
+  *ngIf="isOrderConfirm"
+  title="Подтвердить заказ"
+  (confirm)="postOrder()"
+  (goBack)="onGoBack()"
+></app-modal>

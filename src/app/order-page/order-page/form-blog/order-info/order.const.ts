@@ -1,3 +1,4 @@
+export const YEAR = 31536000;
 export const MONTH = 2592000;
 export const WEEK = 604800;
 export const DAY = 86400;

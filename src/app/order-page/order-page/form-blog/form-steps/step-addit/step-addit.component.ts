@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import {
   ControlContainer,
   FormGroup,
@@ -11,10 +11,10 @@ import { OrderService } from "src/app/shared/services/order.service";
 import { AdditApiService } from "./addit.api.service";
 import { CarModel } from "../step-model/module.interface";
 import { ITariff, IService } from "./addit.interface";
-import { ADDITDVALUES } from "./addit.const";
 import { IAddit } from "src/app/shared/interfaces/order.interface";
 
 import * as moment from "moment";
+import { AddidService } from "./addit.service";
 
 @Component({
   selector: "app-step-addit",
@@ -25,24 +25,36 @@ import * as moment from "moment";
   ],
 })
 export class StepAdditComponent implements OnInit {
+  @Output() completedForm = new EventEmitter<boolean>();
+
   public minValueFrom: string = moment(CURENT_DATE).format("yyyy-MM-DDThh:mm");
   public minValueUntil: string = this.minValueFrom;
   public maxValueFrom?: string;
-  public valueFrom: number = 0;
-  public valueUntil: number = 0;
-  public additValues: IAddit = ADDITDVALUES;
+  public dateFrom: number = 0;
+  public dateUntil: number = 0;
+  public additValues: IAddit = this.orderService.getAdditValue();
 
   public formGroup = new FormGroup({
-    color: new FormControl("", Validators.required),
-    from: new FormControl("", [Validators.required, Validators.minLength(10)]),
-    until: new FormControl("", [Validators.required, Validators.minLength(10)]),
-    rate: new FormControl("", Validators.required),
+    color: new FormControl(this.additValues.color, Validators.required),
+    from: new FormControl(this.additValues.dateFrom, [
+      Validators.required,
+      Validators.minLength(10),
+    ]),
+    until: new FormControl(this.additValues.dateUntil, [
+      Validators.required,
+      Validators.minLength(10),
+    ]),
+    rate: new FormControl(this.additValues.rate, Validators.required),
   });
   constructor(
     private orderForm: FormGroupDirective,
     private orderService: OrderService,
-    private additApiService: AdditApiService
+    private additApiService: AdditApiService,
+    private additServise: AddidService
   ) {}
+
+  public valueFrom: string = this.additServise.getValueFrom();
+  public valueUntil: string = this.additServise.getValueUntil();
 
   formDateValidator(control: FormControl): { [s: string]: boolean } | null {
     if (control.value === "") {
@@ -58,6 +70,7 @@ export class StepAdditComponent implements OnInit {
   ngOnInit(): void {
     this.orderForm.form.addControl("stepAddit", this.formGroup);
     this.additApiService.getRate().subscribe((res) => (this.rates = res));
+    this.formIsValid();
   }
 
   changeColor(item: string) {
@@ -68,38 +81,43 @@ export class StepAdditComponent implements OnInit {
   }
 
   changeDateFrom(item: string) {
-    this.valueUntil = 0;
+    this.additServise.setValueFrom(item);
+    this.additServise.setValueUntil("");
+    this.dateUntil = 0;
     this.minValueUntil = item;
-    this.valueFrom = +new Date(item);
+    this.dateFrom = +new Date(item);
     this.dateCheckAndSet();
-    this.formGroup.patchValue({ from: item });
+    this.formGroup.patchValue({ from: this.dateFrom });
     this.formIsValid();
   }
 
   changeDateUntil(item: string) {
-    this.valueUntil = +new Date(item);
+    this.additServise.setValueUntil(item);
+    this.dateUntil = +new Date(item);
     this.maxValueFrom = item;
     this.dateCheckAndSet();
-    this.formGroup.patchValue({ until: item });
+    this.formGroup.patchValue({ until: this.dateUntil });
     this.formIsValid();
   }
 
   dateCheckAndSet() {
-    if (this.valueFrom != 0 && this.valueUntil != 0) {
-      this.additValues.dateFrom = this.valueFrom;
-      this.additValues.dateUntil = this.valueUntil;
+    if (this.dateFrom != 0 && this.dateUntil != 0) {
+      this.additValues.dateFrom = this.dateFrom;
+      this.additValues.dateUntil = this.dateUntil;
       this.orderService.setAdditValues(this.additValues);
     }
   }
 
-  changeRate(item: string) {
-    this.additValues.rate = item;
+  changeRate(rateName: string, rateId: string) {
+    this.additValues.rate = rateName;
+    this.additValues.rateId = rateId;
     this.orderService.setAdditValues(this.additValues);
-    this.formGroup.patchValue({ rate: item });
+    this.formGroup.patchValue({ rate: rateName });
     this.formIsValid();
   }
 
   toggleCheckBox(event: boolean, service: IService) {
+    service.isChecked = event;
     switch (service.id) {
       case ServicesEnum.FullTank:
         this.additValues.fullTank = event;
@@ -111,10 +129,15 @@ export class StepAdditComponent implements OnInit {
         this.additValues.isRightWheel = event;
         break;
     }
+    this.orderService.setTotalPrice();
   }
 
   formIsValid() {
-    this.additValues.isValid = this.formGroup.status === "VALID";
+    this.additValues.isValid = this.formGroup.valid;
+    if (this.formGroup.valid) {
+      this.orderService.setTotalPrice();
+    }
+    this.completedForm.emit(this.formGroup.valid);
     this.orderService.setAdditValues(this.additValues);
   }
 

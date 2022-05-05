@@ -2,15 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, map } from "rxjs";
 import { environment } from "src/environments/environment";
-import {
-  IGeoRes,
-  IRes,
-} from "../../../../../shared/interfaces/order.interface";
-import {
-  Igeo,
-  ICity,
-  IAddress,
-} from "src/app/order-page/order-page/form-blog/form-steps/step-location/location.interface";
+import { IRes } from "../../../../../shared/interfaces/order.interface";
+import { Igeo, ICity, IAddress, IGeoRes } from "./location.interface";
 
 @Injectable({ providedIn: "root" })
 export class LocatoinApiService {

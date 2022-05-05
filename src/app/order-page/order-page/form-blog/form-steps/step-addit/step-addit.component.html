@@ -4,6 +4,7 @@
     *ngFor="let color of checkedCar.colors"
     [label]="color"
     name="color"
+    [checked]="additValues.color === color"
     (changeEvent)="changeColor($event)"
   ></app-radio-button>
 </div>
@@ -14,6 +15,7 @@
     placeholderValue="Введите дату и время"
     [minValue]="minValueFrom"
     [maxValue]="maxValueFrom"
+    [value]="valueFrom"
     (changeValue)="changeDateFrom($event)"
     (deleteValue)="onDeleteValueFrom()"
   ></app-input-date>
@@ -21,6 +23,7 @@
     label="По"
     placeholderValue="Введите дату и время"
     [minValue]="minValueUntil"
+    [value]="valueUntil"
     (changeValue)="changeDateUntil($event)"
     (deleteValue)="onDeleteValueUntil()"
   ></app-input-date>
@@ -29,9 +32,10 @@
   <h5>Тариф</h5>
   <div class="rate-wrapp">
     <app-radio-button
-      (changeEvent)="changeRate($event)"
+      (changeEvent)="changeRate(rate.rateTypeId.name, rate.id)"
       *ngFor="let rate of rates"
       name="sortRate"
+      [checked]="rate.rateTypeId.name === additValues.rate"
       [label]="
         rate.rateTypeId.name
           | gluing: ', ' + rate.price
@@ -47,6 +51,7 @@
         *ngFor="let service of services; let i = index"
         [name]="service.id"
         [label]="service.description"
+        [isChecked]="service.isChecked"
         (toggleCheckBox)="toggleCheckBox($event, this.service)"
       ></app-checkbox>
     </div>
